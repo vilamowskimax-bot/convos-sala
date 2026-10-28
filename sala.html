@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConVos · Sala de conexiones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha256-tXCrvaljxgtN5LT/Syb5Mm9T+yzPFGH98JVcoJT7JTk=" crossorigin="anonymous">
+<style>
+:root{--ink:#150B33;--ink-2:#20144A;--ink-3:#2F2166;--violet:#6D28D9;--peri:#818CF8;--orange:#FB923C;--rose:#F43F5E;--cream:#F5EBDD;--mint:#34D399;--mute:#B9B1DC;--line:rgba(245,235,221,.16);
+  --grad:linear-gradient(135deg,#FB923C 0%,#FA6A4D 50%,#F43F5E 100%);--fd:'Oswald','Arial Narrow',Impact,sans-serif;--fb:'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--ink);color:var(--cream);font-family:var(--fb);overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+#map{position:absolute;inset:0;background:#A9CEEF}
+.leaflet-container{background:#A9CEEF;font-family:var(--fb)}
+.leaflet-control-attribution{font-size:9.5px;background:rgba(245,235,221,.8)!important;color:#4B3E72}
+.glass{background:rgba(21,11,51,.88);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:24px}
+
+.brand{position:absolute;z-index:500;top:18px;left:18px;display:flex;align-items:center;gap:12px;padding:10px 18px 10px 12px}
+.logo{width:40px;height:40px;border-radius:13px;background:var(--violet);display:grid;place-items:center}
+.brand b{display:block;font:600 24px/1 var(--fd);letter-spacing:.03em}
+.brand small{display:block;margin-top:3px;font-size:12px;color:var(--mute)}
+.st{display:inline-flex;align-items:center;gap:6px;margin-left:10px;font-size:11px;color:var(--mute)}
+.st i{width:9px;height:9px;border-radius:50%;background:var(--mute)}
+.st.online i,.st.sim i{background:var(--mint)}.st.offline i{background:var(--rose)}
+
+.panel{position:absolute;z-index:500;top:18px;right:18px;bottom:96px;width:340px;padding:18px 20px;display:flex;flex-direction:column;gap:11px;overflow:hidden}
+.big{display:flex;align-items:flex-end;gap:12px}
+.big b{font:600 84px/.85 var(--fd);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.big span{font-size:15px;line-height:1.2;padding-bottom:4px}
+.big small{display:block;color:var(--mute);font-size:12px}
+.kp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.k{border-radius:18px;padding:12px 12px 10px;background:var(--violet)}
+.k:nth-child(2){background:var(--ink-3)}.k:nth-child(3){background:var(--cream);color:var(--ink)}.k:nth-child(4){background:var(--peri);color:var(--ink)}
+.k b{display:block;font:600 30px/1 var(--fd)}
+.k.wide{display:flex;align-items:baseline;gap:10px;background:var(--grad);color:var(--ink)}
+.k.wide b{font-size:34px}
+.k span{font-size:11.5px;opacity:.9}
+.lbl{font:600 11px var(--fb);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.zones{display:flex;flex-direction:column;gap:8px}
+.zr{display:grid;grid-template-columns:96px 1fr 22px;gap:8px;align-items:center;font-size:12.5px}
+.zr i{display:block;height:10px;border-radius:5px;background:rgba(245,235,221,.1)}
+.zr u{display:block;height:100%;border-radius:5px;background:var(--grad);transition:width .5s}
+.zr span:last-child{text-align:right;font-weight:600}
+.legend{margin-top:auto;display:flex;flex-direction:column;gap:7px;font-size:12px;color:var(--mute)}
+.legend div{display:flex;align-items:center;gap:10px}
+.legend svg{flex:none}
+
+.dot{position:relative;display:grid;place-items:center;width:27px;height:27px;border-radius:50%;border:2.5px solid #fff;background:var(--c);color:var(--t);font:600 11px var(--fd);box-shadow:0 5px 12px rgba(21,11,51,.45)}
+.dot.sim{border-style:dashed;opacity:.82}
+.dot.iso{background:#8E86B5;color:#fff}
+.dot .car{position:absolute;right:-6px;bottom:-5px;width:15px;height:15px;border-radius:50%;background:var(--ink);color:var(--cream);display:grid;place-items:center;border:2px solid #fff}
+.dot .nm{position:absolute;top:29px;left:50%;transform:translateX(-50%);white-space:nowrap;font:600 11px var(--fb);color:var(--ink);background:rgba(245,235,221,.92);padding:1px 7px;border-radius:999px}
+body.nonames .dot .nm{display:none}
+.dot.new::before{content:"";position:absolute;inset:-4px;border-radius:50%;border:3px solid var(--orange);animation:ping 1.6s ease-out 2}
+@keyframes ping{0%{transform:scale(.7);opacity:.9}100%{transform:scale(2.6);opacity:0}}
+.sede{width:34px;height:34px;border-radius:11px;background:var(--ink);color:var(--cream);display:grid;place-items:center;border:3px solid #fff;box-shadow:0 5px 12px rgba(21,11,51,.45)}
+path.edge{opacity:0;transition:opacity .7s ease}
+path.edge.on{opacity:.92}
+path.halo{opacity:0;transition:opacity 1s ease}
+path.halo.on{opacity:1}
+
+.bar{position:absolute;z-index:600;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:8px;max-width:calc(100vw - 36px);overflow-x:auto}
+.bar button{border:1.5px solid var(--line);background:rgba(255,255,255,.05);padding:10px 15px;border-radius:999px;font:600 13px var(--fb);white-space:nowrap}
+.bar button.on{background:var(--grad);border-color:transparent;color:var(--ink)}
+.bar .sep{width:1px;align-self:stretch;background:var(--line);margin:0 4px}
+.bar button.tg.on{background:var(--cream);color:var(--ink)}
+.bar kbd{font:600 10px var(--fb);opacity:.55;margin-left:6px}
+.toast{position:absolute;z-index:700;left:18px;bottom:96px;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast div{background:var(--cream);color:var(--ink);font:600 14px var(--fb);padding:10px 16px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.35);animation:up .35s ease,out .4s ease 4.2s forwards}
+@keyframes up{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
+@keyframes out{to{opacity:0;transform:translateY(-8px)}}
+#qr{position:absolute;inset:0;z-index:800;background:rgba(10,5,28,.82);display:none;place-items:center}
+#qr.on{display:grid}
+#qr .card{background:var(--cream);color:var(--ink);border-radius:32px;padding:30px 34px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+#qr h2{margin:0;font:600 44px/1 var(--fd)}
+#qr p{margin:0;font-size:17px;color:#4B3E72}
+#qrbox{padding:12px;background:var(--cream);border-radius:20px}
+#qrurl{font:600 15px var(--fb);color:#4B3E72;word-break:break-all;max-width:420px}
+@media (max-width:900px){.panel{display:none}.toast{bottom:90px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="map" aria-label="Mapa de conexiones de la sala"></div>
+
+<div class="brand glass">
+  <span class="logo"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="12" r="6.5" fill="#FB923C"/><circle cx="15" cy="12" r="6.5" fill="#F5EBDD" fill-opacity=".92"/></svg></span>
+  <div><b>ConVos</b><small>Quién vive cerca de quién</small></div>
+  <span class="st" id="st" role="status"><i></i><span id="stt">conectando</span></span>
+</div>
+
+<aside class="panel glass" id="panel" aria-label="Números de la sala">
+  <div class="big"><b id="nTot">0</b><span>personas<br>en la sala<small id="nSim"></small></span></div>
+  <div class="kp">
+    <div class="k"><b id="nCar">0</b><span>manejan</span></div>
+    <div class="k"><b id="nSeat">0</b><span>lugares libres</span></div>
+    <div class="k"><b id="nConn">0%</b><span>ya tienen con quién volver</span></div>
+    <div class="k"><b id="nGrp">0</b><span>grupos posibles</span></div>
+  </div>
+  <div class="kp">
+    <div class="k" style="background:var(--ink-3)"><b id="nNoCar">0</b><span>sin auto que consiguen viaje</span></div>
+    <div class="k" style="background:var(--ink-3)"><b id="nSaved">0</b><span>autos menos en la calle</span></div>
+  </div>
+  <div class="k wide"><b id="nCo2">0</b><span>kg de CO₂ menos por mes*</span></div>
+  <div><div class="lbl" style="margin-bottom:8px">De dónde vienen</div><div class="zones" id="zones"></div></div>
+  <div class="legend" aria-hidden="true">
+    <div><svg width="30" height="8"><line x1="0" y1="4" x2="30" y2="4" stroke="#F97316" stroke-width="5" stroke-linecap="round"/></svg>Grupo posible: alguien maneja y los lleva</div>
+    <div><svg width="30" height="8"><line x1="0" y1="4" x2="30" y2="4" stroke="#818CF8" stroke-width="2.5" stroke-dasharray="3 6" stroke-linecap="round"/></svg>Vecinos sin auto cerca</div>
+    <div><svg width="30" height="14"><circle cx="15" cy="7" r="6" fill="#8E86B5" stroke="#fff" stroke-width="2"/></svg>Todavía sin conexión</div>
+    <div style="opacity:.7;font-size:11px">*Estimación: 20 días al mes, ida y vuelta, 0,16 kg CO₂/km. Línea punteada en el borde = compañero simulado.</div>
+  </div>
+</aside>
+
+<div class="toast" id="toast" aria-live="polite"></div>
+
+<div class="bar glass" id="bar" hidden></div>
+
+<div id="qr" role="dialog" aria-label="Código QR para entrar a la sala">
+  <div class="card"><h2>Escaneá y entrá</h2><p>Pasá la cámara por el código y poné de dónde volvés.</p><div id="qrbox"></div><div id="qrurl"></div></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha256-XJrs/DDkVkUZ29zdzFOkGCJ9zHVo5hnpdi3c7HYJ7Uc=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha256-xUHvBjJ4hahBW8qN9gceFBibSFUzbe9PNttUvehITzY=" crossorigin="anonymous"></script>
+<script src="locs.js"></script><script src="manifest.js"></script><script src="config.js"></script><script src="sync.js"></script>
+<script>
+(function(){
+'use strict';
+const R=window.ConvosRoom,$=(s,r=document)=>r.querySelector(s);
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SEDE={pt:[-34.64030,-58.40125],name:'Distrito Tecnológico'};
+const ZONE_OF=new Map(window.CONVOS_LOCS.map(l=>[l.name,l.zone])),ZN=window.CONVOS_ZONES;
+const COLORS=['#F97316','#6366F1','#10B981','#EC4899','#0EA5E9','#EF4444','#8B5CF6','#EAB308'];
+const RADIUS=4.5;   /* un auto toma a quienes viven a menos de 4,5 km */
+
+/* ---------- mapa (mismo mapa sin conexión del prototipo) ---------- */
+const MAN={};for(const g in window.CONVOS_MANIFEST)MAN[g]=new Set(window.CONVOS_MANIFEST[g]);
+const blockCache={},imgCache={};
+function loadBlock(g,bx,by){const k=g+'_'+bx+'_'+by;if(!MAN[g]||!MAN[g].has(bx+'_'+by))return Promise.resolve(null);return blockCache[k]||(blockCache[k]=fetch('t/'+k+'.json').then(r=>r.ok?r.json():null).catch(()=>null));}
+async function tileImg(g,x,y){const key=g+'/'+x+'/'+y;if(key in imgCache)return imgCache[key];const b=await loadBlock(g,x>>3,y>>3);const s=b&&b[x+','+y];if(!s){imgCache[key]=null;return null;}const im=new Image();im.src='data:image/webp;base64,'+s;try{await im.decode()}catch(_){}imgCache[key]=im;return im;}
+const Tiles=L.GridLayer.extend({createTile(c,done){const cv=document.createElement('canvas');cv.width=cv.height=512;const ctx=cv.getContext('2d');ctx.fillStyle='#A9CEEF';ctx.fillRect(0,0,512,512);
+  (async()=>{const g=c.z-1;for(let gg=Math.min(g,14);gg>=8;gg--){const d=g-gg;const im=await tileImg(gg,c.x>>d,c.y>>d);if(im){const sz=512/(1<<d);ctx.drawImage(im,(c.x&((1<<d)-1))*sz,(c.y&((1<<d)-1))*sz,sz,sz,0,0,512,512);break;}}done(null,cv);})();return cv;}});
+const MAP=L.map('map',{zoomControl:false,minZoom:9,maxZoom:15.5,zoomSnap:.5,attributionControl:true,maxBounds:[[-35.4,-59.9],[-33.9,-57.3]]}).setView([-34.62,-58.5],11);
+MAP.attributionControl.setPrefix(false).addAttribution('© OpenStreetMap');new Tiles({tileSize:512,keepBuffer:2}).addTo(MAP);
+const LG={halo:L.layerGroup().addTo(MAP),edge:L.layerGroup().addTo(MAP),ppl:L.layerGroup().addTo(MAP),sede:L.layerGroup().addTo(MAP)};
+const ICON_CAR='<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>';
+L.marker(SEDE.pt,{icon:L.divIcon({className:'',html:'<span class="sede" title="'+esc(SEDE.name)+'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11v5c3 2 7 2 10 0v-5"/></svg></span>',iconSize:[34,34],iconAnchor:[17,17]}),zIndexOffset:900,interactive:false}).addTo(LG.sede);
+
+/* ---------- estado ---------- */
+const params=new URLSearchParams(location.search);
+let priv=null;
+try{const m=/[#&]k=([A-Za-z0-9+/=]{100,400})/.exec(location.hash);
+  if(m){sessionStorage.setItem('convosPK',m[1]);history.replaceState(null,'',location.pathname+location.search);}   // la clave sale de la barra de direcciones enseguida
+  priv=sessionStorage.getItem('convosPK');}catch(_){}
+const room=R.connect({key:priv?'presenter':undefined});
+let real=[],fill=true,sceneNow={s:'bienvenida',fill:true},forceEdges=null,known=new Set(),firstFit=true;
+const isPresenter=!!priv;
+
+function people(){
+  const all=real.map(p=>({...p,sim:false})).concat(fill?R.FILLERS:[]);
+  return all.map(p=>({...p,pt:R.pointOf(p)})).filter(p=>p.pt);
+}
+/* Armado de grupos: cada auto (de más a menos lugares) toma a los vecinos más cercanos, a menos de RADIUS km,
+   hasta llenar sus lugares. Se prefiere a quien no tiene auto. Es una demostración, no un optimizador real. */
+function plan(ps){
+  const taken=ps.map(()=>false),gid=ps.map(()=>-1),groups=[],edges=[];
+  ps.map((_,i)=>i).filter(i=>ps[i].car).sort((x,y)=>ps[y].seats-ps[x].seats||(ps[x].id<ps[y].id?-1:1)).forEach(i=>{
+    if(taken[i])return;
+    const cand=ps.map((_,j)=>j).filter(j=>j!==i&&!taken[j]).map(j=>({j,d:R.hav(ps[i].pt,ps[j].pt)})).filter(c=>c.d<=RADIUS)
+      .sort((p,q)=>(ps[p.j].car-ps[q.j].car)||p.d-q.d).slice(0,ps[i].seats);
+    if(!cand.length)return;
+    const g={id:groups.length,driver:i,members:cand.map(c=>c.j)};groups.push(g);
+    taken[i]=true;gid[i]=g.id;g.members.forEach(j=>{taken[j]=true;gid[j]=g.id;edges.push({a:i,b:j,gid:g.id});});
+  });
+  // vecinos que quedaron sin grupo: se unen con sus 2 más cercanos (línea punteada)
+  const free=ps.map((_,i)=>i).filter(i=>!taken[i]),seen=new Set();
+  free.forEach(i=>{free.filter(j=>j!==i).map(j=>({j,d:R.hav(ps[i].pt,ps[j].pt)})).filter(c=>c.d<=RADIUS).sort((p,q)=>p.d-q.d).slice(0,2).forEach(({j})=>{
+    const k=i<j?i+'-'+j:j+'-'+i;if(!seen.has(k)){seen.add(k);edges.push({a:Math.min(i,j),b:Math.max(i,j),gid:-1});}});});
+  return {gid,groups,edges};
+}
+function stats(ps,pl){
+  const cars=ps.filter(p=>p.car);let conn=0,noCar=0,saved=0,co2=0;
+  pl.groups.forEach(g=>{conn+=1+g.members.length;g.members.forEach(j=>{if(ps[j].car){saved++;co2+=R.hav(ps[j].pt,SEDE.pt)*1.3*2*0.16*20;}else noCar++;});});
+  const zones={};ps.forEach(p=>{const z=ZONE_OF.get(p.loc);zones[z]=(zones[z]||0)+1;});
+  return {n:ps.length,sim:ps.filter(p=>p.sim).length,cars:cars.length,seats:cars.reduce((t,p)=>t+p.seats,0),conn:ps.length?Math.round(conn/ps.length*100):0,groups:pl.groups.length,noCar,saved,co2:Math.round(co2),zones};
+}
+
+/* ---------- dibujo ---------- */
+let edgeKeys=new Set();
+function showEdges(){return forceEdges!==null?forceEdges:sceneNow.s==='red';}
+function draw(){
+  const ps=people(),pl=plan(ps),st=stats(ps,pl),edges=showEdges();
+  LG.ppl.clearLayers();
+  ps.forEach((p,i)=>{
+    const g=pl.gid[i],iso=g<0,col=edges&&!iso?COLORS[g%COLORS.length]:'#F5EBDD';
+    const ini=p.n.trim().split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const isNew=!known.has(p.id)&&!p.sim&&known.size>0;
+    const html='<span class="dot'+(p.sim?' sim':'')+(edges&&iso?' iso':'')+(isNew?' new':'')+'" style="--c:'+col+';--t:#150B33">'+esc(ini)+(p.car?'<i class="car">'+ICON_CAR+'</i>':'')+'<em class="nm">'+esc(p.n)+'</em></span>';
+    L.marker(p.pt,{icon:L.divIcon({className:'',html,iconSize:[27,27],iconAnchor:[13,13]}),interactive:false,zIndexOffset:p.car?300:200}).addTo(LG.ppl);
+  });
+  // conexiones: aparecen recién cuando el presentador muestra "Tu red"
+  const keys=new Set();LG.edge.clearLayers();LG.halo.clearLayers();
+  if(edges){
+    pl.edges.forEach((e,idx)=>{
+      const a=ps[e.a],b=ps[e.b],k=a.id+'~'+b.id,strong=e.gid>=0,col=strong?COLORS[e.gid%COLORS.length]:'#4C3FB8';keys.add(k);
+      const lines=[];
+      if(strong)lines.push(L.polyline([a.pt,b.pt],{color:'#fff',weight:10,className:'edge',lineCap:'round',interactive:false}).addTo(LG.edge));
+      lines.push(L.polyline([a.pt,b.pt],{color:col,weight:strong?6:3.5,className:'edge',dashArray:strong?null:'2 8',lineCap:'round',interactive:false}).addTo(LG.edge));
+      const fresh=!edgeKeys.has(k);setTimeout(()=>lines.forEach(ln=>{const el=ln.getElement();if(el)el.classList.add('on');}),fresh?(edgeKeys.size?120:60+idx*70):0);
+    });
+    pl.groups.forEach(g=>{
+      const mem=[g.driver,...g.members].map(i=>ps[i]),lat=mem.reduce((t,p)=>t+p.pt[0],0)/mem.length,lon=mem.reduce((t,p)=>t+p.pt[1],0)/mem.length;
+      const rad=Math.max(...mem.map(p=>R.hav([lat,lon],p.pt)))*1000+450,col=COLORS[g.id%COLORS.length];
+      const h=L.circle([lat,lon],{radius:rad,color:col,weight:2,fillColor:col,fillOpacity:.2,className:'halo',interactive:false}).addTo(LG.halo);
+      setTimeout(()=>{const el=h.getElement();if(el)el.classList.add('on');},350);
+    });
+  }
+  edgeKeys=keys;
+  ps.forEach(p=>{if(!p.sim)known.add(p.id);});
+  // números
+  $('#nTot').textContent=st.n;$('#nSim').textContent=st.sim?(st.n-st.sim)+' reales · '+st.sim+' simuladas':'';
+  $('#nCar').textContent=st.cars;$('#nSeat').textContent=st.seats;
+  $('#nConn').textContent=edges?st.conn+'%':'—';$('#nGrp').textContent=edges?st.groups:'—';
+  $('#nNoCar').textContent=edges?st.noCar:'—';$('#nSaved').textContent=edges?st.saved:'—';$('#nCo2').textContent=edges?st.co2:'—';
+  const zs=Object.entries(st.zones).sort((x,y)=>y[1]-x[1]).slice(0,5),mx=zs.length?zs[0][1]:1;
+  $('#zones').innerHTML=zs.map(([z,n])=>'<div class="zr"><span>'+esc(ZN[z]||z)+'</span><i><u style="width:'+Math.round(n/mx*100)+'%"></u></i><span>'+n+'</span></div>').join('');
+}
+const med=a=>{const s=a.slice().sort((x,y)=>x-y);return s.length?s[Math.floor(s.length/2)]:0;};
+function fit(){
+  /* encuadra a casi todos (deja afuera a los muy alejados, para que las conexiones del centro se vean grandes) */
+  let pts=people().map(p=>p.pt);
+  if(pts.length>=6){const c=[med(pts.map(p=>p[0])),med(pts.map(p=>p[1]))],ds=pts.map(p=>R.hav(c,p)),lim=Math.max(10,med(ds)*2.5);pts=pts.filter((_,i)=>ds[i]<=lim);}
+  const b=L.latLngBounds([SEDE.pt,SEDE.pt]);pts.forEach(p=>b.extend(p));
+  MAP.fitBounds(b,{paddingTopLeft:[60,90],paddingBottomRight:[(innerWidth>900?400:60),120],maxZoom:13.5});
+}
+function toast(t){const d=document.createElement('div');d.textContent=t;$('#toast').appendChild(d);setTimeout(()=>d.remove(),4800);while($('#toast').children.length>3)$('#toast').firstChild.remove();}
+
+/* ---------- sala ---------- */
+room.onPeople(list=>{
+  const prev=new Set(real.map(p=>p.id));
+  real=list;
+  list.filter(p=>!prev.has(p.id)&&known.size+prev.size>=0&&!firstFit).forEach(p=>toast(p.n+' se sumó desde '+p.loc));
+  draw();
+  if(firstFit&&people().length){firstFit=false;fit();}
+});
+room.onScene(sc=>{if(!isPresenter){sceneNow=sc;fill=sc.fill;draw();if(sc.s==='red')fit();paintBar();}});
+room.onStatus(s=>{const el=$('#st');el.className='st '+s;$('#stt').textContent=({sim:'ensayo (sin red)',online:'en vivo',connecting:'conectando',offline:'sin conexión'})[s]||s;});
+room.start();
+
+/* ---------- control del presentador ---------- */
+let seq=Date.now();
+async function go(s){
+  if(!isPresenter)return;
+  sceneNow={s,fill};forceEdges=null;await room.publishScene(priv,s,fill,++seq);paintBar();draw();if(s==='red')fit();
+}
+async function toggleFill(){if(!isPresenter)return;fill=!fill;sceneNow={s:sceneNow.s,fill};await room.publishScene(priv,sceneNow.s,fill,++seq);paintBar();draw();}
+function paintBar(){
+  const bar=$('#bar');bar.hidden=false;
+  const sc=R.SCENES.map((s,i)=>'<button type="button" data-s="'+s+'" class="'+(sceneNow.s===s?'on':'')+'"'+(isPresenter?'':' disabled')+'>'+esc(R.SCENE_LABEL[s])+'<kbd>'+(i+1)+'</kbd></button>').join('');
+  bar.innerHTML=sc+'<span class="sep"></span>'+
+    '<button type="button" class="tg'+(fill?' on':'')+'" data-t="fill"'+(isPresenter?'':' disabled')+'>Simulados<kbd>S</kbd></button>'+
+    '<button type="button" class="tg" data-t="qr">QR<kbd>Q</kbd></button>'+
+    '<button type="button" class="tg'+(document.body.classList.contains('nonames')?'':' on')+'" data-t="names">Nombres<kbd>N</kbd></button>'+
+    '<button type="button" class="tg" data-t="fit">Encuadrar<kbd>E</kbd></button>';
+}
+$('#bar').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b||b.disabled)return;
+  if(b.dataset.s)go(b.dataset.s);
+  else if(b.dataset.t==='fill')toggleFill();
+  else if(b.dataset.t==='qr')qr();
+  else if(b.dataset.t==='names'){document.body.classList.toggle('nonames');paintBar();}
+  else if(b.dataset.t==='fit')fit();
+});
+function qr(){
+  const box=$('#qr');if(box.classList.toggle('on')&&!$('#qrbox').firstChild){
+    const url=new URL('./',location.href);url.hash='';url.search='';
+    new QRCode($('#qrbox'),{text:url.href,width:300,height:300,colorDark:'#150B33',colorLight:'#F5EBDD',correctLevel:QRCode.CorrectLevel.M});
+    $('#qrurl').textContent=url.href;
+  }
+}
+$('#qr').addEventListener('click',()=>$('#qr').classList.remove('on'));
+addEventListener('keydown',e=>{
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  const k=e.key.toLowerCase(),i=R.SCENES.indexOf(sceneNow.s);
+  if(k==='arrowright'||k==='pagedown'){e.preventDefault();go(R.SCENES[Math.min(R.SCENES.length-1,i+1)]);}
+  else if(k==='arrowleft'||k==='pageup'){e.preventDefault();go(R.SCENES[Math.max(0,i-1)]);}
+  else if(/^[1-8]$/.test(k))go(R.SCENES[+k-1]);
+  else if(k==='s')toggleFill();
+  else if(k==='q'||k==='escape'){if(k==='q'||$('#qr').classList.contains('on'))qr();}
+  else if(k==='n'){document.body.classList.toggle('nonames');paintBar();}
+  else if(k==='e')fit();
+  else if(k==='c'){forceEdges=forceEdges===null?!showEdges():null;draw();}
+});
+
+paintBar();draw();
+if(isPresenter)room.publishScene(priv,'bienvenida',true,++seq);
+})();
+</script>
+</body>
+</html>
