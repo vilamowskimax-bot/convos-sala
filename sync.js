@@ -1,61 +1,71 @@
 /* ConVos · sala en vivo.
-   Une los celulares del público con la pantalla grande. No guarda nada en ninguna base:
-   usa "presencia" (quién está conectado ahora) y se borra solo cuando cierran la página.
-   Backends: 'supabase' (Realtime) o 'sim' (pestañas de un mismo navegador, para ensayar y como plan B).
+   Une el proyector, los celulares y la consola del presentador. No guarda nada en ninguna base:
+   usa "presencia" (quién está conectado ahora) y se borra solo cuando cada uno cierra la página.
+   Backends: 'supabase' (Realtime) o 'sim' (pestañas de un mismo navegador, para ensayar).
    Todo lo que llega de otros se trata como no confiable: se valida y nunca se pega como HTML. */
 (function(){
 'use strict';
 const CFG=window.CONVOS_CFG||{};
 const LOCS=window.CONVOS_LOCS||[];
 const LOCMAP=new Map(LOCS.map(l=>[l.name,l]));
+const SHOW=Array.isArray(window.CONVOS_SHOW)?window.CONVOS_SHOW:[];
+const SCENES=SHOW.map(x=>x.id);
+const BYID=Object.fromEntries(SHOW.map(x=>[x.id,x]));
+const FLAGS={NAMES_OFF:1,QR:2,REFIT:4};   // lo que la consola puede pedirle al proyector
 
-const SCENES=['bienvenida','cerca','swipe','grupo','viaje','semana','red','empresa'];
-const SCENE_LABEL={bienvenida:'Bienvenida',cerca:'Cerca mío',swipe:'Swipe',grupo:'Grupo',viaje:'Viaje',semana:'Semana',red:'Tu red',empresa:'Empresa'};
-
-/* compañeros simulados: para que el mapa no quede vacío si entra poca gente. Siempre se marcan como simulados. */
+/* compañeros de ejemplo: para que el mapa no quede vacío si entra poca gente. Siempre se marcan como simulados.
+   El orden importa: los primeros forman un auto, después alguien se sube, después llega otro auto…
+   Mica tiene auto pero va con Nico (vive a 2,4 km): así el CO₂ en vivo cuenta un auto menos aunque solo haya ejemplos. */
 const FILLERS=[
-  ['Mica','Olivos',0],['Lucho','Pilar',3],['Sofi','San Isidro',0],['Nico','Martínez',2],['Cande','Tigre',0],
-  ['Fede','Castelar',3],['Vero','Morón',0],['Tobi','Ramos Mejía',0],['Juli','Haedo',2],['Agus','Adrogué',3],
-  ['Lu','Lomas de Zamora',0],['Santi','Quilmes',0],['Flor','Bernal',2],['Rama','La Plata',4],['Pau','Belgrano',0],
-  ['Gabi','Palermo',0],['Dani','Caballito',1],['Mati','Villa Urquiza',0]
+  ['Nico','Martínez',3],['Sofi','San Isidro',0],['Mica','Olivos',2],['Fede','Castelar',3],['Vero','Morón',0],['Lucho','Pilar',3],
+  ['Cande','Tigre',0],['Juli','Haedo',2],['Tobi','Ramos Mejía',0],['Agus','Adrogué',3],['Lu','Lomas de Zamora',0],['Flor','Bernal',2],
+  ['Santi','Quilmes',0],['Pau','Belgrano',0],['Gabi','Palermo',0],['Dani','Caballito',1],['Mati','Villa Urquiza',0],['Rama','La Plata',4]
 ].map(([n,loc,seats],i)=>({id:'sim'+String(i+1).padStart(2,'0'),n,loc,car:seats>0,seats:seats||3,sim:true}));
 
 const clean=(s,max)=>String(s==null?'':s).replace(/[\u0000-\u001f\u007f<>&"'`\\]/g,'').replace(/\s+/g,' ').trim().slice(0,max);
 const hash=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
 function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 const hav=(a,b)=>{const R=6371,t=Math.PI/180,dA=(b[0]-a[0])*t,dO=(b[1]-a[1])*t;const x=Math.sin(dA/2)**2+Math.cos(a[0]*t)*Math.cos(b[0]*t)*Math.sin(dO/2)**2;return 2*R*Math.asin(Math.sqrt(x))};
+const int=(v,max)=>Number.isInteger(v)&&v>=0&&v<=max?v:0;
+const okId=id=>typeof id==='string'&&/^[a-z0-9]{6,16}$/.test(id);
 
-/* Una persona llega de la red: se aceptan solo estos campos y la localidad tiene que existir en la lista.
+/* Lo que cada celular informa de sí: si tocó algo en la escena actual (sid/act) y su voto (v). Nada personal. */
+function viewerBits(p){return {sid:typeof p.sid==='string'&&SCENES.includes(p.sid)?p.sid:'',act:p.act===1?1:0,v:int(p.v,6)};}
+/* Una persona llega de la red: solo se aceptan estos campos y la localidad tiene que existir en la lista.
    La ubicación nunca viene del otro lado: se calcula acá a partir de la localidad (con un corrimiento para no marcar una casa). */
 function validPerson(p){
-  if(!p||typeof p!=='object'||p.k!=='p')return null;
-  const id=String(p.id||'');if(!/^[a-z0-9]{6,16}$/.test(id))return null;
-  const n=clean(p.n,14);if(!n)return null;
-  if(!LOCMAP.has(p.loc))return null;
-  const seats=Math.min(4,Math.max(1,parseInt(p.seats,10)||3));
-  return {id,n,loc:p.loc,car:p.car===true,seats};
+  if(!p||typeof p!=='object'||p.k!=='p'||!okId(p.id))return null;
+  const n=clean(p.n,14);if(!n||!LOCMAP.has(p.loc))return null;
+  return {id:p.id,n,loc:p.loc,car:p.car===true,seats:Math.min(4,Math.max(1,parseInt(p.seats,10)||3)),...viewerBits(p)};
+}
+function validViewer(p){
+  if(!p||typeof p!=='object'||p.k!=='a'||!okId(p.id))return null;
+  return {id:p.id,...viewerBits(p)};
 }
 function pointOf(p){
   const l=LOCMAP.get(p.loc);if(!l)return null;const r=rng(hash(p.id));
   return [l.pt[0]+(r()-.5)*0.012,l.pt[1]+(r()-.5)*0.014];
 }
 
-/* ---- firma del presentador (ECDSA P-256). Los celulares solo guardan la clave pública. ---- */
+/* ---- firma del presentador (ECDSA P-256). Solo la consola tiene la clave privada; los demás, la pública. ---- */
 const u8=b64=>Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
 const b64u8=a=>btoa(String.fromCharCode(...new Uint8Array(a)));
-const msgOf=(s,fill,seq)=>new TextEncoder().encode(s+'|'+(fill?1:0)+'|'+seq);
+const msgOf=(s,st,fill,f,seq)=>new TextEncoder().encode(s+'|'+st+'|'+fill+'|'+f+'|'+seq);
 const ALG={name:'ECDSA',hash:'SHA-256'};
 let pubKeyP=null;
 const pubKey=()=>pubKeyP||(pubKeyP=crypto.subtle.importKey('spki',u8(CFG.publicKey),{name:'ECDSA',namedCurve:'P-256'},false,['verify']));
 async function verifyScene(d){
   try{
-    if(!d||d.k!=='d'||!SCENES.includes(d.s)||!Number.isSafeInteger(d.seq)||typeof d.sig!=='string'||d.sig.length>200||!CFG.publicKey)return false;
-    return await crypto.subtle.verify(ALG,await pubKey(),u8(d.sig),msgOf(d.s,d.fill===true,d.seq));
+    if(!d||d.k!=='d'||!BYID[d.s]||!Number.isSafeInteger(d.seq)||!CFG.publicKey)return false;
+    if(!Number.isInteger(d.st)||d.st<0||d.st>=(BYID[d.s].steps||1)||!Number.isInteger(d.f)||d.f<0||d.f>7)return false;
+    if(!Number.isInteger(d.fill)||d.fill<0||d.fill>FILLERS.length)return false;   // cuántos compañeros de ejemplo
+    if(typeof d.sig!=='string'||d.sig.length>200)return false;
+    return await crypto.subtle.verify(ALG,await pubKey(),u8(d.sig),msgOf(d.s,d.st,d.fill,d.f,d.seq));
   }catch(_){return false;}
 }
-async function signScene(privB64,s,fill,seq){
+async function signScene(privB64,s,st,fill,f,seq){
   const k=await crypto.subtle.importKey('pkcs8',u8(privB64),{name:'ECDSA',namedCurve:'P-256'},false,['sign']);
-  return b64u8(await crypto.subtle.sign(ALG,k,msgOf(s,fill,seq)));
+  return b64u8(await crypto.subtle.sign(ALG,k,msgOf(s,st,fill,f,seq)));
 }
 
 /* ---- backends: mismo contrato. track(key,payload) · leave() · onState(f) · onStatus(f) · start() ---- */
@@ -85,9 +95,11 @@ function supaBackend(room,key){
         if(!window.supabase)await loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js','sha256-hZaWX+kY5lZgChtWjToWj1wNPSKmAIhrtvRKZVXbAec=');
         const sb=window.supabase.createClient(CFG.supabaseUrl,CFG.supabaseKey,{realtime:{params:{eventsPerSecond:5}},auth:{persistSession:false,autoRefreshToken:false}});
         ch=sb.channel('convos:'+room,{config:{presence:{key}}});
-        ch.on('presence',{event:'sync'},()=>{const st=ch.presenceState(),m=new Map();for(const k in st){const a=st[k];if(a&&a.length)m.set(k,a[a.length-1]);}ls.forEach(f=>f(m));});
+        /* con la clave 'presenter' se miran todas las conexiones: si alguien se hace pasar por el presentador, su firma no vale y no tapa a la real */
+        ch.on('presence',{event:'sync'},()=>{const st=ch.presenceState(),m=new Map();for(const k in st){const a=st[k];if(a&&a.length)m.set(k,k==='presenter'?a.slice(-8):a[a.length-1]);}ls.forEach(f=>f(m));});
         ch.subscribe(async s=>{
-          if(s==='SUBSCRIBED'){online=true;status('online');if(mine)try{await ch.track(mine);}catch(_){}}
+          /* Supabase solo manda la presencia a quien se anuncia: el proyector se anuncia como {k:'s'} (no cuenta como celular) */
+          if(s==='SUBSCRIBED'){online=true;status('online');try{await ch.track(mine||{k:'s'});}catch(_){}}
           else if(s==='CHANNEL_ERROR'||s==='TIMED_OUT'||s==='CLOSED'){online=false;status('offline');}
         });
       }catch(_){status('offline');}
@@ -97,43 +109,84 @@ function supaBackend(room,key){
   };
 }
 
+const useSupa=()=>CFG.backend==='supabase'&&!!CFG.supabaseUrl&&!!CFG.supabaseKey;
+/* las firmas necesitan https (o localhost): por http en la red local los celulares no siguen las escenas */
+if(!(window.crypto&&crypto.subtle))console.warn('ConVos: este navegador no puede verificar las escenas firmadas. Abrí la página por https.');
+
+/* role: 'phone' (público) · 'screen' (proyector, solo mira) · 'presenter' (consola, la única que publica escenas) */
 function connect(o){
   o=o||{};
-  const key=o.key||('v'+Math.random().toString(36).slice(2,10));
-  const be=(CFG.backend==='supabase'&&CFG.supabaseUrl&&CFG.supabaseKey)?supaBackend(CFG.room,key):simBackend(CFG.room||'sala-demo',key);
+  const role=o.role||'screen';
+  const key=role==='presenter'?'presenter':(o.key||('v'+Math.random().toString(36).slice(2,10)));
+  const be=useSupa()?supaBackend(CFG.room,key):simBackend(CFG.room||'sala-demo',key);
   let people=[],scene=null,lastSeq=0,status='connecting',timer=0;
-  const pl=[],sl=[],st=[];
-  const verified=new Map();
+  let stats={connected:0,answered:0,interacted:0,tally:[0,0,0,0,0,0]};
+  let mine=role==='phone'?{k:'a',id:key,sid:'',act:0,v:0}:null;
+  const pl=[],sl=[],st=[],ss=[];const verified=new Map();let gen=0;
   async function recompute(m){
-    const list=[];let best=null;
-    for(const [k,p] of m){
-      if(!p||typeof p!=='object'||JSON.stringify(p).length>400)continue;
-      if(p.k==='p'){const v=validPerson(p);if(v&&k===v.id)list.push(v);}
-      else if(p.k==='d'&&k==='presenter'){
-        const ck=p.sig+'|'+p.s+'|'+p.seq+'|'+(p.fill===true);let ok=verified.get(ck);
-        if(ok===undefined){ok=await verifyScene(p);verified.set(ck,ok);}
-        if(ok&&(!best||p.seq>best.seq))best=p;
+    const my=++gen,list=[],marks=[];let best=null;
+    for(const [k,v0] of m){
+      if(k==='presenter'){   // escenas: solo valen las firmadas por la consola
+        for(const p of [].concat(v0)){
+          if(!p||typeof p!=='object'||p.k!=='d'||JSON.stringify(p).length>420)continue;
+          const ck=p.sig+'|'+p.s+'|'+p.st+'|'+p.f+'|'+p.seq+'|'+p.fill;let ok=verified.get(ck);
+          if(ok===undefined){ok=await verifyScene(p);if(verified.size>500)verified.clear();verified.set(ck,ok);}
+          if(ok&&(!best||p.seq>best.seq))best=p;
+        }
+        continue;
       }
+      const p=v0;
+      if(!p||typeof p!=='object'||JSON.stringify(p).length>420)continue;
+      if(p.k==='p'){const v=validPerson(p);if(v&&k===v.id){list.push(v);marks.push(v);}}
+      else if(p.k==='a'){const v=validViewer(p);if(v&&k===v.id)marks.push(v);}
     }
+    if(my!==gen)return;   // llegó un estado más nuevo mientras se verificaba una firma: vale ese
     list.sort((a,b)=>a.id<b.id?-1:1);people=list.slice(0,150);pl.forEach(f=>f(people));
-    if(best&&best.seq>lastSeq){lastSeq=best.seq;scene={s:best.s,fill:best.fill===true,seq:best.seq};sl.forEach(f=>f(scene));}
+    if(best&&best.seq>lastSeq){lastSeq=best.seq;scene={s:best.s,st:best.st,fill:best.fill,f:best.f,seq:best.seq};sl.forEach(f=>f(scene));}
+    const cur=scene?scene.s:'';
+    stats={connected:marks.length,answered:list.length,interacted:marks.filter(v=>v.sid===cur&&v.act===1).length,tally:[0,0,0,0,0,0]};
+    marks.forEach(v=>{if(v.sid===cur&&v.v>=1&&v.v<=6)stats.tally[v.v-1]++;});
+    ss.forEach(f=>f(stats));
   }
   be.onState(m=>{clearTimeout(timer);timer=setTimeout(()=>recompute(m),60);});
   be.onStatus(s=>{status=s;st.forEach(f=>f(s));});
+  const push=()=>be.track(key,mine);
   return {
-    key,
-    get people(){return people},get scene(){return scene},get status(){return status},
-    onPeople(f){pl.push(f);f(people);},onScene(f){sl.push(f);if(scene)f(scene);},onStatus(f){st.push(f);f(status);},
-    start(){return be.start();},
-    track(p){const v=validPerson({k:'p',...p});if(!v)return false;be.track(key,{k:'p',...v});return true;},
+    key,role,
+    get people(){return people},get scene(){return scene},get status(){return status},get stats(){return stats},
+    onPeople(f){pl.push(f);f(people);},onScene(f){sl.push(f);if(scene)f(scene);},onStatus(f){st.push(f);f(status);},onStats(f){ss.push(f);f(stats);},
+    start(){if(mine)push();return be.start();},
+    /* el celular informa quién es (después de contestar la pregunta) */
+    track(p){const v=validPerson({k:'p',...p});if(!v||!mine)return false;mine={k:'p',...v,sid:mine.sid,act:mine.act,v:mine.v};push();return true;},
+    /* el celular informa que tocó algo en la escena sid (como mucho una vez por escena) */
+    ping(sid){if(!mine||!SCENES.includes(sid)||(mine.sid===sid&&mine.act===1))return;mine={...mine,sid,act:1,v:mine.sid===sid?mine.v:0};push();},
+    vote(sid,v){if(!mine||!SCENES.includes(sid)||!(v>=1&&v<=6))return;mine={...mine,sid,act:1,v};push();},
     leave(){return be.leave();},
-    async publishScene(priv,s,fill,seq){
-      if(!SCENES.includes(s))return false;
-      const sig=await signScene(priv,s,fill===true,seq);
-      be.track('presenter',{k:'d',s,fill:fill===true,seq,sig});return true;
+    async publishScene(priv,s,step,fill,f,seq){
+      fill=Number.isInteger(fill)?Math.max(0,Math.min(FILLERS.length,fill)):0;
+      if(role!=='presenter'||!BYID[s]||!(step>=0&&step<(BYID[s].steps||1))||!(f>=0&&f<=7))return false;
+      const sig=await signScene(priv,s,step,fill,f,seq);
+      be.track('presenter',{k:'d',s,st:step,fill,f,seq,sig});return true;
     }
   };
 }
 
-window.ConvosRoom={connect,FILLERS,SCENES,SCENE_LABEL,validPerson,pointOf,hav,clean,hash,rng,cfg:CFG,backendName:()=>(CFG.backend==='supabase'&&CFG.supabaseUrl&&CFG.supabaseKey)?'supabase':'sim'};
+/* Armado de grupos: cada auto (de más a menos lugares) toma a los vecinos más cercanos, a menos de `radius` km,
+   hasta llenar sus lugares. Se prefiere a quien no tiene auto. Es una demostración, no un optimizador real.
+   Cada persona de `ps` necesita {id,car,seats,pt}. Devuelve {gid:[grupo por persona o -1], groups:[{id,driver,members}]}. */
+function plan(ps,radius){
+  radius=radius||4.5;
+  const taken=ps.map(()=>false),gid=ps.map(()=>-1),groups=[];
+  ps.map((_,i)=>i).filter(i=>ps[i].car).sort((x,y)=>ps[y].seats-ps[x].seats||(ps[x].id<ps[y].id?-1:1)).forEach(i=>{
+    if(taken[i])return;
+    const cand=ps.map((_,j)=>j).filter(j=>j!==i&&!taken[j]).map(j=>({j,d:hav(ps[i].pt,ps[j].pt)})).filter(c=>c.d<=radius)
+      .sort((p,q)=>(ps[p.j].car-ps[q.j].car)||p.d-q.d).slice(0,ps[i].seats);
+    if(!cand.length)return;
+    const g={id:groups.length,driver:i,members:cand.map(c=>c.j)};groups.push(g);
+    taken[i]=true;gid[i]=g.id;g.members.forEach(j=>{taken[j]=true;gid[j]=g.id;});
+  });
+  return {gid,groups};
+}
+
+window.ConvosRoom={connect,plan,FILLERS,SCENES,SHOW,BYID,FLAGS,validPerson,pointOf,hav,clean,hash,rng,cfg:CFG,backendName:()=>useSupa()?'supabase':'sim'};
 })();

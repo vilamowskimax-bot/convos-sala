@@ -1,5 +1,6 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="es"><head><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0}img{max-width:100%}</style>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark"><meta name="theme-color" content="#150B33">
 <title>ConVos ITBA</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -397,14 +398,14 @@ button.chip.on{background:var(--violet);color:#fff}
 .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
 @keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
 .composer{display:flex;gap:8px;margin-top:4px}
-.composer input{flex:1;min-width:0;border:1.5px solid var(--ink-3);background:var(--ink-2);color:var(--cream);border-radius:999px;padding:12px 16px;font:400 14px var(--fb)}
+.composer input{flex:1;min-width:0;border:1.5px solid var(--ink-3);background:var(--ink-2);color:var(--cream);border-radius:999px;padding:12px 16px;font:400 16px var(--fb)}
 .composer button{width:46px;height:46px;border:0;border-radius:50%;background:var(--grad);color:var(--ink);display:grid;place-items:center;flex:none}
 
 /* formularios en hojas */
 .msheet.tall{max-height:92%;overflow-y:auto;scrollbar-width:none}
 .fl{display:flex;flex-direction:column;gap:5px;font:600 11px var(--fb);letter-spacing:.08em;text-transform:uppercase;color:#6B5A91}
 .fl small{float:right;letter-spacing:0;color:#6B5A91}
-.fl input,.fl select,.fl textarea{font:400 14.5px var(--fb);letter-spacing:0;text-transform:none;color:var(--ink);background:#fff;border:1.5px solid rgba(21,11,51,.18);border-radius:14px;padding:11px 12px;resize:none;width:100%}
+.fl input,.fl select,.fl textarea{font:400 16px var(--fb);letter-spacing:0;text-transform:none;color:var(--ink);background:#fff;border:1.5px solid rgba(21,11,51,.18);border-radius:14px;padding:11px 12px;resize:none;width:100%}
 .two2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .sugg{display:flex;flex-wrap:wrap;gap:6px;margin-top:-4px}
 .sugg button{border:0;background:rgba(21,11,51,.08);color:var(--ink);border-radius:999px;padding:5px 10px;font:500 11.5px var(--fb)}
@@ -421,11 +422,33 @@ button.chip.on{background:var(--violet);color:#fff}
 body.aud .top{display:none}
 body.aud .stage{padding-top:10px}
 .jlive{display:inline-flex;align-items:center;gap:6px}
+.view.comp{inset:0}
+.comp{min-height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:16px;padding:64px 26px 44px;text-align:center}
+.comp h2{font:600 clamp(30px,9vw,40px)/1.1 var(--fd)}
+.comp .ck{font:600 11px var(--fb);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.comp .cs{font-size:15px;color:var(--mute);max-width:26ch}
+.comp small{color:var(--mute)}
+.comp .clogo{width:112px;height:112px;animation:look 3.2s ease-in-out infinite}   /* el auto anda en el lugar mientras mirás al frente */
+.comp .clogo .body{animation:ride .7s ease-in-out infinite alternate}
+.comp .clogo .spd{animation:spd .5s ease-in-out infinite alternate}
+@keyframes look{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes ride{to{transform:translateY(-1.5px)}}
+@keyframes spd{to{transform:translateX(-3px)}}
+.opts{width:100%;display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.opt{border:1.5px solid var(--line);background:var(--ink-2);border-radius:20px;padding:16px;font:600 16px var(--fb);color:var(--cream)}
+.opt.on{background:var(--grad);border-color:transparent;color:var(--ink)}
+/* celulares (Android y iPhone): arrastrar hacia abajo no recarga la página, tocar no deja un recuadro azul y las letras no se agrandan solas */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior-y:none}
+body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent}
+.view,.msheet.tall{overscroll-behavior:contain}
+.opt:active,.btn:active{filter:brightness(.9)}
 </style>
+</head>
+<body>
 
 <header class="top">
   <div class="brand">
-    <span class="logo"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="12" r="6.5" fill="#FB923C"/><circle cx="15" cy="12" r="6.5" fill="#F5EBDD" fill-opacity=".92"/></svg></span>
+    <span class="logo"><svg width="26" height="26" viewBox="8 14 54 40" aria-hidden="true"><path d="M10 39q0-8 8-9.5l5.5-9q1.8-3 5.5-3h11q3.6 0 5.6 3l5.6 9q7.8 1.4 7.8 8.5v3.5q0 3-3 3H13q-3 0-3-3z" fill="#FB923C"/><path d="M25.5 22h17q1.6 0 2.5 1.4l3.6 6.1H21.4l3.6-6.1q.9-1.4 2.5-1.4z" fill="#150B33"/><circle cx="29" cy="26.6" r="3.1" fill="#F5EBDD"/><circle cx="40" cy="26.6" r="3.1" fill="#F5EBDD"/><rect x="55.5" y="34" width="4" height="3" rx="1.5" fill="#F5EBDD"/><circle cx="21" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/><circle cx="49" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/></svg></span>
     <div><b>ConVos</b><small>Comunidad ITBA · demo con mapa real</small></div>
   </div>
   <nav class="pills" id="pills" aria-label="Momento de la historia">
@@ -451,7 +474,7 @@ body.aud .stage{padding-top:10px}
           <span>9:41</span>
           <span><svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5" width="3" height="7" rx="1" fill="currentColor"/><rect x="10" y="2" width="3" height="10" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="1" fill="currentColor"/></svg><svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="4" fill="none" stroke="currentColor" opacity=".5"/><rect x="2" y="2" width="18" height="9" rx="2.5" fill="currentColor"/><rect x="25" y="4.5" width="2" height="4" rx="1" fill="currentColor" opacity=".5"/></svg></span>
         </div>
-        <button type="button" class="banner" id="banner" data-act="bannergo"><span class="app"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="12" r="6.5" fill="#FB923C"/><circle cx="15" cy="12" r="6.5" fill="#F5EBDD" fill-opacity=".92"/></svg></span><span class="bt"><b>ConVos</b><span id="bnText"></span></span><small>ahora</small></button>
+        <button type="button" class="banner" id="banner" data-act="bannergo"><span class="app"><svg width="24" height="24" viewBox="8 14 54 40" aria-hidden="true"><path d="M10 39q0-8 8-9.5l5.5-9q1.8-3 5.5-3h11q3.6 0 5.6 3l5.6 9q7.8 1.4 7.8 8.5v3.5q0 3-3 3H13q-3 0-3-3z" fill="#FB923C"/><path d="M25.5 22h17q1.6 0 2.5 1.4l3.6 6.1H21.4l3.6-6.1q.9-1.4 2.5-1.4z" fill="#150B33"/><circle cx="29" cy="26.6" r="3.1" fill="#F5EBDD"/><circle cx="40" cy="26.6" r="3.1" fill="#F5EBDD"/><rect x="55.5" y="34" width="4" height="3" rx="1.5" fill="#F5EBDD"/><circle cx="21" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/><circle cx="49" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/></svg></span><span class="bt"><b>ConVos</b><span id="bnText"></span></span><small>ahora</small></button>
         <div class="view" id="view"></div>
         <nav class="tabbar" id="tabbar" aria-label="Secciones"></nav>
         <div id="modal"></div>
@@ -463,7 +486,7 @@ body.aud .stage{padding-top:10px}
 
 <section class="org" id="orgpanel" hidden></section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha256-XJrs/DDkVkUZ29zdzFOkGCJ9zHVo5hnpdi3c7HYJ7Uc=" crossorigin="anonymous"></script>
-<script src="locs.js"></script><script src="config.js"></script><script src="sync.js"></script>
+<script src="locs.js"></script><script src="show.js"></script><script src="config.js"></script><script src="sync.js"></script>
 <script>
 (function(){
 'use strict';
@@ -537,7 +560,7 @@ const PARAMS={nafta:{v:2099},gasoil:{v:2249},gnc:{v:790},electrico:{v:185},
   uberBase:{v:1100},uberKm:{v:1050},sube:{v:1650}};
 const P_=k=>PARAMS[k].v;
 const CARS=[{m:'Fiat Cronos',fuel:'nafta',cons:6.8},{m:'Volkswagen Gol Trend',fuel:'nafta',cons:7.2},{m:'Toyota Etios',fuel:'nafta',cons:6.4},{m:'Peugeot 208',fuel:'nafta',cons:6.3},{m:'Renault Kangoo',fuel:'gasoil',cons:6.6},{m:'Fiat Siena GNC',fuel:'gnc',cons:7.6},{m:'Renault Kwid E-Tech',fuel:'electrico',cons:13.2}];
-const EF={nafta:2.31,gasoil:2.68,gnc:1.95,electrico:0.35};
+const EF={nafta:1.97,gasoil:2.34,gnc:1.95,electrico:0.35};   // kg de CO₂ fósil por litro (GNC: por m³), factores oficiales SNIGEIAR 2025: nafta con 12% de bioetanol, gasoil con 7,5% de biodiésel. Eléctrico es de ejemplo
 const INGS=['Bioingeniería','Ing. en Biotecnología','Ing. Civil','Ing. Electrónica','Ing. Industrial','Ing. Informática','Ing. Mecánica','Ing. Naval','Ing. en Petróleo','Ing. Química'];
 const LICS=['Lic. en Ciencias del Comportamiento','Lic. en Analítica (Data Science)','Lic. en Negocios y Tecnología'];
 const DOCAREAS=['Física','Matemática','Química','Tecnología','Ingeniería','Informática','Ciencias del comportamiento','Negocios y gestión'];
@@ -614,13 +637,15 @@ const pubMin=()=>soloModel().minutes*1.7+15, pubCost=()=>P_('sube')*(soloModel()
 
 /* ---------- sala en vivo (el público de la presentación) ---------- */
 const AUD=!/[?&]libre=1/.test(location.search);
+const MIRROR=/[?&]espejo=1/.test(location.search);
+const START=(()=>{const m=/[?&]escena=([a-z_]+)/.exec(location.search);return m&&window.ConvosRoom&&ConvosRoom.SCENES.includes(m[1])?m[1]:'inicio';})();   // la pantalla grande muestra la app acá adentro, sin entrar a la sala
 if(AUD)document.body.classList.add('aud');
-const ROOM={room:null,people:[],fill:true,myId:null,joined:false,last:null,pending:null,status:'connecting'};
+const ROOM={room:null,people:[],fillN:window.CONVOS_FILL||6,myId:null,joined:false,last:null,pending:null,status:'connecting',voted:{}};
 const PAL=[['#FB923C','#150B33'],['#818CF8','#150B33'],['#34D399','#150B33'],['#FDE68A','#150B33'],['#F9A8D4','#150B33'],['#F43F5E','#FFFFFF'],['#6D28D9','#FFFFFF'],['#7DD3FC','#150B33']];
 const initials=n=>n.trim().split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase();
 function roomCast(){
   const R=window.ConvosRoom;if(!R)return [];
-  const src=ROOM.people.filter(p=>p.id!==ROOM.myId).concat(ROOM.fill?R.FILLERS:[]);
+  const src=ROOM.people.filter(p=>p.id!==ROOM.myId).concat(R.FILLERS.slice(0,ROOM.fillN));
   return src.map(r=>{
     const h=R.hash(r.id),pal=PAL[h%PAL.length],car=CARS[h%CARS.length],pt=R.pointOf(r);if(!pt)return null;
     return {id:'r_'+r.id,n:r.n,i:initials(r.n)||'?',f:0,bg:pal[0],fg:pal[1],role:'staff',carrera:'',drives:r.car,seats:r.seats,
@@ -632,34 +657,58 @@ function roomCast(){
 }
 const roomWhy=(c,det,kmT)=>c.drives&&!S.me.car?'Maneja y vuelve por tu zona: pasa a '+kmT+' km de tu casa'+(det!=null?' (+'+det+' min).':'.')
   :(!c.drives&&S.me.car?'Vive a '+kmT+' km de tu camino y te suma +'+det+' min.':'Vive a '+kmT+' km de vos y también vuelve a la zona.');
+const SHOWBY=Object.fromEntries((window.CONVOS_SHOW||[]).map(x=>[x.id,x]));
+function showComp(c){   // pantalla de compañía: lo que el celular muestra mientras el proyector cuenta algo
+  S.modal=null;S.stack=[];S.tab='home';S.screen='comp';S.comp=c;S.trip=null;S.groups=[];
+  hideBanner();cancelAnimationFrame(carAnim);$('#stage').hidden=false;$('#orgpanel').hidden=true;render();
+}
 function applyScene(sc){
-  if(!sc||!ROOM.joined)return;
-  const prev=ROOM.last;ROOM.last=sc;ROOM.fill=sc.fill!==false;
+  if(!sc)return;
+  if(!S.ready){   // el mapa todavía está bajando: se guarda la escena; votar y los mensajes se muestran igual
+    ROOM.last=sc;if(Number.isInteger(sc.fill))ROOM.fillN=sc.fill;
+    const d=SHOWBY[sc.s];if(!MIRROR&&d&&d.view==='slide'&&d.id!=='match'&&d.id!=='cierre')showComp({id:d.id,def:d,big:(d.phone&&d.phone.text)||'',sub:(d.phone&&d.phone.sub)||''});
+    return;
+  }
+  const prev=ROOM.last;ROOM.last=sc;if(Number.isInteger(sc.fill))ROOM.fillN=sc.fill;
   if(prev&&prev.s===sc.s){if(prev.fill!==sc.fill&&S.world==='room'){computeWorld();render(true);}return;}
-  S.world=['cerca','swipe','red'].includes(sc.s)?'room':'classic';
+  S.world=(sc.s==='red'||sc.s==='cierre')?'room':'classic';
   computeWorld();S.swiped={};
   switch(sc.s){
-    case 'bienvenida':story('d1');setTab('home');render();break;
+    case 'inicio':story('d1');setTab('home');render();break;
     case 'cerca':story('d1');break;
     case 'swipe':story('d1');setTab('near','swipe');render();break;
-    case 'red':story('d1');setTab('near','red');render();break;
-    case 'grupo':story('d2');break;
+    case 'viajes':story('d2');setTab('trips');render();break;
     case 'viaje':story('d3','driving');break;
-    case 'semana':story('w2');break;
+    case 'perfil':story('d1');setTab('me');render();break;
+    case 'pregunta':if(!MIRROR){if(ROOM.joined)toast('Ya estás en la sala. Mirá la pantalla grande.');else{S.modal='join';render(true);}}break;
+    case 'red':story('d1');setTab('near','red');render();break;
     case 'empresa':story('org');break;
+    case 'match':break;   // el match se ve solo en el proyector: el celular no cambia
+    case 'cierre':{const n5=S.people.filter(p=>p.km<=5).length;
+      showComp({id:'cierre',big:'Gracias',sub:ROOM.joined?'Tu camino de vuelta: '+nf(soloModel().km,0)+' km. Cerca tuyo: '+n5+(n5===1?' persona.':' personas.'):''});break;}
+    default:{const d=SHOWBY[sc.s];if(d)showComp({id:d.id,def:d,big:(d.phone&&d.phone.text)||'',sub:(d.phone&&d.phone.sub)||''});}
   }
 }
 function startRoom(){
   const R=window.ConvosRoom;if(!R)return;
+  if(MIRROR){   // pantalla grande: recibe las escenas de la página que la contiene, no usa la red
+    ROOM.joined=true;
+    addEventListener('message',e=>{if(e.origin!==location.origin)return;const d=e.data;if(d&&d.convos==='scene'&&R.SCENES.includes(d.s))applyScene({s:d.s,fill:d.fill});});
+    parent.postMessage({convos:'ready'},location.origin);
+    return;
+  }
   try{ROOM.myId=sessionStorage.getItem('convosId');}catch(_){}
   if(!ROOM.myId||!/^[a-z0-9]{6,16}$/.test(ROOM.myId)){ROOM.myId=('u'+Math.random().toString(36).slice(2,10)).padEnd(8,'0');try{sessionStorage.setItem('convosId',ROOM.myId);}catch(_){}}
-  ROOM.room=R.connect({key:ROOM.myId});let t=0;
+  ROOM.room=R.connect({role:'phone',key:ROOM.myId});let t=0;
+  try{const f=JSON.parse(sessionStorage.getItem('convosForm')||'null'),nick=f&&R.clean(f.nick,14);   // recargó la página: vuelve con lo que ya había contestado
+    if(nick&&LOC(f.loc)){const car=f.car===true,seats=Math.min(4,Math.max(1,parseInt(f.seats,10)||3));Object.assign(S.me,{name:nick,origin:f.loc,car,seats});ROOM.joined=true;ROOM.room.track({id:ROOM.myId,n:nick,loc:f.loc,car,seats});}}catch(_){}
+  addEventListener('pointerdown',e=>{if(ROOM.last&&e.target.closest&&e.target.closest('.screen,#orgpanel'))ROOM.room.ping(ROOM.last.s);},{passive:true});
   ROOM.room.onPeople(list=>{ROOM.people=list;
     if(ROOM.joined&&S.world==='room'&&(S.screen==='near'||S.screen==='red')&&!S.modal){clearTimeout(t);t=setTimeout(()=>{computeWorld();render(true);},1200);}});
-  ROOM.room.onScene(sc=>{ROOM.pending=sc;if(ROOM.joined)applyScene(sc);});
+  ROOM.room.onScene(sc=>applyScene(sc));
   ROOM.room.onStatus(s=>{if(s==='offline'&&ROOM.status!=='offline')toast('Sin conexión con la sala: seguís en modo demo.');ROOM.status=s;});
+  applyScene({s:START,fill:ROOM.fillN});
   ROOM.room.start();
-  S.modal='join';render();
 }
 function joinRoom(){
   const R=window.ConvosRoom,nick=R.clean($('#jNick').value,14),loc=$('#jLoc').value,car=$('#jCar').checked,seats=parseInt($('#jSeats').value,10)||3;
@@ -667,9 +716,9 @@ function joinRoom(){
   if(!LOC(loc)){$('#jLoc').focus();toast('Elegí tu localidad.');return;}
   try{sessionStorage.setItem('convosForm',JSON.stringify({nick,loc,car,seats}));}catch(_){}
   Object.assign(S.me,{name:nick,origin:loc,car,seats});
-  ROOM.joined=true;S.modal=null;regen();
+  ROOM.joined=true;S.modal=null;regen();render();
   if(ROOM.room)ROOM.room.track({id:ROOM.myId,n:nick,loc,car,seats});
-  const sc=ROOM.pending||{s:'bienvenida',fill:true,seq:0};ROOM.last=null;applyScene(sc);
+  toast('Listo, ya estás en la sala. Mirá la pantalla grande.');
 }
 
 /* ---------- mundo: dónde vive cada compañero ---------- */
@@ -799,7 +848,7 @@ function home(){
   if(S.pending&&!S.groups.length)return homeWaiting();
   if(S.groups.length){const g=G0(),m=groupModel(g),d=g.days[0],drv=P(g.drv);
     return hdr({eyebrow:'Tu próximo viaje',title:'Hola, '+name})+'<div class="pad"><section class="hero"><div class="hero-top"><span class="lbl">'+DN[d]+' · llegás '+S.me.arr+'</span><span class="chip chip-ink">'+(g.confirmed?ic('check',14,3)+'Confirmado':'Falta confirmar')+'</span></div><h2>'+(drv.id==='me'?'Manejás vos':'Te lleva '+drv.n.split(' ')[0])+'</h2><p>Pasa a las '+hhmm(stopOf(m,'me'))+' · '+S.me.origin+'</p><div class="rowc mt"><div class="avs">'+[drv,...g.riders.map(P)].filter(x=>x.id!=='me').map(x=>av(x,40)).join('')+'</div><small style="color:rgba(21,11,51,.75)">'+shortDays(g.days)+'</small></div><button type="button" class="btn btn-ink block mt" data-go="group">Ver viaje y chat</button></section>'+impactTiles()+'</div>';}
-  return hdr({eyebrow:hoyTxt(),title:'Hola, '+name})+'<div class="pad"><section class="card empty"><svg width="96" height="64" viewBox="0 0 96 64" aria-hidden="true"><circle cx="34" cy="32" r="26" fill="#FB923C"/><circle cx="62" cy="32" r="26" fill="#F5EBDD" fill-opacity=".92"/></svg><h3>Todavía no armaste viajes</h3><p class="fine">Mirá quién de la comunidad ITBA hace tu camino. Con una propuesta alcanza.</p><button type="button" class="btn btn-go block mt" data-act="tab" data-t="near">Ver quién va cerca</button></section>'+
+  return hdr({eyebrow:hoyTxt(),title:'Hola, '+name})+'<div class="pad"><section class="card empty"><svg width="96" height="72" viewBox="0 12 64 46" aria-hidden="true"><path d="M2 30h7M0 36h8M3 42h5" stroke="#818CF8" stroke-width="2.6" stroke-linecap="round"/><path d="M10 39q0-8 8-9.5l5.5-9q1.8-3 5.5-3h11q3.6 0 5.6 3l5.6 9q7.8 1.4 7.8 8.5v3.5q0 3-3 3H13q-3 0-3-3z" fill="#FB923C"/><path d="M25.5 22h17q1.6 0 2.5 1.4l3.6 6.1H21.4l3.6-6.1q.9-1.4 2.5-1.4z" fill="#150B33"/><circle cx="29" cy="26.6" r="3.1" fill="#F5EBDD"/><circle cx="40" cy="26.6" r="3.1" fill="#F5EBDD"/><rect x="55.5" y="34" width="4" height="3" rx="1.5" fill="#F5EBDD"/><circle cx="21" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/><circle cx="49" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/></svg><h3>Todavía no armaste viajes</h3><p class="fine">Mirá quién de la comunidad ITBA hace tu camino. Con una propuesta alcanza.</p><button type="button" class="btn btn-go block mt" data-act="tab" data-t="near">Ver quién va cerca</button></section>'+
   '<section class="card card-cream tip">'+ic('info',22)+'<p>Cada día elegís si vas y con quién. Los días que no marcás, no aparecés.</p></section></div>';
 }
 const hoyTxt=()=>'Hoy · ITBA '+SEDES[S.me.sede].short;
@@ -871,7 +920,7 @@ function ontrip(){
 function arrived(){
   const g=G0(),m=groupModel(g),drv=P(g.drv);
   const kgSaved=(m.n-1)*0;const solo=soloModel();
-  const co2=Math.max(0,m.pax.filter(x=>!x.me||true).reduce((a,x)=>a+toSede(x.node).len/1000*7/100*2.31,0)-(m.kg-(walkKm(drv.node))*drv.car.cons/100*EF[drv.car.fuel]));
+  const co2=Math.max(0,m.pax.filter(x=>!x.me||true).reduce((a,x)=>a+toSede(x.node).len/1000*7/100*EF.nafta,0)-(m.kg-(walkKm(drv.node))*drv.car.cons/100*EF[drv.car.fuel]));
   const chips=['Puntual','Buen viaje','Buena onda'].map(k=>'<button type="button" class="chip'+(S.thx[k]?' on':'')+'" data-act="thx" data-k="'+k+'">'+k+'</button>').join('');
   return '<div class="col">'+hdr({eyebrow:'Jueves · '+hhmm(m.arrive),title:'Llegaste',sub:'Primer viaje juntos',right:'<span class="big">'+ic('check',44,3)+'</span>'})+
   '<div class="pad"><div class="cmp"><div><b>'+dur(m.minutes)+'</b><span>hoy, compartiendo</span></div><div><b>'+dur(pubMin())+'</b><span>en transporte público</span></div></div>'+
@@ -888,7 +937,7 @@ function impactCalc(){
   const solo=soloModel(),uber=(P_('uberBase')+P_('uberKm')*solo.km),pub=pubCost();
   const alt={auto:solo.total,app:uber,publico:pub}[S.cmp];
   const wr=rides.filter(r=>r.m),sharedW=wr.reduce((a,r)=>a+r.m.share,0)+(marked.length-wr.length)*alt,altW=alt*marked.length;
-  const soloKg=wr.reduce((a,r)=>a+walkKm(r.m.driver.node)*r.m.car.cons/100*EF[r.m.car.fuel]+r.m.pax.reduce((b,x)=>b+walkKm(x.node)*7/100*2.31,0),0);
+  const soloKg=wr.reduce((a,r)=>a+walkKm(r.m.driver.node)*r.m.car.cons/100*EF[r.m.car.fuel]+r.m.pax.reduce((b,x)=>b+walkKm(x.node)*7/100*EF.nafta,0),0);
   const sharedKg=wr.reduce((a,r)=>a+r.m.kg,0);
   const minSaved=wr.reduce((a,r)=>a+(pubMin()-r.m.minutes),0);
   return {marked,wr,altW,sharedW,soloKg,sharedKg,minSaved,sim:wr.some(r=>r.sim),alt};
@@ -937,7 +986,13 @@ function co2Bars(I){
   if(!I.soloKg)return '<p class="fine" style="margin-top:8px">Armá un viaje para ver cuánto CO₂ evitan.</p>';
   const pct=Math.round((1-I.sharedKg/I.soloKg)*100);
   return '<div class="co2"><div class="co2r"><span>Cada uno en su auto</span><div class="cb"><i style="width:100%;background:#FB923C"></i></div><b>'+nf(I.soloKg,0)+' kg</b></div><div class="co2r"><span>Compartiendo</span><div class="cb"><i style="width:'+(I.sharedKg/I.soloKg*100)+'%;background:#6D28D9"></i></div><b>'+nf(I.sharedKg,0)+' kg</b></div>'+
-  '<p class="co2p"><span class="badge-g">−'+pct+'%</span>'+nf((I.soloKg-I.sharedKg)*16/21,0)+' árboles: lo que absorben en un año el CO₂ que evitás en el cuatrimestre.</p></div>';
+  '<p class="co2p"><span class="badge-g">−'+pct+'%</span>'+co2Eq((I.soloKg-I.sharedKg)*16)+'</p></div>';
+}
+// Equivalencia del CO₂ evitado en el cuatrimestre (16 semanas). EPA: un árbol urbano absorbe 60 kg de CO₂ por año. SNIGEIAR: un litro de nafta comercial libera 1,97 kg.
+function co2Eq(kg){
+  const t=Math.round(kg/60);
+  if(t>=1)return t+(t===1?' árbol urbano absorbe':' árboles urbanos absorben')+' en un año el CO₂ que evitás en el cuatrimestre (EPA).';
+  return nf(kg/EF.nafta,0)+' litros de nafta que no se queman en el cuatrimestre (SNIGEIAR).';
 }
 function meScreen(){
   const m=S.me;
@@ -954,6 +1009,7 @@ function meScreen(){
 function loading(){return '<div class="pad" style="justify-content:center;align-items:center;min-height:100%"><div class="spin"></div><p class="fine">Cargando el mapa del AMBA…</p></div>';}
 const redList=()=>visible().filter(p=>p.km<=6).slice(0,6);
 function red(){
+  if(!ROOM.joined)return hdr({eyebrow:'Tu red',title:'Cerca tuyo',sub:'Contanos de dónde volvés'})+'<div class="pad"><section class="card empty">'+ic('pin',40,1.6)+'<h3>Todavía no sabemos de dónde volvés</h3><p class="fine">Elegí tu localidad y te mostramos quién vive cerca y cómo podrían volver juntos.</p><button type="button" class="btn btn-go block mt" data-act="askjoin">Contestar</button></section></div>';
   const all=visible(),n5=all.filter(p=>p.km<=5),cars=n5.filter(p=>p.drives),riders=n5.filter(p=>!p.drives),list=redList(),me=!!S.me.car;
   const take=me?Math.min(S.me.seats||3,riders.length):0,b=list[0],pl=(n,a,b2)=>n===1?a:b2;
   const seg='<div class="seg" style="margin-top:12px">'+[['0','No tengo auto'],['1','Tengo auto']].map(([v,t])=>'<button type="button" class="'+((me?'1':'0')===v?'on':'')+'" data-act="carsw" data-v="'+v+'">'+t+'</button>').join('')+'</div>';
@@ -967,7 +1023,14 @@ function red(){
   '<section class="card card-cream tip" style="margin-top:12px">'+ic(me?'car':'users',22)+'<p>'+msg+'</p></section>'+
   '<div class="nbs">'+list.map((p,i)=>nbRow(p,i===0)).join('')+'</div></section>';
 }
-const SCREENS={home,near,swipe,ficha,trips,group,ontrip,arrived,red,me:meScreen};
+function comp(){
+  const c=S.comp||{},d=c.def||{},ph=d.phone||{};
+  const mark='<svg class="clogo" viewBox="0 0 64 64" aria-hidden="true"><g class="spd"><path d="M2 30h7M0 36h8M3 42h5" stroke="#818CF8" stroke-width="2.6" stroke-linecap="round"/></g><g class="body"><path d="M10 39q0-8 8-9.5l5.5-9q1.8-3 5.5-3h11q3.6 0 5.6 3l5.6 9q7.8 1.4 7.8 8.5v3.5q0 3-3 3H13q-3 0-3-3z" fill="#FB923C"/><path d="M25.5 22h17q1.6 0 2.5 1.4l3.6 6.1H21.4l3.6-6.1q.9-1.4 2.5-1.4z" fill="#150B33"/><circle cx="29" cy="26.6" r="3.1" fill="#F5EBDD"/><circle cx="40" cy="26.6" r="3.1" fill="#F5EBDD"/><rect x="55.5" y="34" width="4" height="3" rx="1.5" fill="#F5EBDD"/></g><g><circle cx="21" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/><circle cx="49" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/></g></svg>';   // el logo del celular: el auto con dos personas, andando
+  if(ph.poll&&d.slide){const v=ROOM.voted[d.id]||0;
+    return '<div class="comp"><p class="ck">'+esc(d.slide.kicker||'')+'</p><h2>'+esc(d.slide.q)+'</h2><div class="opts">'+d.slide.opts.map((o,i)=>'<button type="button" class="opt'+(v===i+1?' on':'')+'" data-act="vote" data-v="'+(i+1)+'">'+esc(o)+'</button>').join('')+'</div><small>'+(v?'Gracias. Mirá la pantalla.':'Tocá una opción')+'</small></div>';}
+  return '<div class="comp">'+mark+(c.big?'<h2>'+esc(c.big)+'</h2>':'')+(c.sub?'<p class="cs">'+esc(c.sub)+'</p>':'')+'<small>Conectado</small></div>';
+}
+const SCREENS={home,near,swipe,ficha,trips,group,ontrip,arrived,red,comp,me:meScreen};
 
 /* ---------- ventanas ---------- */
 const MODALS={
@@ -1008,11 +1071,11 @@ const MODALS={
     let f={};try{f=JSON.parse(sessionStorage.getItem('convosForm')||'{}');}catch(_){}
     return '<div class="scrim"></div><div class="msheet tall" role="dialog" aria-label="Entrar a la sala"><span class="grab"></span><h2>Entrá a la sala</h2>'+
     '<p class="fine">Se ven tu apodo y tu localidad, nunca tu dirección. Se borra solo al cerrar esta página.</p>'+
-    '<label class="fl">Tu apodo<input id="jNick" maxlength="14" autocomplete="off" placeholder="Ej: Vale" value="'+esc(f.nick||'')+'"></label>'+
+    '<label class="fl">Tu apodo<input id="jNick" maxlength="14" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" enterkeyhint="go" placeholder="Ej: Vale" value="'+esc(f.nick||'')+'"></label>'+
     '<label class="fl">¿En qué localidad vivís?<select id="jLoc"><option value="" disabled'+(f.loc?'':' selected')+'>Elegí tu localidad</option>'+Object.entries(ZONES).map(([z,zn])=>'<optgroup label="'+zn+'">'+LOCS.filter(l=>l.zone===z).map(l=>'<option'+(l.name===f.loc?' selected':'')+'>'+l.name+'</option>').join('')+'</optgroup>').join('')+'</select></label>'+
     '<div class="set" style="border:0;padding:0"><p>Tengo auto y puedo llevar gente</p><label class="sw"><input type="checkbox" id="jCar"'+(f.car?' checked':'')+'><span></span></label></div>'+
     '<label class="fl" id="jSeatsRow"'+(f.car?'':' hidden')+'>Lugares libres<select id="jSeats">'+[1,2,3,4].map(n=>'<option'+(n===(f.seats||3)?' selected':'')+'>'+n+'</option>').join('')+'</select></label>'+
-    '<button type="button" class="btn btn-go block" data-act="join">Entrar</button></div>';
+    '<button type="button" class="btn btn-go block" data-act="join">Entrar</button><button type="button" class="link" data-act="joinskip" style="color:#4B3E72">Ahora no</button></div>';
   },
   edittrip(){
     const m=S.me;
@@ -1088,12 +1151,13 @@ function drawOrg(){
 /* ---------- render ---------- */
 function render(keep){
   const v=$('#view'),st=v.scrollTop;
-  v.className='view'+(S.screen==='ontrip'?' trip':'');
+  v.className='view'+(S.screen==='ontrip'?' trip':'')+(S.screen==='comp'?' comp':'');
   if(!keep){v.style.animation='none';void v.offsetWidth;v.style.animation='';}
-  v.innerHTML=S.ready?SCREENS[S.screen]():loading();
+  v.innerHTML=(S.ready||S.screen==='comp')?SCREENS[S.screen]():loading();
   v.scrollTop=keep?st:0;
   $('#tabbar').innerHTML=TABS.map(t=>'<button type="button" class="tab" data-act="tab" data-t="'+t[0]+'"'+(S.tab===t[0]?' aria-current="page"':'')+'>'+ic(t[2],22,2)+'<span>'+t[1]+'</span></button>').join('');
   $('#modal').innerHTML=S.modal&&S.ready?MODALS[S.modal]():'';
+  $('#tabbar').hidden=S.screen==='comp';
   if(S.ready){mountMap();bindDeck();bindChart();if(S.screen==='group'){const c=$('.chat');if(c&&!keep){}}}
 }
 function modal(n){S.modal=n;$('#modal').innerHTML=n?MODALS[n]():'';}
@@ -1182,7 +1246,7 @@ function subLabels(){if(!S.ready||!S.groups.length&&S.story!=='d3')return;const 
 function renderOrg(){
   const N=128,trips=214;
   $('#orgpanel').innerHTML='<div class="org-head"><div><div class="eyebrow">Panel de la organización · datos de ejemplo</div><h1>ITBA</h1><p class="hsub">Movilidad de la comunidad · 3 sedes</p></div><span class="chip chip-pe">Solo datos agregados, sin nombres ni direcciones</span></div>'+
-  '<div class="kpis"><div class="kpi"><b>'+N+'</b><span>personas comparten viaje</span></div><div class="kpi"><b>'+trips+'</b><span>viajes compartidos por semana</span></div><div class="kpi"><b>3,1 t</b><span>de CO₂ evitado por mes</span></div><div class="kpi"><b>52</b><span>lugares de estacionamiento liberados</span></div></div>'+
+  '<div class="kpis"><div class="kpi"><b>'+N+'</b><span>personas comparten viaje</span></div><div class="kpi"><b>'+trips+'</b><span>viajes compartidos por semana</span></div><div class="kpi"><b>96 kg</b><span>de CO₂ menos por mes por auto que no sale (cálculo propio, 15 km por tramo)</span></div><div class="kpi"><b>52</b><span>lugares de estacionamiento liberados</span></div></div>'+
   '<div class="grid2"><section class="panel cream"><h2>De dónde viene la comunidad</h2><p class="fine">Personas que hacen el viaje cada semana, por zona.</p><div id="orgmap" class="orgmap"></div></section>'+
   '<section class="panel dark"><h2>Zonas con potencial</h2><p class="fine">Varias personas salen a horarios parecidos y todavía no comparten.</p>'+
   [['Zona Norte',90,18],['Belgrano y Núñez',70,14],['Zona Oeste',55,11],['Caballito y Flores',35,7]].map(([z,w,n])=>'<div class="bar dk"><span>'+z+'</span><i><u style="width:'+w+'%"></u></i><span>'+n+' personas</span></div>').join('')+
@@ -1248,6 +1312,9 @@ function act(a,el){
     case 'cmp':S.cmp=el.dataset.f;render(true);break;
     case 'bell':toast('No tenés avisos nuevos.');break;
     case 'join':joinRoom();break;
+    case 'vote':{const d=S.comp&&S.comp.def;if(!d)break;const v=+el.dataset.v;ROOM.voted[d.id]=v;if(ROOM.room)ROOM.room.vote(d.id,v);render(true);break;}
+    case 'joinskip':modal(null);break;
+    case 'askjoin':modal('join');break;
     case 'carsw':S.me.car=el.dataset.v==='1';computeWorld();render(true);break;
     case 'restart':S.me=DEF_ME();regen();story('d1');break;
     case 'bannergo':hideBanner();if(bannerGo==='group'){setTab('trips','group');}else setTab('home');render();break;
@@ -1274,7 +1341,7 @@ document.addEventListener('keydown',e=>{
 function fit(){
   const dev=$('#device'),box=$('#fit');
   if(window.innerWidth<=520){dev.style.transform='';box.style.width='';box.style.height='';if(MAP)MAP.invalidateSize();return;}
-  const top=$('.top').getBoundingClientRect().height,s=Math.max(.45,Math.min(1,(window.innerHeight-top-40)/868));
+  const top=$('.top').getBoundingClientRect().height,s=Math.max(.45,Math.min(MIRROR?1.4:1,(window.innerHeight-top-40)/868));
   dev.style.transform='scale('+s+')';box.style.width=(414*s)+'px';box.style.height=(868*s)+'px';
 }
 window.addEventListener('resize',fit);if(window.ResizeObserver)new ResizeObserver(fit).observe($('.top'));
@@ -1282,11 +1349,13 @@ window.addEventListener('resize',fit);if(window.ResizeObserver)new ResizeObserve
 /* ---------- arranque ---------- */
 function boot(){
   story('d1');
-  fetch('graph.json').then(r=>r.json()).then(j=>{loadGraph(j);computeWorld();S.ready=true;
+  if(AUD&&!MIRROR)startRoom();   // el público entra a la sala enseguida: puede votar mientras baja el mapa
+  const get=n=>fetch('graph.json').then(r=>{if(!r.ok)throw new Error('graph');return r.json();}).catch(e=>{if(n>0)return new Promise(ok=>setTimeout(ok,1500)).then(()=>get(n-1));throw e;});
+  get(2).then(j=>{loadGraph(j);computeWorld();S.ready=true;
     const h=(location.hash||'').replace('#','');const m={d1:['d1'],d2:['d2'],d3:['d3','soon'],w2:['w2'],org:['org']};
     if(m[h])story(m[h][0],m[h][1]);else story('d1');
-    if(AUD)startRoom();
-  }).catch(()=>{$('#view').innerHTML='<div class="pad"><p class="fine">No pudimos cargar el mapa. Recargá la página.</p></div>';});
+    if(AUD){if(MIRROR)startRoom();else{const sc=ROOM.last;ROOM.last=null;applyScene(sc||{s:START,fill:ROOM.fillN});}}
+  }).catch(()=>{if(S.screen!=='comp')$('#view').innerHTML='<div class="pad"><p class="fine">No pudimos cargar el mapa. Recargá la página.</p></div>';});
 }
 boot();
 })();
