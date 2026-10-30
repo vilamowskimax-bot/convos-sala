@@ -71,7 +71,7 @@ body.v-slide #slide{display:flex}
 
 /* ---------- match: una ruta en perspectiva con los autos andando (la dibuja match.js) ---------- */
 #slide .in.wide{width:100%;height:100%;display:block;position:relative;gap:0}
-.mt{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;white-space:nowrap;font:700 clamp(80px,17vw,300px)/1 var(--fd)!important;letter-spacing:.02em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;animation:pop 1s cubic-bezier(.2,.9,.3,1.15) backwards;transition:top .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+#slide .mt{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;white-space:nowrap;font:700 clamp(80px,17vw,300px)/1 var(--fd)!important;letter-spacing:.02em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;animation:pop 1s cubic-bezier(.2,.9,.3,1.15) backwards;transition:top .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
 @keyframes pop{0%{transform:translate(-50%,-50%) scale(.35);opacity:0}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
 #slide.s1 .mt{top:9%;transform:translate(-50%,-50%) scale(.34)}
 .mview{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity .8s ease .2s}
