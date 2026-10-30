@@ -251,18 +251,38 @@ body.v-app #app,body.v-map #map,body.v-map #hint{animation:vin .7s ease both}
 @keyframes cldraw{to{transform:scaleX(1)}}
 #slide .cl-w{font-size:132px;line-height:1;margin-top:34px}
 .cl-t{margin:10px 0 0;font:500 40px var(--fb);color:var(--mute)}
-.cl-n{margin-top:46px}
-.cl-k{margin:0 0 16px;font:600 16px var(--fb);letter-spacing:.2em;text-transform:uppercase;color:var(--peri)}
-.cl-row{display:flex;justify-content:center}
-.cl-row>div{display:flex;flex-direction:column;align-items:center;padding:0 46px;min-width:220px}
-.cl-row>div+div{border-left:1px solid var(--line)}
-.cl-row b{font:600 64px/1 var(--fd);color:var(--cream);font-variant-numeric:tabular-nums}
-.cl-row>div:last-child b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.cl-row span{margin-top:8px;font:500 18px var(--fb);color:var(--mute)}
-.cl-x{margin:14px 0 0;font:500 13px var(--fb);color:var(--mute);opacity:.7}
-.cl-g{margin:40px 0 0;font:600 34px var(--fd);color:var(--cream)}
+.cl-a{transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+#slide.s1 .cl-a{opacity:0;transform:translateY(-40px) scale(.94)}
+.cl-b{position:absolute;inset:70px 100px 90px;display:flex;flex-direction:column;text-align:left;opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.8,.2,1) .35s,transform .8s cubic-bezier(.2,.8,.2,1) .35s;pointer-events:none}
+#slide.s1 .cl-b{opacity:1;transform:none}
+.cb-h{display:flex;justify-content:space-between;align-items:flex-start}
+#slide .cb-h h1{font-size:72px;line-height:1.02;margin-top:10px}
+.cb-s{margin:14px 0 0;font:500 20px var(--fb);color:var(--mute)}
+.cb-brand{display:flex;align-items:center;gap:14px;font:600 34px var(--fd)}
+.cb-brand .lg{width:84px;height:58px}
+.cb-g{display:grid;grid-template-columns:1fr 1.08fr;gap:30px;margin-top:34px;flex:1;min-height:0}
+.svs{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:18px}
+.sv{background:var(--ink-2);border-radius:26px;padding:26px 28px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;min-width:0}
+.sv b{display:block;font:600 56px/1 var(--fd);color:var(--cream);font-variant-numeric:tabular-nums;white-space:nowrap}
+.sv span{display:block;font:500 18px/1.3 var(--fb);color:var(--mute)}
+.sv.hot{background:var(--grad)}.sv.hot b,.sv.hot span{color:var(--ink)}.sv.hot span{font-weight:600}
+.cb-c{background:var(--ink-2);border-radius:26px;padding:24px 28px 18px;display:flex;flex-direction:column}
+.cb-ct{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.cb-ct span{font:600 20px var(--fd);color:var(--cream)}
+.cb-ct b{font:600 44px/1 var(--fd);white-space:nowrap}.cb-ct i{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cb-c svg{width:100%;flex:1;min-height:0;margin-top:14px;overflow:visible}
+.cb-c text{font:600 14px var(--fb);fill:var(--mute)}
+.cb{fill:#FB923C;fill-opacity:.9;transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(0);transition:transform .9s cubic-bezier(.2,.9,.2,1) calc(.9s + var(--d))}
+.cb.last{fill:url(#cbGr);opacity:1!important}
+#slide.s1 .cb{transform:none}
+.cb-tr{margin:10px 0 0;font:500 17px var(--fb);color:var(--mute)}.cb-tr b{color:var(--cream)}
+.cb-f{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-top:22px}
+.cl-g{margin:0;font:600 40px var(--fd);color:var(--cream);white-space:nowrap}
 .cl-g span{color:var(--orange)}
-.cl-f{position:absolute;left:0;right:0;bottom:44px;margin:0;font:600 15px var(--fb);letter-spacing:.2em;text-transform:uppercase;color:var(--mute);opacity:.6}
+.cl-g.big{margin:auto;font-size:90px;text-align:center}
+.cl-x{margin:0;max-width:880px;font:500 12.5px/1.45 var(--fb);color:var(--mute);opacity:.75;text-align:right}
+
+.cl-f{position:absolute;left:0;right:0;bottom:34px;margin:0;font:600 15px var(--fb);letter-spacing:.2em;text-transform:uppercase;color:var(--mute);opacity:.6}
 
 /* entrada: el auto cruza la pantalla y corre la previa como un telón */
 #intro{position:fixed;inset:0;z-index:900;pointer-events:none;display:none}
@@ -377,7 +397,7 @@ body.v-map .toast{display:flex}
     <div class="anat" id="anat"><span data-t="Inicio">Inicio</span><span data-t="Cerca mío">Cerca mío</span><span data-t="Mis viajes">Mis viajes</span><span data-t="Perfil">Perfil</span></div>
     <p class="sb" id="capSub"></p><h2 id="capT"></h2><p id="capP"></p><div class="try" id="capTry"></div>
   </section>
-  <iframe id="mirror" src="index.html?espejo=1&amp;v=4531613d85" title="App ConVos"></iframe>
+  <iframe id="mirror" src="index.html?espejo=1&amp;v=b3c20285ed" title="App ConVos"></iframe>
   <aside class="qrside glass"><div class="qrbox" id="qrSideBox"></div><b>Escaneá y seguí</b>
     <div class="meter"><div class="mt"><i id="nCon">0</i>conectados</div><div class="bar2"><u id="mtr"></u></div><div id="mtrT">0 lo probaron</div></div></aside>
 </main>
@@ -405,7 +425,7 @@ body.v-map .toast{display:flex}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha256-XJrs/DDkVkUZ29zdzFOkGCJ9zHVo5hnpdi3c7HYJ7Uc=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha256-xUHvBjJ4hahBW8qN9gceFBibSFUzbe9PNttUvehITzY=" crossorigin="anonymous"></script>
-<script src="locs.js?v=dc410bc9df"></script><script src="manifest.js?v=5eaa727148"></script><script src="show.js?v=eb95e47597"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=118cfce577"></script><script src="match.js?v=43d4d534ea"></script>
+<script src="locs.js?v=dc410bc9df"></script><script src="manifest.js?v=5eaa727148"></script><script src="show.js?v=edede1ffba"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=118cfce577"></script><script src="match.js?v=43d4d534ea"></script>
 <script>
 (function(){
 'use strict';
@@ -470,10 +490,10 @@ function people(){
 }
 const plan=ps=>R.plan(ps,RADIUS);   // armado de grupos (compartido con la consola)
 function numbers(ps,pl){   // n: personas · groups: viajes posibles · co2: kg por mes (máximo)
-  let conn=0,noCar=0,co2=0;
-  pl.groups.forEach(g=>{conn+=1+g.members.length;g.members.forEach(j=>{if(ps[j].car)co2+=nearSedeKm(ps[j].pt)*1.3*2*0.16*20;else noCar++;});});
+  let conn=0,noCar=0,co2=0,carsOff=0;
+  pl.groups.forEach(g=>{conn+=1+g.members.length;g.members.forEach(j=>{if(ps[j].car){co2+=nearSedeKm(ps[j].pt)*1.3*2*0.16*20;carsOff++;}else noCar++;});});
   const zones={};ps.forEach(p=>{const z=ZONE_OF.get(p.loc);zones[z]=(zones[z]||0)+1;});
-  return {n:ps.length,sim:ps.filter(p=>p.sim).length,conn:ps.length?Math.round(conn/ps.length*100):0,groups:pl.groups.length,noCar,co2:Math.round(co2),zones};
+  return {n:ps.length,sim:ps.filter(p=>p.sim).length,conn:ps.length?Math.round(conn/ps.length*100):0,groups:pl.groups.length,noCar,carsOff,co2:Math.round(co2),zones};
 }
 
 /* ---------- raíces: el camino más corto de cada persona a la sede; donde se juntan, el trazo engorda ---------- */
@@ -595,12 +615,23 @@ function stageHTML(s){
       '<div class="st '+nth(i)+'"><span class="n">PASO '+(i+1)+'</span><span class="ic">'+svgI(it.i)+'</span><h3>'+esc(it.t)+'</h3><p>'+esc(it.d)+'</p></div>').join('')+'</div>';
     case 'answers':return '<p class="ey a">'+esc(s.kicker)+'</p><h1 class="a d1">'+hl(s.title)+'</h1><div class="ans">'+(s.rows||[]).slice(0,3).map((r,i)=>
       '<div class="ar '+nth(i)+'"><span class="p">'+esc(r.p)+'</span><span class="f">'+esc(r.f)+'</span>'+ARROW+'<div><h3>'+esc(r.t)+'</h3><p class="d">'+esc(r.d)+'</p></div></div>').join('')+'</div>'+(s.src?'<p class="ssrc">Fuente: '+esc(s.src)+'</p>':'');
-    case 'logo':{   // cierre: la ruta se dibuja, el auto entra y frena; después, los números de esta sala
-      const ps=people(),nb=numbers(ps,plan(ps)),stat=(v,t)=>'<div><b data-v="'+v+'">0</b><span>'+t+'</span></div>';
-      return '<div class="cl"><div class="cl-road"></div>'+LOGO('draw')+'<h1 class="cl-w a d2">'+esc(s.word)+'</h1><p class="cl-t a d3">'+esc(s.tag||'')+'</p>'+
-        (nb.n?'<div class="cl-n w w1"><p class="cl-k">Esta sala, hoy</p><div class="cl-row">'+stat(nb.n,'personas')+stat(nb.groups,nb.groups===1?'viaje compartido posible':'viajes compartidos posibles')+stat(nb.co2,'kg de CO₂ menos por mes*')+'</div>'+
-          '<p class="cl-x">*Máximo estimado con los factores oficiales (SNIGEIAR 2025)'+(nb.sim?' · incluye '+nb.sim+' compañeros de ejemplo':'')+'</p></div>':'')+
-        '<p class="cl-g w w1">Gracias. <span>¿Preguntas?</span></p></div><p class="cl-f a d5">Tecnología y Sociedad · ITBA · 2026</p>';}
+    case 'logo':{   // cierre: s0 la ruta, el auto y el nombre · s1 lo que ahorraría esta sala, con el gráfico del año lectivo
+      const ps=people(),nb=numbers(ps,plan(ps)),PL=2045;   // $ por litro de nafta súper (YPF, CABA, oct. 2026)
+      const lts=Math.round(nb.co2/1.97),pesos=Math.round(lts*PL/100)*100,year=nb.co2*10,trees=Math.round(year/60);
+      const fmt=v=>Math.round(v).toLocaleString('es-AR'),kp=(v,t,c,pre)=>'<div class="sv'+(c?' '+c:'')+'"><b data-v="'+v+'"'+(pre?' data-pre="'+pre+'"':'')+'>'+(pre||'')+'0</b><span>'+t+'</span></div>';
+      const MES=['M','A','M','J','J','A','S','O','N','D'],bw=40,gap=16,H=200;
+      const bars=MES.map((m,i)=>{const h=Math.max(4,H*(i+1)/10),x=i*(bw+gap);return '<rect class="cb'+(i===9?' last':'')+'" x="'+x+'" y="'+(H-h)+'" width="'+bw+'" height="'+h+'" rx="7" style="--d:'+(i*.09).toFixed(2)+'s;opacity:'+(0.35+0.065*i).toFixed(2)+'"/><text x="'+(x+bw/2)+'" y="'+(H+26)+'" text-anchor="middle">'+m+'</text>';}).join('');
+      const hero='<div class="cl cl-a"><div class="cl-road"></div>'+LOGO('draw')+'<h1 class="cl-w a d2">'+esc(s.word)+'</h1><p class="cl-t a d3">'+esc(s.tag||'')+'</p></div>';
+      const dash=nb.n?'<div class="cl-b"><div class="cb-h"><div><p class="ey">Si esta sala viajara junta</p><h1>Lo que <span class="g">ahorraríamos</span> cada mes</h1>'+
+          '<p class="cb-s">'+nb.n+' personas · '+nb.groups+(nb.groups===1?' viaje compartido posible':' viajes compartidos posibles')+' · '+nb.noCar+' sin auto que consiguen viaje</p></div>'+
+          '<div class="cb-brand">'+LOGO('')+'<b>'+esc(s.word)+'</b></div></div>'+
+        '<div class="cb-g"><div class="svs">'+kp(nb.co2,'kg de CO₂ menos por mes','hot')+kp(lts,'litros de nafta por mes')+kp(pesos,'pesos de nafta por mes','','$ ')+kp(nb.carsOff,nb.carsOff===1?'lugar de estacionamiento libre por día':'lugares de estacionamiento libres por día')+'</div>'+
+          '<div class="cb-c"><div class="cb-ct"><span>CO₂ evitado en un año lectivo</span><b><i data-v="'+year+'">0</i> kg</b></div>'+
+          '<svg viewBox="-4 0 '+(10*bw+9*gap+8)+' '+(H+34)+'" aria-hidden="true"><defs><linearGradient id="cbGr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FB923C"/><stop offset="1" stop-color="#F43F5E"/></linearGradient></defs>'+bars+'</svg>'+
+          '<p class="cb-tr">≈ <b>'+fmt(trees)+'</b> '+(trees===1?'árbol urbano':'árboles urbanos')+' absorbiendo CO₂ durante un año</p></div></div>'+
+        '<div class="cb-f"><p class="cl-g">Gracias. <span>¿Preguntas?</span></p><p class="cl-x">Máximo estimado con la gente de esta sala'+(nb.sim?' (incluye '+nb.sim+' compañeros de ejemplo)':'')+': 20 días por mes, ida y vuelta, 0,16 kg de CO₂ por km (SNIGEIAR 2025), nafta súper a $2.045 el litro (YPF, oct. 2026), año lectivo de 10 meses y 60 kg de CO₂ por árbol urbano por año (EPA). No descuenta el desvío del conductor.</p></div></div>'
+        :'<div class="cl-b"><p class="cl-g big">Gracias. <span>¿Preguntas?</span></p></div>';
+      return hero+dash+'<p class="cl-f a d5">Tecnología y Sociedad · ITBA · 2026</p>';}
     case 'cta':return '<div class="wel cta"><div><p class="ey a">'+LOGO()+esc(s.kicker)+'</p><h1 class="a d1">'+hl(s.title)+'</h1><p class="sub a d2">'+esc(s.sub||'')+'</p></div>'+
       '<div class="qrc a d3"><div class="qrbox" id="qrCta"></div><b>'+esc(s.t1||'')+'</b><span>'+esc(s.t2||'')+'</span></div></div>';
   }
@@ -608,9 +639,9 @@ function stageHTML(s){
 }
 function stageStep(s,st){
   if(s.type==='logo'&&st>=1){
-    SL.querySelectorAll('.cl-row b').forEach((b,j)=>{if(b.dataset.done)return;b.dataset.done='1';const v=+b.dataset.v,t0=performance.now()+300+j*180,D=1400;
-      (function tick(t){const x=Math.min(1,Math.max(0,(t-t0)/D)),e=1-Math.pow(1-x,3);b.textContent=Math.round(v*e).toLocaleString('es-AR');if(x<1)requestAnimationFrame(tick);})(t0);
-      setTimeout(()=>{b.textContent=v.toLocaleString('es-AR');},D+j*180+700);});
+    SL.querySelectorAll('.cl-b [data-v]').forEach((b,j)=>{if(b.dataset.done)return;b.dataset.done='1';const v=+b.dataset.v,pre=b.dataset.pre||'',t0=performance.now()+700+j*160,D=1500,f=x=>pre+Math.round(x).toLocaleString('es-AR');
+      (function tick(t){const x=Math.min(1,Math.max(0,(t-t0)/D)),e=1-Math.pow(1-x,3);b.textContent=f(v*e);if(x<1)requestAnimationFrame(tick);})(t0);
+      setTimeout(()=>{b.textContent=f(v);},D+j*160+1000);});
   }
   if(s.type==='survey'){
     SL.querySelectorAll('.dpan').forEach(pan=>{const on=st>=+pan.dataset.q;pan.classList.toggle('lit',on);

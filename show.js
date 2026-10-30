@@ -40,9 +40,9 @@ window.CONVOS_SHOW=[
 
   /* ============ ACTO 1 · EL PROBLEMA ============ */
   {id:'equipo',act:1,label:'Equipo',secs:30,view:'slide',draft:true,
-   slide:{type:'team',kicker:'ConVos · Tecnología y Sociedad · ITBA',title:'¿Cómo llegaste *hoy* a la facu?',names:['Integrante 1','Integrante 2','Integrante 3','Integrante 4'],photo:'equipo.jpg'},
+   slide:{type:'team',kicker:'ConVos · Tecnología y Sociedad · ITBA',title:'¿Cómo llegaste *hoy* a la universidad?',names:['Max Vilamowski','Thiago García','Martina Ciceran Pellegrini','Santiago Bermudez'],photo:'equipo.jpg'},
    phone:{text:'Mirá la pantalla'},proj:'La pregunta, los cuatro nombres y la foto del equipo.',cel:'Mensaje de compañía.',
-   notes:['Presentarnos: nombre y carrera.','¿Cómo llegaron hoy a la facu? (Que lo piensen: la respuesta aparece en lo que sigue.)']},
+   notes:['Presentarnos: nombre y carrera.','¿Cómo llegaron hoy a la universidad? (Que lo piensen: la respuesta aparece en lo que sigue.)']},
   {id:'problema',act:1,label:'Problema',secs:20,view:'slide',steps:2,
    slide:{type:'converge',kicker:'El problema',t1:'Todos vamos al mismo lugar.',t2:'Cada uno por su cuenta.',dest:'ITBA'},
    phone:{text:'Mirá la pantalla'},proj:'Autos con una persona que llegan todos al ITBA. Después, la segunda frase.',cel:'Mensaje de compañía.',
@@ -115,6 +115,6 @@ window.CONVOS_SHOW=[
    notes:['Cada punto es una persona de esta sala.','Cada raíz es el camino real hasta la sede; donde se juntan, engorda.','Los círculos son grupos posibles: alguien maneja y los lleva.','Y esto es lo que se evita. Es un máximo: no descuenta el desvío del conductor.']},
   {id:'cierre',act:2,label:'Cierre',secs:15,view:'slide',steps:2,
    slide:{type:'logo',pre:'',word:'ConVos',tag:'Volver juntos.'},
-   phone:{text:'Gracias'},proj:'ConVos. Volver juntos.',cel:'Gracias, con tu camino de vuelta.',
-   notes:['Menos tiempo, menos plata, menos contaminación.','Volver juntos. Gracias.']}
+   phone:{text:'Gracias'},proj:'El auto entra y frena: ConVos. Volver juntos. Después, el tablero de lo que ahorraría esta sala (CO₂, nafta, plata y estacionamiento) con el gráfico del año, y Gracias.',cel:'Gracias, con tu camino de vuelta.',
+   notes:['ConVos: volver juntos.','Si esta sala viajara junta: esto es lo que ahorraría por mes, y el CO₂ acumulado en un año lectivo. Es un máximo: no descuenta el desvío del conductor. Gracias. ¿Preguntas?']}
 ];

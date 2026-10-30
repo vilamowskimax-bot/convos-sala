@@ -19,7 +19,7 @@ Está en `show.js` (una sola lista que leen las tres partes).
 - Cada "Siguiente" pasa a la diapositiva siguiente.
 - **Mismo ritmo en todas:** las partes de cada diapositiva se sueltan cada 2,5 s (`CONVOS_AUTO`) y todas las entradas duran 0,8 s. Solo Match y Tu red tienen su propio ritmo, porque son animaciones en vivo.
 - **Entrada:** con el primer "Siguiente" aparece una placa (Tecnología y Sociedad · ITBA · ConVos) y el auto la cruza despacio de izquierda a derecha, corriéndola como un telón: detrás queda la diapositiva del equipo ya armada. Si la tele se recarga a mitad de la charla, no se repite.
-- **Cierre:** la ruta se dibuja, el auto entra y frena en el centro (ConVos · Volver juntos.); después aparecen los números de esta sala (personas, viajes compartidos posibles y kg de CO₂ por mes) y "Gracias. ¿Preguntas?".
+- **Cierre:** la ruta se dibuja, el auto entra y frena en el centro (ConVos · Volver juntos.). Después, el tablero "Lo que ahorraríamos cada mes" con la gente de esta sala: kg de CO₂, litros de nafta, pesos de nafta ($2.045 el litro, YPF oct. 2026) y lugares de estacionamiento libres; al lado, el gráfico del CO₂ acumulado en un año lectivo (10 meses) y su equivalencia en árboles urbanos (60 kg por árbol por año, EPA). Abajo, "Gracias. ¿Preguntas?". Queda en pantalla durante las preguntas.
 - Si una diapositiva tiene varias partes, se sueltan solas, una cada uno o dos segundos (campo `auto` de cada escena). Si tocás "Siguiente" mientras se arma, aparece entera.
 - La única parte que espera un toque es la frase final de la encuesta, porque reemplaza a los gráficos. La consola avisa "sigue: La frase final".
 - De punta a punta son 17 toques (antes 23). Abajo del botón, la consola siempre dice qué hace el próximo toque.
@@ -30,7 +30,7 @@ Está en `show.js` (una sola lista que leen las tres partes).
 
 | Escena | Qué muestra | Fuente |
 |---|---|---|
-| Equipo | "¿Cómo llegaste hoy a la facu?", los cuatro nombres y la foto del equipo | — (**borrador**: faltan nombres y foto) |
+| Equipo | "¿Cómo llegaste hoy a la universidad?", los cuatro integrantes (Max Vilamowski, Thiago García, Martina Ciceran Pellegrini y Santiago Bermudez) y la foto del equipo | — (**borrador**: falta la foto) |
 | Problema | Autos con una persona que llegan todos al ITBA: "Todos vamos al mismo lugar. Cada uno por su cuenta." | — |
 | Entrevistas | "Salimos a escuchar": cuatro tarjetas (nombre, cargo, frase), una por paso | — (**borrador**: vacía hasta tener los entrevistados) |
 | Encuesta | 40 respuestas, en barras horizontales: qué frena (flexibilidad 68%, desvío 48%, seguridad 38%) y qué da confianza (conocerse en la facu 80%, misma carrera 73%, mismo género 13%). Cierra con "No es miedo: es rigidez. Y la confianza la da la comunidad." | Encuesta propia, octubre 2026 (40 respuestas; muestra no aleatoria) |
