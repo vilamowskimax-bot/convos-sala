@@ -38,7 +38,13 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .num b{color:var(--orange)}
 h1{margin:0;font:600 clamp(64px,10vw,160px)/.92 var(--fd)}
 .dots{display:flex;gap:12px}.dots i{width:20px;height:20px;border-radius:50%;background:rgba(245,235,221,.18)}.dots i.on{background:var(--orange)}.dots i.cur{background:var(--grad);box-shadow:0 0 0 5px rgba(251,146,60,.25)}
-.cue p{margin:0 0 .3em;font-size:clamp(24px,2.9vw,44px);line-height:1.25;max-width:32ch}
+.cue p{margin:0 0 .3em;font-size:clamp(24px,2.9vw,44px);line-height:1.25;max-width:32ch;transition:opacity .4s}
+.cue p.later{opacity:.38}
+/* si lo que hay que decir no entra, se achica (fit) */
+.stage.many{gap:1.3vh}.stage.many h1{font-size:clamp(46px,6vw,100px)}.stage.many .cue p{font-size:clamp(17px,1.65vw,27px);max-width:56ch;margin-bottom:.2em}
+.stage.tight h1{font-size:clamp(40px,4.6vw,76px)}.stage.tight .cue p{font-size:clamp(15px,1.3vw,21px)}
+/* en una compu, todo entra en la pantalla: el botón nunca se va para abajo */
+@media (min-width:900px){body{height:100vh;height:100dvh;min-height:0}.stage{overflow:auto;justify-content:safe center}}
 .match{font-size:clamp(20px,2vw,30px);color:var(--mute)}.match b{color:var(--cream)}
 
 /* abajo: un botón gigante */
@@ -94,7 +100,7 @@ details summary::after{content:" ▾"}details[open] summary::after{content:" ▴
   <button type="button" id="bReset" title="Vuelve todo a la primera escena: la consola, la tele y los celulares (que olvidan lo que contestaron)">↺ Reiniciar todo</button>
 </div>
 
-<script src="locs.js?v=dc410bc9df"></script><script src="show.js?v=1ed5e6a316"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=118cfce577"></script>
+<script src="locs.js?v=dc410bc9df"></script><script src="show.js?v=508e2c6a1d"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=118cfce577"></script>
 <script>
 (function(){
 'use strict';
@@ -111,12 +117,16 @@ try{const m=/[#&]k=([A-Za-z0-9+/=]{100,400})/.exec(location.hash);
 $('#nokey').hidden=!!priv;
 const room=R.connect({role:'presenter'});
 
-/* una lista plana de pasos: cada "Siguiente" avanza uno */
+/* una lista plana de pasos. Cada "Siguiente" pasa a la diapositiva siguiente; sus partes se sueltan solas (show.js: auto) */
 const flat=[];SHOW.forEach((d,i)=>{for(let k=0;k<(d.steps||1);k++)flat.push({i,k});});
-const firstOf=i=>flat.findIndex(x=>x.i===i);
+const firstOf=i=>flat.findIndex(x=>x.i===i),lastOf=i=>firstOf(i)+(SHOW[i].steps||1)-1;
+const autoOf=(d,k)=>Array.isArray(d.auto)?d.auto[Math.min(k,d.auto.length-1)]:d.auto;
+const gap=(d,k)=>{const a=autoOf(d,k);return typeof a==='string'?0:(a||window.CONVOS_AUTO||1.5);};   // 0: esa parte espera un toque
+const until=(d,k)=>{while(k<(d.steps||1)-1&&gap(d,k))k++;return k;};   // hasta qué parte llega sola desde k
+let autoT=0;
 const OPTS={qr:{t:'QR grande',toggle:true},names:{t:'Nombres en el mapa',toggle:true},fill:{t:'Gente de ejemplo',stepper:true},fit:{t:'Encuadrar mapa'},skip:{t:'Saltear escena'}};
 let pos=0,fillN=window.CONVOS_FILL||6,names=true,qrBig=false,seq=Date.now(),pubAt=0,real=[],stats={connected:0,screens:[]},net='connecting';
-let run=false,tStart=0,acc=0,rst=0;   // rst: hora del último "reiniciar todo"; viaja con cada escena
+let run=false,tStart=0,acc=0,rst=0,offAt=0;   // rst: hora del último "reiniciar todo"; viaja con cada escena
 try{const p=+sessionStorage.getItem('convosPos');if(p>=0&&p<flat.length)pos=p;const q=sessionStorage.getItem('convosFill');if(q!==null&&+q>=0&&+q<=R.FILLERS.length)fillN=+q;
   const r=+sessionStorage.getItem('convosRst');if(Number.isSafeInteger(r)&&r>0)rst=r;}catch(_){}
 const elapsed=()=>acc+(run?Date.now()/1000-tStart:0);
@@ -133,15 +143,26 @@ async function publish(refit){
 function resetAll(){
   if(!priv||!confirm('¿Reiniciar todo?\n\nVuelve a la primera escena y el tiempo a cero. Los celulares se recargan y olvidan lo que contestaron.'))return;
   rst=Date.now();try{sessionStorage.setItem('convosRst',String(rst));}catch(_){}
-  pos=0;run=false;acc=0;fillN=window.CONVOS_FILL||6;names=true;qrBig=false;
+  clearTimeout(autoT);pos=0;run=false;acc=0;fillN=window.CONVOS_FILL||6;names=true;qrBig=false;
   publish();
 }
 function go(p){
   p=Math.max(0,Math.min(flat.length-1,p));
   if(p!==pos&&!run&&p>0)toggleTimer();   // el cronómetro arranca solo con el primer avance
-  pos=p;publish();
+  pos=p;publish();autoStep();
 }
-const next=()=>go(pos+1),prev=()=>go(pos-1);
+/* la diapositiva se arma sola: cada parte sale unos segundos después de la anterior */
+function autoStep(){
+  clearTimeout(autoT);const {i,k}=flat[pos],d=SHOW[i];
+  if(k<(d.steps||1)-1&&gap(d,k))autoT=setTimeout(()=>{pos++;publish();autoStep();},gap(d,k)*1000);
+}
+/* Siguiente: si la diapositiva todavía se está armando, la muestra entera; si ya está, pasa a lo que sigue
+   (casi siempre la diapositiva siguiente; en la encuesta, antes, la frase final). Anterior: la diapositiva anterior, ya entera. */
+function next(){
+  const {i,k}=flat[pos],d=SHOW[i],u=until(d,k);
+  if(u>k)go(pos+u-k);else if(k<(d.steps||1)-1)go(pos+1);else if(i+1<SHOW.length)go(firstOf(i+1));
+}
+function prev(){const {i}=flat[pos];if(i>0)go(lastOf(i-1));}
 function act(id){
   if(id==='qr'){qrBig=!qrBig;publish();}
   else if(id==='names'){names=!names;publish();}
@@ -163,7 +184,8 @@ function paintTimer(){
 /* ---------- la tele avisa qué escena muestra: así se ve si le llegó el último paso ---------- */
 function paintTele(){
   const s=stats.screens||[],el=$('#tele');let c,t;
-  if(net==='offline'){c='bad';t='Sin internet';}
+  if(net==='offline'&&Date.now()-offAt<5000){c='warn';t='Reconectando…';}   // un corte de segundos se arregla solo
+  else if(net==='offline'){c='bad';t='Sin internet';}
   else if(net==='connecting'){c='warn';t='Conectando…';}
   else if(!s.length){c='bad';t='Tele sin conectar';}
   else if(!priv||s.includes(seq)){c='ok';t='Tele al día';}
@@ -174,22 +196,23 @@ function paintTele(){
 
 /* ---------- pantalla ---------- */
 function paint(){
-  const {i,k}=flat[pos],d=SHOW[i],steps=d.steps||1,nx=flat[pos+1],nd=nx?SHOW[nx.i]:null,notes=d.notes||[];
+  const {i,k}=flat[pos],d=SHOW[i],steps=d.steps||1,nd=SHOW[i+1],notes=d.notes||[],building=until(d,k)>k,wait=!building&&k<steps-1;
   $('#num').innerHTML='<b>'+(i+1)+'</b> / '+SHOW.length;
   $('#nT').textContent=d.label;
   $('#dots').innerHTML=steps>1?Array.from({length:steps},(_,j)=>'<i class="'+(j<k?'on':j===k?'cur':'')+'"></i>').join(''):'';
-  const now=steps>1?notes.slice(Math.min(k,notes.length-1),Math.min(k,notes.length-1)+1):notes.slice(0,1);
-  $('#cue').innerHTML=now.map(n=>'<p>'+esc(first(n))+'</p>').join('');
+  // todo lo que hay que decir en esta diapositiva; lo que todavía no salió, más tenue
+  $('#cue').innerHTML=notes.map((n,j)=>'<p'+(steps>1&&j>k?' class="later"':'')+'>'+esc(first(n))+'</p>').join('');
   $('#full').innerHTML=(notes.length?'<ol>'+notes.map(n=>'<li>'+esc(n)+'</li>').join('')+'</ol>':'')+'<b>Proyector:</b> '+esc(d.proj||'—')+'<br><b>Celular:</b> '+esc(d.cel||'—');
-  $('#xT').textContent=nd?(nx.i===i?'paso '+(nx.k+1)+' de '+steps:'sigue: '+nd.label):'es la última';
-  $('#bNext').disabled=!priv||!nx;$('#bPrev').disabled=!priv||pos===0;$('#bReset').disabled=!priv;
+  $('#xT').textContent=building?'se está armando: tocá para verla entera':wait?'sigue: '+autoOf(d,k):nd?'sigue: '+nd.label:'es la última';
+  $('#bNext').disabled=!priv||(!building&&!wait&&!nd);$('#bPrev').disabled=!priv||i===0;$('#bReset').disabled=!priv;
   $('#ops').innerHTML=Object.keys(OPTS).map(id=>{const o=OPTS[id],dis=priv?'':' disabled';
     if(o.stepper)return '<span class="op stp'+(fillN?' on':'')+'">'+esc(o.t)+' <button type="button" data-o="fill-"'+dis+' aria-label="Sacar uno">−</button><i>'+fillN+'</i><button type="button" data-o="fill+"'+dis+' aria-label="Sumar uno">+</button></span>';
     const on=id==='qr'?qrBig:id==='names'?names:false;
     return '<button type="button" class="op'+(on?' on':'')+'" data-o="'+id+'"'+dis+'>'+esc(o.t)+(o.toggle?' <i>'+(on?'sí':'no')+'</i>':'')+'</button>';}).join('');
   $('#strip').innerHTML=SHOW.map((x,j)=>'<button type="button" class="chip'+(j===i?' cur':j<i?' past':'')+'" data-i="'+j+'"'+(priv?'':' disabled')+'>'+esc(x.label)+'</button>').join('');
-  paintMatch();paintTimer();
+  paintMatch();paintTimer();fit();
 }
+function fit(){const st=$('.stage');st.classList.remove('many','tight');for(const c of ['many','tight'])if(st.scrollHeight>st.clientHeight+1)st.classList.add(c);}
 /* en la pregunta y el match: una línea con lo que hay */
 function paintMatch(){
   const d=cur(),show=d.id==='pregunta'||d.id==='match',el=$('#match');el.hidden=!show;if(!show)return;
@@ -216,12 +239,13 @@ addEventListener('keydown',e=>{
 });
 room.onPeople(l=>{real=l;paintMatch();});
 room.onStats(s=>{stats=s;$('#aCon').textContent=s.connected;paintTele();});
-room.onStatus(s=>{net=s==='sim'?'online':s;paintTele();});
+room.onStatus(s=>{s=s==='sim'?'online':s;if(s==='offline'&&net!=='offline')offAt=Date.now();net=s;paintTele();});
 room.start();
 setInterval(()=>{paintTimer();paintTele();},500);
+addEventListener('resize',fit);
 const base=new URL('./',location.href);
 $('#foot').textContent='Tele: '+new URL('sala.html',base).href+'  ·  Público: '+base.href+'  ·  Teclas: → siguiente · ← anterior · Q QR · N nombres · + / − gente de ejemplo · E encuadrar · P cronómetro';
-paint();if(priv)publish();
+paint();if(priv){publish();autoStep();}
 })();
 </script>
 </body>

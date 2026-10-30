@@ -14,7 +14,12 @@ Archivos compartidos: `show.js` (guion), `sync.js` (sala en vivo y firmas), `mat
 
 ## Guion
 
-Está en `show.js` (una sola lista que leen las tres partes). Cada "Siguiente" avanza un paso: suma algo a la diapositiva o pasa a la siguiente.
+Está en `show.js` (una sola lista que leen las tres partes).
+
+- Cada "Siguiente" pasa a la diapositiva siguiente.
+- Si una diapositiva tiene varias partes, se sueltan solas, una cada uno o dos segundos (campo `auto` de cada escena). Si tocás "Siguiente" mientras se arma, aparece entera.
+- La única parte que espera un toque es la frase final de la encuesta, porque reemplaza a los gráficos. La consola avisa "sigue: La frase final".
+- De punta a punta son 23 toques (antes eran 49). Abajo del botón, la consola siempre dice qué hace el próximo toque.
 
 **Antes de empezar · Previa (no cuenta en los 8 minutos).** Mientras la gente se acomoda, el proyector muestra el logo, un QR grande ("Escaneá y dejá el celular abierto") y cuántos celulares ya entraron. El celular dice "Mirá al frente". El cronómetro de la consola arranca solo con el primer "Siguiente".
 
@@ -42,7 +47,7 @@ Está en `show.js` (una sola lista que leen las tres partes). Cada "Siguiente" a
 
 **Logos.** El proyector y la consola usan el de los dos caminos que se juntan en el destino (se dibuja al aparecer). El celular usa el del auto con dos personas (en la pantalla de espera anda en el lugar).
 
-**Acto 2 · La solución (≈3:50).** Inicio → Cerca mío → Swipe → Mis viajes → En viaje → Perfil → **La pregunta** → **Match** → **Tu red** → Empresa → Cierre.
+**Acto 2 · La solución (≈3:45).** Cómo funciona (3 pasos, sin grupos fijos) → Por qué esta sí (cada miedo de la encuesta con su respuesta) → la app (Inicio, Cerca mío, Swipe, En viaje) → Ahora ustedes (QR) → **La pregunta** → **Match** → **Tu red** → Para la organización → Empresa → Cierre.
 
 - **La pregunta:** cada celular elige su localidad (nunca la dirección) y si tiene auto. El mapa del proyector se llena en vivo.
 - **Match:** aparece HAY MATCH y se ve una avenida en perspectiva (desde arriba y de costado) con los autos siempre en movimiento.
@@ -60,11 +65,25 @@ Está en `show.js` (una sola lista que leen las tres partes). Cada "Siguiente" a
 |---|---|
 | Mostrar / ocultar QR | Código grande en el proyector para que entren. |
 | Nombres en el mapa | Muestra u oculta los apodos. |
-| Compañeros de ejemplo (− n +) | Suma o saca gente de ejemplo de a uno. Útil si entra poca gente y para ensayar el match. Se ven con borde punteado. |
+| Gente de ejemplo (− n +) | Suma o saca gente de ejemplo de a uno. Útil si entra poca gente y para ensayar el match. Se ven con borde punteado. |
 | Encuadrar mapa | Ajusta el mapa a toda la sala. |
-| Saltear esta escena | Pasa directo a la siguiente. |
+| Saltear escena | Pasa directo a la siguiente. |
+| ↺ Reiniciar todo (abajo a la derecha) | Primera escena, tiempo en cero y 6 de ejemplo. Los celulares se recargan y olvidan lo que contestaron. |
 
 Teclas: `→` siguiente · `←` anterior · `Q` QR · `N` nombres · `+` / `−` ejemplos · `E` encuadrar · `P` cronómetro.
+
+Si la conexión se corta unos segundos, la luz de la tele dice "Reconectando…" (amarillo). Si sigue cortada a los 5 segundos, dice "Sin internet" (rojo).
+
+## Gente de ejemplo y gente real
+
+- La sala arranca con 6 personas de ejemplo (Nico, Sofi, Mica, Fede, Vero, Lucho). Se **suman** a la gente real, no la reemplazan, y siempre se ven con borde punteado. El panel las cuenta aparte ("14 reales · 6 simuladas").
+- Para sacarlas: Más opciones → Gente de ejemplo → "−" hasta 0 (o la tecla `−` seis veces). Se puede hacer en cualquier momento: el mapa, el match y los números se rehacen solos.
+- "Reiniciar todo" las vuelve a poner en 6. Si las querés sacar, hacelo después de reiniciar.
+- En el match, los autos con más gente real salen primero.
+- Si nadie real arma un grupo, la consola dice "Todavía no hay match · conviene saltear Match". Si igual lo mostrás, aparecen los de ejemplo.
+- Probado con 14 celulares simulados (5 con auto, localidades al azar):
+  - Con los 6 de ejemplo: 20 personas, 4 grupos y 436 kg de CO₂.
+  - Sin ellos: 14 personas, 1 grupo (Joaco lleva a Facu, los dos de Núñez) y 103 kg.
 
 ## Qué es real y qué es de ejemplo
 
