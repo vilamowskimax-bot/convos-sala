@@ -60,10 +60,22 @@ async function verifyScene(d){
     if(!d||d.k!=='d'||!BYID[d.s]||!Number.isSafeInteger(d.seq)||!CFG.publicKey)return false;
     if(!Number.isInteger(d.st)||d.st<0||d.st>=(BYID[d.s].steps||1)||!Number.isInteger(d.f)||d.f<0||d.f>7)return false;
     if(!Number.isInteger(d.fill)||d.fill<0||d.fill>FILLERS.length)return false;   // cuántos compañeros de ejemplo
-    if(typeof d.sig!=='string'||d.sig.length>200)return false;
+    return await sigOk(d);
+  }catch(_){return false;}
+}
+/* solo la firma, sin mirar si la escena existe en este guion: así se sabe si la consola tiene un guion más nuevo */
+async function sigOk(d){
+  try{
+    if(typeof d.sig!=='string'||d.sig.length>200||!CFG.publicKey)return false;
     if(d.r!==undefined&&!(Number.isSafeInteger(d.r)&&d.r>0))return false;
     return await crypto.subtle.verify(ALG,await pubKey(),u8(d.sig),msgOf(d.s,d.st,d.fill,d.f,d.seq,d.r));
   }catch(_){return false;}
+}
+/* la consola mandó, firmada, una escena que este guion no tiene: esta página quedó con una versión vieja guardada.
+   Se recarga sola para traer la nueva (como mucho una vez cada 5 min, para no entrar en bucle si la vieja es la consola) */
+function outdated(){
+  try{const t=+sessionStorage.getItem('convosOld')||0;if(Date.now()-t<300000)return;sessionStorage.setItem('convosOld',String(Date.now()));}catch(_){return;}
+  setTimeout(()=>location.reload(),200);
 }
 async function signScene(privB64,s,st,fill,f,seq,r){
   const k=await crypto.subtle.importKey('pkcs8',u8(privB64),{name:'ECDSA',namedCurve:'P-256'},false,['sign']);
@@ -166,7 +178,7 @@ function connect(o){
   let people=[],scene=null,lastSeq=0,status='connecting',timer=0;
   let stats={connected:0,answered:0,interacted:0,tally:[0,0,0,0,0,0],screens:[]};
   let mine=role==='phone'?{k:'a',id:key,sid:'',act:0,v:0}:null;
-  const pl=[],sl=[],st=[],ss=[],rl=[];const verified=new Map();let gen=0;
+  const pl=[],sl=[],st=[],ss=[],rl=[];const verified=new Map(),unknown=new Set();let gen=0;
   /* "reiniciar todo": quien abrió la página antes de la hora del reinicio vuelve al principio, una sola vez (la hora queda guardada en la pestaña) */
   let since=Date.now();
   if(role!=='presenter')try{const v=+sessionStorage.getItem('convosSince');if(v>0)since=v;else sessionStorage.setItem('convosSince',String(since));}catch(_){}
@@ -179,6 +191,8 @@ function connect(o){
           const ck=p.sig+'|'+p.s+'|'+p.st+'|'+p.f+'|'+p.seq+'|'+p.fill+'|'+p.r;let ok=verified.get(ck);
           if(ok===undefined){ok=await verifyScene(p);if(verified.size>500)verified.clear();verified.set(ck,ok);}
           if(ok&&(!best||p.seq>best.seq))best=p;
+          else if(!ok&&role!=='presenter'&&!BYID[p.s]&&typeof p.s==='string'&&/^[a-z_]{2,24}$/.test(p.s)&&Number.isSafeInteger(p.seq)&&p.seq>lastSeq&&!unknown.has(ck)){
+            if(unknown.size>50)unknown.clear();unknown.add(ck);if(await sigOk(p))outdated();}
         }
         continue;
       }
