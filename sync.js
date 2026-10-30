@@ -84,28 +84,57 @@ function simBackend(room,key){
   };
 }
 function loadScript(src,sri){return new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;if(sri){s.integrity=sri;s.crossOrigin='anonymous';}s.onload=ok;s.onerror=()=>no(new Error('script'));document.head.appendChild(s);});}
+const SUPA_SRI='sha256-hZaWX+kY5lZgChtWjToWj1wNPSKmAIhrtvRKZVXbAec=';
 function supaBackend(room,key){
-  const ls=[],ss=[];let ch=null,mine=null,online=false;
+  const ls=[],ss=[],tvs=new Map();let ch=null,mine=null,online=false,extra=null,retry=0;
   const status=v=>ss.forEach(f=>f(v));
+  /* la escena llega por dos caminos: la presencia (sirve a quien entra tarde) y un aviso directo (los cambios en vivo; si uno se pierde, llega el otro) */
+  const emit=()=>{if(!ch)return;const st=ch.presenceState(),m=new Map(),now=Date.now();
+    for(const k in st){const a=st[k];if(a&&a.length)m.set(k,k==='presenter'?a.slice(-8):a[a.length-1]);}
+    if(extra)m.set('presenter',[].concat(m.get('presenter')||[],[extra]));
+    for(const [k,v] of tvs){if(now-v.t>10000)tvs.delete(k);else m.set(k,v.p);}   // proyectores que avisaron en los últimos 10 s
+    ls.forEach(f=>f(m));};
+  /* anunciarse; si Supabase no confirma, se reintenta solo */
+  async function put(){
+    if(!ch||!online)return;let r;
+    try{r=await ch.track(mine||{k:'s'});}catch(_){r='error';}
+    clearTimeout(retry);if(r!=='ok')retry=setTimeout(put,1500);
+  }
+  /* la consola repite la escena y el proyector repite cuál está mostrando (así la consola sabe si la tele está al día) */
+  const send=()=>{if(!ch||!online||!mine)return;
+    if(mine.k==='d')ch.send({type:'broadcast',event:'d',payload:mine}).catch(()=>{});
+    else if(mine.k==='s')ch.send({type:'broadcast',event:'s',payload:{...mine,key}}).catch(()=>{});};
+  async function start(){
+    try{
+      status('connecting');
+      /* la librería se sirve desde la misma página (si falla, desde el CDN): un bloqueador o una red que corte el CDN no deja a nadie afuera */
+      if(!window.supabase)await loadScript('supabase.js',SUPA_SRI).catch(()=>loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js',SUPA_SRI));
+      const sb=window.supabase.createClient(CFG.supabaseUrl,CFG.supabaseKey,{
+        /* latido cada 5 s: si la conexión quedó muerta sin avisar, en ~10 s se da cuenta y se reconecta sola */
+        realtime:{params:{eventsPerSecond:20},heartbeatIntervalMs:5000,reconnectAfterMs:n=>[500,1000,2000,3000][n-1]||3000},
+        auth:{persistSession:false,autoRefreshToken:false}});
+      ch=sb.channel('convos:'+room,{config:{presence:{key},broadcast:{self:false}}});
+      /* con la clave 'presenter' se miran todas las conexiones: si alguien se hace pasar por el presentador, su firma no vale y no tapa a la real */
+      ch.on('presence',{event:'sync'},emit);
+      ch.on('broadcast',{event:'d'},m=>{const p=m&&m.payload;if(p&&typeof p==='object'&&p.k==='d'){extra=p;emit();}});
+      ch.on('broadcast',{event:'s'},m=>{const p=m&&m.payload;
+        if(p&&typeof p==='object'&&typeof p.key==='string'&&/^v[a-z0-9]{1,12}$/.test(p.key)&&Number.isSafeInteger(p.q)){tvs.set(p.key,{t:Date.now(),p:{k:'s',q:p.q}});emit();}});
+      ch.subscribe(s=>{
+        /* Supabase solo manda la presencia a quien se anuncia: el proyector se anuncia como {k:'s'} (no cuenta como celular) */
+        if(s==='SUBSCRIBED'){online=true;status('online');put();send();}
+        else if(s==='CHANNEL_ERROR'||s==='TIMED_OUT'||s==='CLOSED'){online=false;status('offline');}   // la librería se reconecta sola
+      });
+    }catch(_){status('offline');setTimeout(start,3000);}   // no cargó la librería: reintenta
+  }
+  /* cada 3 s se repite: si un celular o la tele se perdió un cambio, se pone al día solo */
+  setInterval(send,3000);
+  /* el celular que vuelve de la pantalla bloqueada se vuelve a anunciar enseguida */
+  addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')put();});
+  addEventListener('online',()=>put());
   return {
-    onState:f=>ls.push(f),onStatus:f=>ss.push(f),
-    async start(){
-      try{
-        status('connecting');
-        if(!window.supabase)await loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js','sha256-hZaWX+kY5lZgChtWjToWj1wNPSKmAIhrtvRKZVXbAec=');
-        const sb=window.supabase.createClient(CFG.supabaseUrl,CFG.supabaseKey,{realtime:{params:{eventsPerSecond:5}},auth:{persistSession:false,autoRefreshToken:false}});
-        ch=sb.channel('convos:'+room,{config:{presence:{key}}});
-        /* con la clave 'presenter' se miran todas las conexiones: si alguien se hace pasar por el presentador, su firma no vale y no tapa a la real */
-        ch.on('presence',{event:'sync'},()=>{const st=ch.presenceState(),m=new Map();for(const k in st){const a=st[k];if(a&&a.length)m.set(k,k==='presenter'?a.slice(-8):a[a.length-1]);}ls.forEach(f=>f(m));});
-        ch.subscribe(async s=>{
-          /* Supabase solo manda la presencia a quien se anuncia: el proyector se anuncia como {k:'s'} (no cuenta como celular) */
-          if(s==='SUBSCRIBED'){online=true;status('online');try{await ch.track(mine||{k:'s'});}catch(_){}}
-          else if(s==='CHANNEL_ERROR'||s==='TIMED_OUT'||s==='CLOSED'){online=false;status('offline');}
-        });
-      }catch(_){status('offline');}
-    },
-    async track(_k,payload){mine=payload;if(ch&&online)try{await ch.track(payload);}catch(_){}},
-    async leave(){mine=null;if(ch&&online)try{await ch.untrack();}catch(_){}}
+    onState:f=>ls.push(f),onStatus:f=>ss.push(f),start,
+    async track(_k,payload){mine=payload;await put();send();},
+    async leave(){mine=null;clearTimeout(retry);if(ch&&online)try{await ch.untrack();}catch(_){}}
   };
 }
 
@@ -120,11 +149,11 @@ function connect(o){
   const key=role==='presenter'?'presenter':(o.key||('v'+Math.random().toString(36).slice(2,10)));
   const be=useSupa()?supaBackend(CFG.room,key):simBackend(CFG.room||'sala-demo',key);
   let people=[],scene=null,lastSeq=0,status='connecting',timer=0;
-  let stats={connected:0,answered:0,interacted:0,tally:[0,0,0,0,0,0]};
+  let stats={connected:0,answered:0,interacted:0,tally:[0,0,0,0,0,0],screens:[]};
   let mine=role==='phone'?{k:'a',id:key,sid:'',act:0,v:0}:null;
   const pl=[],sl=[],st=[],ss=[];const verified=new Map();let gen=0;
   async function recompute(m){
-    const my=++gen,list=[],marks=[];let best=null;
+    const my=++gen,list=[],marks=[],screens=[];let best=null;
     for(const [k,v0] of m){
       if(k==='presenter'){   // escenas: solo valen las firmadas por la consola
         for(const p of [].concat(v0)){
@@ -139,12 +168,14 @@ function connect(o){
       if(!p||typeof p!=='object'||JSON.stringify(p).length>420)continue;
       if(p.k==='p'){const v=validPerson(p);if(v&&k===v.id){list.push(v);marks.push(v);}}
       else if(p.k==='a'){const v=validViewer(p);if(v&&k===v.id)marks.push(v);}
+      else if(p.k==='s')screens.push(Number.isSafeInteger(p.q)?p.q:0);   // proyector: qué escena está mostrando
     }
     if(my!==gen)return;   // llegó un estado más nuevo mientras se verificaba una firma: vale ese
     list.sort((a,b)=>a.id<b.id?-1:1);people=list.slice(0,150);pl.forEach(f=>f(people));
-    if(best&&best.seq>lastSeq){lastSeq=best.seq;scene={s:best.s,st:best.st,fill:best.fill,f:best.f,seq:best.seq};sl.forEach(f=>f(scene));}
+    if(best&&best.seq>lastSeq){lastSeq=best.seq;scene={s:best.s,st:best.st,fill:best.fill,f:best.f,seq:best.seq};sl.forEach(f=>f(scene));
+      if(role==='screen'){mine={k:'s',q:lastSeq};push();}}   // el proyector le avisa a la consola que ya está al día
     const cur=scene?scene.s:'';
-    stats={connected:marks.length,answered:list.length,interacted:marks.filter(v=>v.sid===cur&&v.act===1).length,tally:[0,0,0,0,0,0]};
+    stats={connected:marks.length,answered:list.length,interacted:marks.filter(v=>v.sid===cur&&v.act===1).length,tally:[0,0,0,0,0,0],screens};
     marks.forEach(v=>{if(v.sid===cur&&v.v>=1&&v.v<=6)stats.tally[v.v-1]++;});
     ss.forEach(f=>f(stats));
   }
