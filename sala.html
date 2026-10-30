@@ -24,7 +24,7 @@ body.v-map #map{visibility:visible}
 #dot.online,#dot.sim{background:var(--mint)}#dot.offline{background:var(--rose)}
 .brand{position:absolute;z-index:600;top:18px;left:28px;display:none;align-items:center;gap:10px;padding:8px 16px 8px 10px;font:600 20px var(--fd);letter-spacing:.03em}
 body.v-app .brand,body.v-map .brand{display:flex}
-.brand svg{width:28px;height:28px}
+.brand svg{width:38px;height:26px}
 
 /* ---------- diapositivas ---------- */
 #slide{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:6vh 8vw;z-index:300}
@@ -112,13 +112,12 @@ body.nonames .cpop,body.nonames .ccard,body.nonames .wtag{visibility:hidden}
 .mcap small{display:block;margin-top:.4em;font-size:.45em;color:var(--mute)}
 
 /* ---------- logo de pantalla: dos caminos que se juntan en el destino; se dibuja al aparecer ---------- */
-.lg .r1,.lg .r2{stroke-dasharray:60}
-.lg .o1,.lg .o2,.lg .dst{transform-box:fill-box;transform-origin:center}
-.lg.draw .r1,.lg.draw .r2,#slide.s1 .sol .lg .r1,#slide.s1 .sol .lg .r2{animation:lgdraw 1.2s cubic-bezier(.5,0,.2,1) .2s both}
-.lg.draw .o1,.lg.draw .o2,#slide.s1 .sol .lg .o1,#slide.s1 .sol .lg .o2{animation:lgpop .5s cubic-bezier(.2,1.6,.4,1) both}
-.lg.draw .dst,#slide.s1 .sol .lg .dst{animation:lgpop .5s cubic-bezier(.2,1.6,.4,1) 1.25s both}
-@keyframes lgdraw{from{stroke-dashoffset:60}to{stroke-dashoffset:0}}
-@keyframes lgpop{from{transform:scale(0)}to{transform:none}}
+.lg{overflow:visible}
+.lg .body,.lg .whl,.lg .spd{transform-box:view-box}
+.lg.draw,#slide.s1 .sol .lg{animation:drivein 1.3s cubic-bezier(.2,.9,.25,1) .15s both}
+.lg.draw .spd,#slide.s1 .sol .lg .spd{animation:spdfade 1.3s ease .15s both}
+@keyframes drivein{0%{transform:translateX(-70vw);opacity:0}12%{opacity:1}78%{transform:translateX(14px);opacity:1}100%{transform:none;opacity:1}}
+@keyframes spdfade{0%,60%{opacity:1;transform:translateX(0)}100%{opacity:.85;transform:translateX(3px)}}
 @keyframes look{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
 /* ---------- escenario fijo de 1600×900 (las diapositivas que diseñó el amigo de Max): se escala entero a la pantalla ---------- */
@@ -131,12 +130,16 @@ body.nonames .cpop,body.nonames .ccard,body.nonames .wtag{visibility:hidden}
 .stg .w{opacity:0;transform:translateY(30px) scale(.98);transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1)}
 #slide.s1 .w1,#slide.s2 .w2,#slide.s3 .w3,#slide.s4 .w4{opacity:1;transform:none}
 .stg .ey{display:flex;align-items:center;gap:12px;margin:0;font:600 18px var(--fb);letter-spacing:.16em;text-transform:uppercase;color:var(--peri)}
-.stg .ey .lg{width:34px;height:34px}
+.stg .ey .lg{width:44px;height:30px}
 .ssrc{position:absolute;right:100px;bottom:40px;margin:0;font-size:16px;color:var(--mute)}
 .draft{z-index:5}
 /* previa */
 .wel{display:grid;grid-template-columns:1fr auto;gap:90px;align-items:center}
-.wel .lg{width:190px;height:190px;display:block;animation:look 3.2s ease-in-out 1.8s infinite}
+.wel .lg{width:230px;height:158px;display:block}
+.wel .lg .body{animation:ride .7s ease-in-out 1.6s infinite alternate}
+.wel .lg .spd{animation:spd .5s ease-in-out 1.6s infinite alternate}
+@keyframes ride{from{transform:translateY(0)}to{transform:translateY(-1.2px)}}
+@keyframes spd{from{transform:translateX(0);opacity:.55}to{transform:translateX(-2px);opacity:1}}
 #slide .wel h1{font-size:170px;line-height:1;margin-top:20px}
 .wel .ey{margin-top:18px}
 .qrc{display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--cream);color:var(--ink);border-radius:40px;padding:26px 30px 30px;text-align:center;box-shadow:0 30px 70px rgba(0,0,0,.45)}
@@ -184,30 +187,18 @@ body.nonames .cpop,body.nonames .ccard,body.nonames .wtag{visibility:hidden}
 #slide.s3 .dgrid{opacity:0;transform:scale(.97)}
 .dpan{background:var(--ink-2);border-radius:34px;padding:30px 34px 28px;display:flex;flex-direction:column;gap:20px}
 .dq{font:600 30px/1.1 var(--fd)}
-.ul{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
-.ul span{font:500 19px var(--fb);color:var(--mute)}
-.ul b{font:600 46px/1 var(--fd);color:var(--mute);opacity:0;transition:opacity .5s .6s}
-#slide.s1 .ul b{opacity:1}
-.urow.hot .ul span{color:var(--cream);font-weight:600}.urow.hot .ul b{color:var(--orange)}.urow.cool .ul b{color:var(--peri)}
-.dots{display:grid;grid-template-columns:repeat(var(--c,28),1fr);gap:4px}
-.dots i{height:26px;border-radius:9px 9px 5px 5px;background:rgba(245,235,221,.09);transition:background .3s,transform .3s}
-.dots i.on{transform:translateY(-2px)}
-.urow.hot .dots i.on{background:var(--orange)}
-.urow.top .dots i.on{background:linear-gradient(#FB923C,#F43F5E)}
-.urow.cool .dots i.on{background:var(--peri)}
-.leg{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--mute);margin-top:-4px}
-.leg i{width:12px;height:17px;border-radius:6px 6px 3px 3px;background:var(--orange)}
-.rings2{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px;align-items:end;flex:1}
-.rg{position:relative;text-align:center}
-.rg svg{width:100%;transform:rotate(-90deg);display:block}
-.rg circle{fill:none;stroke-width:22}
-.rg .bg{stroke:rgba(245,235,221,.08)}
-.rg .fg{stroke-linecap:round;stroke-dasharray:0 999;transition:stroke-dasharray 1.6s cubic-bezier(.2,.9,.2,1)}
-.rg b{position:absolute;left:0;right:0;top:0;aspect-ratio:1;display:grid;place-items:center;font:600 64px var(--fd)}
-.rg.hot b{font-size:84px}
-.rg.cool b{color:var(--peri)}
-.rg p{margin:10px 0 0;font:500 18px/1.25 var(--fb);color:var(--mute)}
-.rg.hot p,.rg.hot2 p{color:var(--cream);font-weight:600}
+.bars{display:flex;flex-direction:column;gap:30px;margin-top:6px}
+.hl{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:12px}
+.hl span{font:500 22px/1.2 var(--fb);color:var(--mute)}
+.hl b{font:600 50px/1 var(--fd);color:var(--mute);font-variant-numeric:tabular-nums}
+.hb.top .hl span,.hb.hot2 .hl span{color:var(--cream);font-weight:600}
+.hb.top .hl b{color:var(--orange)}.hb.hot2 .hl b{color:var(--cream)}.hb.cool .hl b{color:var(--peri)}
+.tr{height:18px;border-radius:9px;background:rgba(245,235,221,.07);overflow:hidden;position:relative}
+.tr::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(25% - 1px),rgba(245,235,221,.12) calc(25% - 1px) 25%)}
+.tr u{display:block;height:100%;width:0;border-radius:9px;background:rgba(245,235,221,.35);transition:width 1.4s cubic-bezier(.2,.9,.2,1)}
+.hb.top .tr u{background:linear-gradient(90deg,#FB923C,#F43F5E)}.hb.hot .tr u{background:rgba(251,146,60,.75)}.hb.hot2 .tr u{background:rgba(245,235,221,.8)}.hb.cool .tr u{background:var(--peri)}
+.ax{display:flex;justify-content:space-between;margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font:500 14px var(--fb);color:var(--mute);opacity:.7}
+.dpan{transition:box-shadow .8s}.dpan.lit{box-shadow:inset 0 0 0 1px rgba(251,146,60,.25)}
 .punch{position:absolute;left:100px;right:100px;top:330px;margin:0;text-align:center;font:600 92px/1.05 var(--fd)}
 /* la solución */
 #slide .stg.t-reveal{align-items:center;text-align:center}
@@ -217,9 +208,8 @@ body.nonames .cpop,body.nonames .ccard,body.nonames .wtag{visibility:hidden}
 .q1 small{display:block;font:500 34px/1.3 var(--fb);color:var(--mute);margin-top:26px}
 .sol{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:0;transition:opacity .8s;pointer-events:none}
 #slide.s1 .sol{opacity:1}
-.sol .lg{width:280px;height:280px}
-.sol .lg .r1,.sol .lg .r2{stroke-dashoffset:60}
-.sol .lg .o1,.sol .lg .o2,.sol .lg .dst{transform:scale(0)}
+.sol .lg{width:300px;height:206px}
+.sol .lg{opacity:0}
 #slide .sol h1{font-size:140px;line-height:1;margin-top:26px}
 .sol .tagi{margin-top:6px;font:600 20px var(--fb);letter-spacing:.16em;text-transform:uppercase;color:var(--peri)}
 .sol p{margin:18px 0 0;font:500 34px/1.3 var(--fb);color:var(--mute);max-width:30ch}
@@ -253,18 +243,31 @@ body.nonames .cpop,body.nonames .ccard,body.nonames .wtag{visibility:hidden}
 /* al pasar de una diapositiva a la app o al mapa, entran con un fundido */
 body.v-app #app,body.v-map #map,body.v-map #hint{animation:vin .7s ease both}
 @keyframes vin{from{opacity:0}to{opacity:1}}
+/* entrada: el auto cruza la pantalla y corre la previa como un telón */
+#intro{position:fixed;inset:0;z-index:900;pointer-events:none;display:none}
+#intro.on{display:block}
+#intro .cur{position:absolute;inset:0;background-color:var(--ink);background-image:radial-gradient(900px 520px at 50% -10%,rgba(109,40,217,.5),transparent 72%),radial-gradient(700px 420px at 100% 100%,rgba(244,63,94,.22),transparent 70%)}
+#intro .edge{position:absolute;top:0;bottom:0;width:3px;left:0;background:linear-gradient(180deg,transparent,rgba(251,146,60,.9) 35%,rgba(244,63,94,.9) 65%,transparent);box-shadow:0 0 40px 8px rgba(251,146,60,.35)}
+#intro .road{position:absolute;left:0;top:calc(58% + 64px);height:4px;width:0;border-radius:2px;background:linear-gradient(90deg,transparent,rgba(251,146,60,.15) 20%,#FB923C)}
+#intro .lg{position:absolute;left:0;top:58%;width:230px;height:158px;margin-top:-79px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))}
+#intro .beam{position:absolute;left:0;top:58%;width:520px;height:220px;margin-top:-118px;background:radial-gradient(ellipse at 0% 50%,rgba(245,235,221,.28),transparent 70%);clip-path:polygon(0 42%,100% 0,100% 100%,0 58%)}
+#intro .ttl{position:absolute;inset:0;display:grid;place-items:center;text-align:center;opacity:0}
+#intro .ttl p{margin:0 0 18px;font:600 20px var(--fb);letter-spacing:.22em;text-transform:uppercase;color:var(--peri)}
+#intro .ttl h2{margin:0;font:600 150px/1 var(--fd);letter-spacing:-.01em;color:var(--cream)}
+#intro .ttl span{display:block;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font:500 24px var(--fb);color:var(--mute)}
+
 
 /* ---------- la app espejada ---------- */
-#app{position:absolute;inset:0;display:none;grid-template-columns:minmax(260px,1fr) auto minmax(260px,1fr);gap:34px;align-items:center;justify-items:center;padding:84px 34px 40px;z-index:300}
+#app{position:absolute;inset:0;display:none;grid-template-columns:minmax(300px,1fr) auto minmax(220px,.8fr);gap:40px;align-items:center;justify-items:center;padding:24px 40px 16px;z-index:300}
 body.v-app #app{display:grid}
-#mirror{width:min(600px,42vw);height:min(960px,calc(100vh - 130px));border:0;border-radius:30px;background:transparent}
-.cap2{justify-self:end;max-width:430px;padding:28px 30px}
+#mirror{width:min(700px,46vw);height:calc(100vh - 40px);border:0;border-radius:30px;background:transparent}
+.cap2{justify-self:end;max-width:470px;padding:32px 34px}
 .anat{display:flex;gap:6px;flex-wrap:wrap}
 .anat span{font:600 12px var(--fb);padding:7px 12px;border-radius:99px;border:1.5px solid var(--line);color:var(--mute);transition:all .4s}
 .anat span.on{background:var(--grad);border-color:transparent;color:var(--ink)}
 .cap2 .sb{margin:14px 0 0;font:600 12px var(--fb);letter-spacing:.12em;text-transform:uppercase;color:var(--mute);min-height:1em}
-.cap2 h2{margin:6px 0 12px;font:600 58px/1 var(--fd)}
-.cap2 p{margin:0;font-size:20px;line-height:1.5}
+.cap2 h2{margin:6px 0 14px;font:600 68px/1 var(--fd)}
+.cap2 p{margin:0;font-size:24px;line-height:1.45}
 .try{margin-top:18px;display:inline-flex;gap:10px;align-items:center;padding:9px 16px;border-radius:99px;background:var(--grad);color:var(--ink);font:600 14px var(--fb)}
 .try:empty{display:none}
 .try::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--ink);animation:tap 1.6s ease-in-out infinite}
@@ -339,7 +342,7 @@ body.v-map .toast{display:flex}
 #qrurl{font:600 15px var(--fb);color:#4B3E72;word-break:break-all;max-width:420px}
 @media (max-width:1100px){#app{grid-template-columns:1fr;padding-top:70px}.cap2,.qrside{display:none}#mirror{width:min(560px,92vw)}.panel{display:none!important}#hint{max-width:60vw}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}
-  #slide.s1 .sol .lg .r1,#slide.s1 .sol .lg .r2{stroke-dashoffset:0}#slide.s1 .sol .lg .o1,#slide.s1 .sol .lg .o2,#slide.s1 .sol .lg .dst{transform:none}}
+  #slide.s1 .sol .lg{opacity:1;animation:none}.lg.draw{animation:none}}
 </style>
 </head>
 <body class="v-slide">
@@ -357,7 +360,8 @@ body.v-map .toast{display:flex}
     <div class="meter"><div class="mt"><i id="nCon">0</i>conectados</div><div class="bar2"><u id="mtr"></u></div><div id="mtrT">0 lo probaron</div></div></aside>
 </main>
 
-<div class="brand glass"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M12 12C13 27 22 37 32 49" fill="none" stroke="#FB923C" stroke-width="8" stroke-linecap="round"/><path d="M52 12C51 27 42 37 32 49" fill="none" stroke="#F5EBDD" stroke-width="8" stroke-linecap="round"/><circle cx="12" cy="12" r="6" fill="#FB923C"/><circle cx="52" cy="12" r="6" fill="#F5EBDD"/><circle cx="32" cy="53" r="7.5" fill="#F43F5E" stroke="#150B33" stroke-width="3"/></svg>ConVos</div>
+<div id="intro" aria-hidden="true"><div class="cur"><div class="ttl"><div><p>Tecnología y Sociedad · ITBA</p><h2>ConVos</h2><span>Movilidad urbana · Trabajo de campo 2026</span></div></div></div><div class="road"></div><div class="beam"></div><div class="edge"></div><span id="introCar"></span></div>
+<div class="brand glass"><svg viewBox="0 10 64 44" aria-hidden="true"><g class="spd"><path d="M2 30h7M0 36h8M3 42h5" stroke="#818CF8" stroke-width="2.6" stroke-linecap="round"/></g><g class="body"><path d="M10 39q0-8 8-9.5l5.5-9q1.8-3 5.5-3h11q3.6 0 5.6 3l5.6 9q7.8 1.4 7.8 8.5v3.5q0 3-3 3H13q-3 0-3-3z" fill="#FB923C"/><path d="M25.5 22h17q1.6 0 2.5 1.4l3.6 6.1H21.4l3.6-6.1q.9-1.4 2.5-1.4z" fill="#150B33"/><circle cx="29" cy="26.6" r="3.1" fill="#F5EBDD"/><circle cx="40" cy="26.6" r="3.1" fill="#F5EBDD"/><rect x="55.5" y="34" width="4" height="3" rx="1.5" fill="#F5EBDD"/></g><g class="whl"><circle cx="21" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/><circle cx="49" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/></g></svg>ConVos</div>
 <div id="hint" class="glass"><b id="hintT"></b><span id="hintP"></span></div>
 
 <aside class="panel glass" id="panel" aria-label="Números de la sala">
@@ -512,8 +516,8 @@ function fit(){
 function toast(t){const d=document.createElement('div');d.textContent=t;$('#toast').appendChild(d);setTimeout(()=>d.remove(),4800);while($('#toast').children.length>3)$('#toast').firstChild.remove();}
 
 /* ---------- diapositivas: cada paso suma algo (un número, un gráfico) o anima ---------- */
-/* logo de pantalla: dos caminos (naranja y crema) que se juntan en el destino. En el celular va el del auto. */
-const LOGO=cls=>'<svg class="lg'+(cls?' '+cls:'')+'" viewBox="0 0 64 64" aria-hidden="true"><path class="r1" d="M12 12C13 27 22 37 32 49" fill="none" stroke="#FB923C" stroke-width="8" stroke-linecap="round"/><path class="r2" d="M52 12C51 27 42 37 32 49" fill="none" stroke="#F5EBDD" stroke-width="8" stroke-linecap="round"/><circle class="o1" cx="12" cy="12" r="6" fill="#FB923C"/><circle class="o2" cx="52" cy="12" r="6" fill="#F5EBDD"/><circle class="dst" cx="32" cy="53" r="7.5" fill="#F43F5E" stroke="#150B33" stroke-width="3"/></svg>';
+/* logo único (proyector, consola y celular): el auto con dos personas. */
+const LOGO=cls=>'<svg class="lg'+(cls?' '+cls:'')+'" viewBox="0 10 64 44" aria-hidden="true"><g class="spd"><path d="M2 30h7M0 36h8M3 42h5" stroke="#818CF8" stroke-width="2.6" stroke-linecap="round"/></g><g class="body"><path d="M10 39q0-8 8-9.5l5.5-9q1.8-3 5.5-3h11q3.6 0 5.6 3l5.6 9q7.8 1.4 7.8 8.5v3.5q0 3-3 3H13q-3 0-3-3z" fill="#FB923C"/><path d="M25.5 22h17q1.6 0 2.5 1.4l3.6 6.1H21.4l3.6-6.1q.9-1.4 2.5-1.4z" fill="#150B33"/><circle cx="29" cy="26.6" r="3.1" fill="#F5EBDD"/><circle cx="40" cy="26.6" r="3.1" fill="#F5EBDD"/><rect x="55.5" y="34" width="4" height="3" rx="1.5" fill="#F5EBDD"/></g><g class="whl"><circle cx="21" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/><circle cx="49" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/></g></svg>';
 const SL=$('#slide'),MARK=LOGO('draw');
 const E=(tag,cls,k,html,o)=>'<'+tag+' class="b '+cls+'" data-k="'+k+'"'+(o===undefined?'':' data-o="'+o+'"')+'>'+html+'</'+tag+'>';
 const SRC=s=>E('p','src',1,s.src?'Fuente: '+esc(s.src):'');
@@ -551,16 +555,14 @@ function stageHTML(s){
       '<div class="pframe"><div class="noimg">Foto del equipo</div>'+(s.photo?'<img src="'+esc(s.photo)+'" alt="Foto del equipo">':'')+'</div></div>';
     case 'converge':return convergeSVG(s.dest)+'<div class="shade"></div><div class="ptxt"><p class="ey a">'+esc(s.kicker)+'</p><h1><span class="a d1">'+esc(s.t1)+'</span><span class="w w1 g">'+esc(s.t2)+'</span></h1></div>';
     case 'people':{const C=['#FB923C','#818CF8','#34D399','#F5EBDD'];
-      return '<div class="pp"><p class="ey a">'+esc(s.kicker)+'</p><h1 class="a d1">'+esc(s.title)+'</h1><div class="ints">'+(s.people||[]).slice(0,4).map((p,i)=>
+      return '<div class="pp"><p class="ey a">'+esc(s.kicker)+'</p><h1 class="a d1">'+hl(s.title)+'</h1><div class="ints">'+(s.people||[]).slice(0,4).map((p,i)=>
         '<div class="int w w'+(i+1)+'" style="--c:'+C[i]+'"><span class="av">'+esc(INI(p.n))+'</span><div class="nm">'+esc(p.n)+'</div><div class="rl">'+esc(p.r||'')+'</div>'+(p.q?'<div class="ins">'+esc(p.q)+'</div>':'')+'</div>').join('')+'</div></div>';}
-    case 'survey':{const n=s.n||1,pc=k=>Math.round(k/n*100),cols=n<=36?n:Math.ceil(n/2);
-      const rows=s.q1.opts.map((o,i)=>'<div class="urow '+o.c+(i===0?' top':'')+'" data-k="'+o.k+'"><div class="ul"><span>'+esc(o.l)+'</span><b>'+pc(o.k)+'%</b></div><div class="dots" style="--c:'+cols+'">'+'<i></i>'.repeat(n)+'</div></div>').join('');
-      const ST={hot:'url(#svGr)',hot2:'#FB923C',cool:'#818CF8'};
-      const rings=s.q2.opts.map(o=>'<div class="rg '+o.c+'" data-p="'+pc(o.k)+'"><svg viewBox="0 0 260 260"><circle class="bg" cx="130" cy="130" r="108"/><circle class="fg" cx="130" cy="130" r="108" stroke="'+(ST[o.c]||'#FB923C')+'"/></svg><b>'+pc(o.k)+'%</b><p>'+esc(o.l)+'</p></div>').join('');
-      return '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="svGr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FB923C"/><stop offset="1" stop-color="#F43F5E"/></linearGradient></defs></svg>'+
-        '<div class="dhead"><div><p class="ey a">'+esc(s.kicker)+'</p><h1 class="a d1">'+esc(s.title)+'</h1></div><span class="live a d2"><b>'+n+'</b> respuestas</span></div>'+
-        '<div class="dgrid"><div class="dpan a d2"><div class="dq">'+esc(s.q1.q)+'</div>'+rows+'<div class="leg"><i></i>'+esc(s.q1.leg||'')+'</div></div>'+
-        '<div class="dpan a d3"><div class="dq">'+esc(s.q2.q)+'</div><div class="rings2">'+rings+'</div></div></div>'+
+    case 'survey':{const n=s.n||1,pc=k=>Math.round(k/n*100);
+      const bar=(o,i)=>'<div class="hb '+o.c+(i===0?' top':'')+'" data-p="'+pc(o.k)+'"><div class="hl"><span>'+esc(o.l)+'</span><b>0%</b></div><div class="tr"><u></u></div></div>';
+      const axis='<div class="ax"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>';
+      return '<div class="dhead"><div><p class="ey a">'+esc(s.kicker)+'</p><h1 class="a d1">'+esc(s.title)+'</h1></div><span class="live a d2"><b>'+n+'</b> respuestas</span></div>'+
+        '<div class="dgrid"><div class="dpan a d2" data-q="1"><div class="dq">'+esc(s.q1.q)+'</div><div class="bars">'+s.q1.opts.map(bar).join('')+'</div>'+axis+'</div>'+
+        '<div class="dpan a d3" data-q="2"><div class="dq">'+esc(s.q2.q)+'</div><div class="bars">'+s.q2.opts.map(bar).join('')+'</div>'+axis+'</div></div>'+
         '<p class="punch w w3">'+hl(s.punch)+'</p>'+(s.src?'<p class="ssrc">Fuente: '+esc(s.src)+'</p>':'');}
     case 'reveal':return '<div class="qw"><p class="q1 a d1">'+esc(s.q)+'<small class="a d3">'+esc(s.sub||'')+'</small></p></div>'+
       '<div class="sol">'+LOGO()+'<h1>'+esc(s.word)+'</h1><div class="tagi a2">'+esc(s.tag||'')+'</div><p class="a2">'+esc(s.line||'')+'</p><div class="nx a2">'+esc(s.next||'')+'</div></div>';
@@ -575,8 +577,11 @@ function stageHTML(s){
 }
 function stageStep(s,st){
   if(s.type==='survey'){
-    SL.querySelectorAll('.urow').forEach(r=>{const k=+r.dataset.k;[...r.querySelector('.dots').children].forEach((d,j)=>{const on=st>=1&&j<k;d.style.transitionDelay=on?(j*35)+'ms':'0ms';d.classList.toggle('on',on);});});
-    const L=2*Math.PI*108;SL.querySelectorAll('.rg').forEach(r=>{r.querySelector('.fg').style.strokeDasharray=st>=2?(L*(+r.dataset.p)/100)+' '+L:'0 '+L;});
+    SL.querySelectorAll('.dpan').forEach(pan=>{const on=st>=+pan.dataset.q;pan.classList.toggle('lit',on);
+      pan.querySelectorAll('.hb').forEach((r,j)=>{const p=+r.dataset.p,u=r.querySelector('u'),b=r.querySelector('b');
+        u.style.transitionDelay=on?(j*.18)+'s':'0s';u.style.width=on?p+'%':'0';
+        if(on&&r.dataset.done!=='1'){r.dataset.done='1';const t0=performance.now()+j*180,D=1400;(function tick(t){const x=Math.min(1,Math.max(0,(t-t0)/D)),e=1-Math.pow(1-x,3);b.textContent=Math.round(p*e)+'%';if(x<1)requestAnimationFrame(tick);})(t0);setTimeout(()=>{b.textContent=p+'%';},D+j*180+300);}
+        if(!on){r.dataset.done='';b.textContent='0%';}});});
   }
 }
 /* ---------- match: la ruta (la dibuja match.js; acá se decide quién va con quién) ----------
@@ -662,7 +667,7 @@ function buildSlide(d){
   if(stage){
     const q=$('#qrWel');if(q)makeQR(q,330);const qc=$('#qrCta');if(qc)makeQR(qc,300);
     const im=SL.querySelector('.pframe img');if(im){im.addEventListener('error',()=>im.remove());if(im.complete&&!im.naturalWidth)im.remove();}   // sin foto queda el cartel "Foto del equipo"
-    const g=SL.querySelector('.stg');setTimeout(()=>g.classList.add('on'),40);   // las entradas animadas (setTimeout y no rAF: corre aunque la ventana no esté al frente)
+    const g=SL.querySelector('.stg');setTimeout(()=>g.classList.add('on'),Math.max(40,introUntil-performance.now()));   // las entradas animadas (setTimeout y no rAF: corre aunque la ventana no esté al frente)
   }
 }
 function countUp(el){
@@ -704,10 +709,33 @@ function makeQR(el,size){if(el.firstChild)return;new QRCode(el,{text:qrUrl(),wid
 function qrBig(on){if(on)makeQR($('#qrbox'),320);$('#qr').classList.toggle('on',on);$('#qrurl').textContent=on?qrUrl():'';}
 
 /* ---------- escena: llega firmada desde la consola del presentador ---------- */
-function setScene(sc){
+let introUntil=0,sawPrevia=false;   // la entrada solo corre si la tele mostró la previa en vivo (no al recargar a mitad)
+/* La entrada: el auto del logo arranca a la izquierda, acelera y cruza. Detrás suyo queda la diapositiva nueva
+   (la previa se corre como un telón), con una estela naranja sobre la ruta. Dura ~2,2 s y no bloquea nada. */
+function runIntro(){
+  const box=$('#intro');if(!box||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  if(!box.querySelector('.lg'))$('#introCar').outerHTML=LOGO('');
+  const cur=box.querySelector('.cur'),edge=box.querySelector('.edge'),road=box.querySelector('.road'),beam=box.querySelector('.beam'),car=box.querySelector('.lg'),ttl=box.querySelector('.ttl');
+  const W=innerWidth,cw=230,D=2600,t0=performance.now();introUntil=t0+150;   // la diapositiva se arma debajo del telón: el auto la descubre ya armada
+  box.classList.add('on');
+  const ease=x=>x<.18?0:(x=(x-.18)/.82,x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2);   // espera, arranca y acelera
+  const frame=t=>{
+    const x=Math.min(1,(t-t0)/D),e=ease(x),cx=-cw*0.3+e*(W+cw*1.6),edgeX=Math.max(0,cx+cw*0.15);
+    cur.style.clipPath='inset(0 0 0 '+edgeX+'px)';edge.style.left=edgeX+'px';edge.style.opacity=e>0&&e<1?1:0;
+    road.style.width=Math.max(0,cx+cw*0.6)+'px';road.style.opacity=x<.55?1:Math.max(0,1-(x-.55)*4);
+    car.style.transform='translateX('+cx+'px)';
+    beam.style.transform='translateX('+(cx+cw*0.92)+'px)';beam.style.opacity=Math.min(1,x*4);
+    ttl.style.opacity=x<.1?x/.1:x<.3?1:Math.max(0,1-(x-.3)*5);ttl.style.transform='translateY('+(-x*14)+'px)';
+    if(x<1)requestAnimationFrame(frame);else{box.classList.remove('on');cur.style.clipPath='';}
+  };
+  requestAnimationFrame(frame);setTimeout(()=>box.classList.remove('on'),D+400);   // por si el navegador frena los cuadros
+}
+function setScene(sc,live){
   const d=BY[sc.s];if(!d)return;
   const prev=cur,B=document.body.classList;cur={s:sc.s,st:sc.st|0,fill:Number.isInteger(sc.fill)?sc.fill:cur.fill,f:sc.f|0};fill=cur.fill;
   const isNew=prev.s!==cur.s;if(isNew)stopEngine();
+  if(isNew&&sawPrevia&&prev.s===SHOW[0].id&&d.act!==0)runIntro();
+  sawPrevia=live&&d.act===0;
   [...B].forEach(c=>{if(c.startsWith('s-')||c.startsWith('v-'))B.remove(c);});
   B.add('v-'+d.view,'s-'+d.id);B.toggle('q-on',!!d.qr&&d.view!=='app');B.toggle('nonames',!!(cur.f&1));
   if(d.view!=='map'){B.remove('p-on','p-co2','roots-on');}
@@ -736,7 +764,7 @@ room.onPeople(list=>{
   matchLive();   // si alguien suma su respuesta mientras está el match, se anima
   draw();
 });
-room.onScene(sc=>setScene(sc));
+room.onScene(sc=>setScene(sc,true));
 room.onStats(st=>paintStats(st));
 room.onStatus(s=>{$('#dot').className=s;$('#dot').title='Conexión: '+s;});
 room.start();
