@@ -19,35 +19,33 @@ Está en `show.js` (una sola lista que leen las tres partes).
 - Cada "Siguiente" pasa a la diapositiva siguiente.
 - Si una diapositiva tiene varias partes, se sueltan solas, una cada uno o dos segundos (campo `auto` de cada escena). Si tocás "Siguiente" mientras se arma, aparece entera.
 - La única parte que espera un toque es la frase final de la encuesta, porque reemplaza a los gráficos. La consola avisa "sigue: La frase final".
-- De punta a punta son 23 toques (antes eran 49). Abajo del botón, la consola siempre dice qué hace el próximo toque.
+- De punta a punta son 17 toques (antes 23). Abajo del botón, la consola siempre dice qué hace el próximo toque.
 
 **Antes de empezar · Previa (no cuenta en los 8 minutos).** Mientras la gente se acomoda, el proyector muestra el logo, un QR grande ("Escaneá y dejá el celular abierto") y cuántos celulares ya entraron. El celular dice "Mirá al frente". El cronómetro de la consola arranca solo con el primer "Siguiente".
 
-**Acto 1 · El problema (≈4:05).** Suma lo que agregó el amigo de Max (equipo, autos que llegan al ITBA, entrevistas, encuesta y cierre) a nuestros datos con fuente.
+**Acto 1 · El problema (≈2:25).** Versión corta: solo lo que llegamos a decir.
 
 | Escena | Qué muestra | Fuente |
 |---|---|---|
 | Equipo | "¿Cómo llegaste hoy a la facu?", los cuatro nombres y la foto del equipo | — (**borrador**: faltan nombres y foto) |
 | Problema | Autos con una persona que llegan todos al ITBA: "Todos vamos al mismo lugar. Cada uno por su cuenta." | — |
-| Autos | 12 autos con una persona que se juntan en 3; **1,3 personas por auto** | GCBA, Partición modal 2026 (base ENMODO 2018) |
-| Tiempo | Barras: 34 min en promedio, 77 con 2 medios, 109 con 3 | ENMODO 2018 (todos los motivos de viaje) |
-| Planeta | **31%** de los gases de efecto invernadero de la Ciudad sale del transporte | Inventario GEI CABA 2023 |
-| Qué existe | "No somos los primeros.": Tenés Lugar, Waze Carpool, BlaBlaCar, y "dentro de una comunidad cerrada, 20 o 30 alcanzan" | Prensa 2018–2026 y Mühlethaler (STRC 2012) |
-| Entrevistas | "Salimos a escuchar": cuatro tarjetas (nombre, cargo, frase), una por paso | — (**borrador**: faltan los entrevistados) |
-| Encuesta | 28 estudiantes del ITBA: qué frena (flexibilidad 68%, desvío 50%, seguridad 36%) y qué da confianza (misma carrera 79%, conocerse 75%, mismo género 11%). Cierra con "No es miedo: es rigidez. Y la confianza la da la comunidad." | Encuesta propia, octubre 2026 (muestra no aleatoria) |
+| Entrevistas | "Salimos a escuchar": cuatro tarjetas (nombre, cargo, frase), una por paso | — (**borrador**: vacía hasta tener los entrevistados) |
+| Encuesta | 38 respuestas válidas: qué frena (flexibilidad 66%, desvío 45%, seguridad 34%) y qué da confianza (conocerse en la facu 79%, misma carrera 71%, mismo género 8%). Cierra con "No es miedo: es rigidez. Y la confianza la da la comunidad." | Encuesta propia, octubre 2026 (40 respuestas, 2 descartadas por contradictorias; muestra no aleatoria) |
 | La solución | "Apps para compartir el auto hay muchas. Ninguna se volvió costumbre." → se dibuja el logo: ConVos, Comunidad ITBA | — |
+
+- Salieron del guion para ser breves: **Autos** (1,3 personas por auto), **Tiempo** (ENMODO), **Planeta** (31% de los GEI) y **Qué existe** (Tenés Lugar, Waze, BlaBlaCar). Quedan en el historial de git y en las notas por si preguntan.
 
 - Todas las cifras llevan su fuente corta al pie. El detalle de cada una (qué mide, año, enlace y límites) está en `resultados-investigacion.md`, que no se publica.
 - Salieron del guion, para no pasar los 8 minutos: la pregunta en vivo del inicio (Hook), **Volver** (83% presencial, Randstad) y **En el camino** (44,6% de las muertes laborales, SRT). Siguen en `resultados-investigacion.md` por si preguntan.
 - Las diapositivas del amigo de Max van en un escenario fijo de 1600 × 900 que se escala entero a la pantalla, con sus mismas animaciones.
 - **Foto del equipo:** guardala como `equipo.jpg` en esta carpeta (horizontal o vertical, se recorta sola). Mientras no esté, el proyector muestra "Foto del equipo". Los nombres y los entrevistados se completan en `show.js` (escenas `equipo` y `escuchar`); al completarlos, sacá el `draft:true`.
-- La encuesta es una foto fija de las 28 respuestas que traía el archivo del amigo. No se lee la hoja de Google en vivo: eso obligaría al proyector a ejecutar código de otro sitio. Si llegan más respuestas, se actualizan los números en `show.js` (escena `encuesta`).
+- La encuesta es una foto fija de las 40 respuestas de la planilla (38 válidas). No se lee la hoja de Google en vivo: eso obligaría al proyector a ejecutar código de otro sitio. Si llegan más respuestas, se actualizan los números en `show.js` (escena `encuesta`).
 - Las notas de la consola tienen el contexto de cada dato y lo que conviene aclarar si preguntan.
 - Si una diapositiva lleva `draft:true`, el proyector la marca como "Borrador".
 
 **Logos.** El proyector y la consola usan el de los dos caminos que se juntan en el destino (se dibuja al aparecer). El celular usa el del auto con dos personas (en la pantalla de espera anda en el lugar).
 
-**Acto 2 · La solución (≈3:45).** Cómo funciona (3 pasos, sin grupos fijos) → Por qué esta sí (cada miedo de la encuesta con su respuesta) → la app (Inicio, Cerca mío, Swipe, En viaje) → Ahora ustedes (QR) → **La pregunta** → **Match** → **Tu red** → Para la organización → Empresa → Cierre.
+**Acto 2 · La solución (≈3:10).** Cómo funciona (3 pasos, sin grupos fijos) → Por qué esta sí (cada miedo de la encuesta con su respuesta) → la app (Inicio, Cerca mío, Swipe, En viaje) → Ahora ustedes (QR) → **La pregunta** → **Match** → **Tu red** (con el CO₂) → Cierre. Salieron **Para la organización** y **Empresa** (lo que ve la universidad).
 
 - **La pregunta:** cada celular elige su localidad (nunca la dirección) y si tiene auto. El mapa del proyector se llena en vivo.
 - **Match:** aparece HAY MATCH y se ve una avenida en perspectiva (desde arriba y de costado) con los autos siempre en movimiento.
@@ -57,7 +55,6 @@ Está en `show.js` (una sola lista que leen las tres partes).
   - Si alguien responde en ese momento, su auto frena a buscarlo, o entra un auto nuevo si es conductor.
   - Se ve solo en el proyector y se puede saltear. Los personajes son ilustraciones planas (piel, pelo, ropa y peinado varían por persona) y llevan su inicial en la remera.
 - **Tu red:** puntos → raíces (el camino real de cada persona hasta la sede; donde se juntan, engorda) → grupos de colores y números → CO₂. En el celular, cada uno ve a quién tiene cerca y el interruptor "¿y si tuvieras auto?".
-- **Empresa:** burbujas por zona, sin nombres.
 
 ## Opciones de la consola (se explican solas)
 
