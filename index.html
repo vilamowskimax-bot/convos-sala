@@ -700,6 +700,9 @@ function startRoom(){
   try{ROOM.myId=sessionStorage.getItem('convosId');}catch(_){}
   if(!ROOM.myId||!/^[a-z0-9]{6,16}$/.test(ROOM.myId)){ROOM.myId=('u'+Math.random().toString(36).slice(2,10)).padEnd(8,'0');try{sessionStorage.setItem('convosId',ROOM.myId);}catch(_){}}
   ROOM.room=R.connect({role:'phone',key:ROOM.myId});let t=0;
+  /* la consola reinició todo: se olvida lo contestado y la página arranca de cero */
+  ROOM.room.onReset(()=>{try{sessionStorage.removeItem('convosForm');}catch(_){}
+    Promise.race([Promise.resolve(ROOM.room.leave()).catch(()=>{}),new Promise(r=>setTimeout(r,800))]).then(()=>location.reload());});
   try{const f=JSON.parse(sessionStorage.getItem('convosForm')||'null'),nick=f&&R.clean(f.nick,14);   // recargó la página: vuelve con lo que ya había contestado
     if(nick&&LOC(f.loc)){const car=f.car===true,seats=Math.min(4,Math.max(1,parseInt(f.seats,10)||3));Object.assign(S.me,{name:nick,origin:f.loc,car,seats});ROOM.joined=true;ROOM.room.track({id:ROOM.myId,n:nick,loc:f.loc,car,seats});}}catch(_){}
   addEventListener('pointerdown',e=>{if(ROOM.last&&e.target.closest&&e.target.closest('.screen,#orgpanel'))ROOM.room.ping(ROOM.last.s);},{passive:true});
