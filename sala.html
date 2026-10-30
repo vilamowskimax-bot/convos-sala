@@ -226,6 +226,33 @@ body.nonames .cpop,body.nonames .ccard,body.nonames .wtag{visibility:hidden}
 .sol .nx{margin-top:44px;font:600 22px var(--fb);letter-spacing:.14em;text-transform:uppercase;color:var(--orange)}
 .sol .a2{opacity:0;transform:translateY(20px);transition:opacity .8s 1s,transform .8s 1s}
 #slide.s1 .sol .a2{opacity:1;transform:none}
+/* cómo funciona: tres tarjetas, una por paso */
+#slide .t-how h1{font-size:96px;line-height:1;margin-top:14px}
+.hw{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:60px}
+.hw .st{position:relative;overflow:hidden;background:var(--ink-2);border-radius:36px;padding:36px 36px 40px;min-height:380px;display:flex;flex-direction:column}
+.hw .st::before{content:"";position:absolute;inset:0 0 auto 0;height:8px;background:var(--grad)}
+.hw .n{font:600 22px var(--fd);letter-spacing:.14em;color:var(--peri)}
+.hw .ic{width:96px;height:96px;margin-top:22px;border-radius:30px;background:var(--grad);color:var(--ink);display:grid;place-items:center}
+.hw .ic svg{width:54px;height:54px}
+.hw h3{margin:30px 0 0;font:600 52px/1 var(--fd)}
+.hw p{margin:16px 0 0;font:500 25px/1.4 var(--fb);color:var(--mute)}
+/* por qué esta sí: cada miedo de la encuesta con su respuesta */
+#slide .t-answers h1{font-size:88px;line-height:1;margin-top:14px}
+.ans{display:flex;flex-direction:column;gap:18px;margin-top:48px}
+.ar{display:grid;grid-template-columns:210px 300px 64px 1fr;gap:0 26px;align-items:center;background:var(--ink-2);border-radius:30px;padding:24px 36px}
+.ar .p{font:600 96px/1 var(--fd);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ar .f{font:500 25px/1.3 var(--fb);color:var(--mute)}
+.ar .to{width:56px;height:56px;color:var(--orange)}
+.ar h3{margin:0;font:600 46px/1.02 var(--fd)}
+.ar .d{margin:8px 0 0;font:500 22px/1.35 var(--fb);color:var(--mute)}
+/* ahora ustedes: el pase a la parte en vivo */
+#slide .cta h1{font-size:140px;line-height:.95;margin-top:22px}
+.cta .ey .lg{animation:none}
+.cta .sub{margin:34px 0 0;font:500 30px/1.4 var(--fb);color:var(--mute);max-width:26ch}
+
+/* al pasar de una diapositiva a la app o al mapa, entran con un fundido */
+body.v-app #app,body.v-map #map,body.v-map #hint{animation:vin .7s ease both}
+@keyframes vin{from{opacity:0}to{opacity:1}}
 
 /* ---------- la app espejada ---------- */
 #app{position:absolute;inset:0;display:none;grid-template-columns:minmax(260px,1fr) auto minmax(260px,1fr);gap:34px;align-items:center;justify-items:center;padding:84px 34px 40px;z-index:300}
@@ -492,7 +519,12 @@ const E=(tag,cls,k,html,o)=>'<'+tag+' class="b '+cls+'" data-k="'+k+'"'+(o===und
 const SRC=s=>E('p','src',1,s.src?'Fuente: '+esc(s.src):'');
 const hl=t=>esc(t||'').replace(/\*([^*]+)\*/g,'<span class="g">$1</span>').replace(/\n/g,'<br>');   // *así* = resaltado
 /* ---------- diapositivas de escenario fijo (1600×900): las diseñó el amigo de Max y se escalan enteras ---------- */
-const STAGE={welcome:1,team:1,converge:1,people:1,survey:1,reveal:1};
+const STAGE={welcome:1,team:1,converge:1,people:1,survey:1,reveal:1,how:1,answers:1,cta:1};
+const ICON={cal:'<rect x="3" y="4.5" width="18" height="16.5" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 10h18M12 13.5v3.2l2.2 1.3"/>',
+  ppl:'<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.6"/><path d="M15.6 14.2c3 .3 5.4 2.7 5.4 5.8"/>',car:CAR_PATH};
+const svgI=k=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(ICON[k]||'')+'</svg>';
+const ARROW='<svg class="to" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>';
+const nth=i=>i?'w w'+i:'a d2';   // la primera entra con la diapositiva; las demás, una por cada Siguiente
 function fitStage(){SL.style.setProperty('--k',Math.min(innerWidth/1600,innerHeight/900));}
 addEventListener('resize',fitStage);fitStage();
 function convergeSVG(dest){   // autos con una sola persona que llegan todos al mismo punto (siempre el mismo dibujo)
@@ -532,6 +564,12 @@ function stageHTML(s){
         '<p class="punch w w3">'+hl(s.punch)+'</p>'+(s.src?'<p class="ssrc">Fuente: '+esc(s.src)+'</p>':'');}
     case 'reveal':return '<div class="qw"><p class="q1 a d1">'+esc(s.q)+'<small class="a d3">'+esc(s.sub||'')+'</small></p></div>'+
       '<div class="sol">'+LOGO()+'<h1>'+esc(s.word)+'</h1><div class="tagi a2">'+esc(s.tag||'')+'</div><p class="a2">'+esc(s.line||'')+'</p><div class="nx a2">'+esc(s.next||'')+'</div></div>';
+    case 'how':return '<p class="ey a">'+LOGO()+esc(s.kicker)+'</p><h1 class="a d1">'+hl(s.title)+'</h1><div class="hw">'+(s.items||[]).slice(0,3).map((it,i)=>
+      '<div class="st '+nth(i)+'"><span class="n">PASO '+(i+1)+'</span><span class="ic">'+svgI(it.i)+'</span><h3>'+esc(it.t)+'</h3><p>'+esc(it.d)+'</p></div>').join('')+'</div>';
+    case 'answers':return '<p class="ey a">'+esc(s.kicker)+'</p><h1 class="a d1">'+hl(s.title)+'</h1><div class="ans">'+(s.rows||[]).slice(0,3).map((r,i)=>
+      '<div class="ar '+nth(i)+'"><span class="p">'+esc(r.p)+'</span><span class="f">'+esc(r.f)+'</span>'+ARROW+'<div><h3>'+esc(r.t)+'</h3><p class="d">'+esc(r.d)+'</p></div></div>').join('')+'</div>'+(s.src?'<p class="ssrc">Fuente: '+esc(s.src)+'</p>':'');
+    case 'cta':return '<div class="wel cta"><div><p class="ey a">'+LOGO()+esc(s.kicker)+'</p><h1 class="a d1">'+hl(s.title)+'</h1><p class="sub a d2">'+esc(s.sub||'')+'</p></div>'+
+      '<div class="qrc a d3"><div class="qrbox" id="qrCta"></div><b>'+esc(s.t1||'')+'</b><span>'+esc(s.t2||'')+'</span></div></div>';
   }
   return '';
 }
@@ -622,7 +660,7 @@ function buildSlide(d){
   SL.innerHTML=(d.draft?'<i class="draft">Borrador · completar con datos</i>':'')+(stage?'<div class="stg t-'+s.type+'">'+h+'</div>':'<div class="in'+(s.type==='match'?' wide':'')+'">'+h+'</div>');
   SL.classList.remove('enter','m','s1','s2','s3','s4');void SL.offsetWidth;SL.classList.add('enter');
   if(stage){
-    const q=$('#qrWel');if(q)makeQR(q,330);
+    const q=$('#qrWel');if(q)makeQR(q,330);const qc=$('#qrCta');if(qc)makeQR(qc,300);
     const im=SL.querySelector('.pframe img');if(im){im.addEventListener('error',()=>im.remove());if(im.complete&&!im.naturalWidth)im.remove();}   // sin foto queda el cartel "Foto del equipo"
     const g=SL.querySelector('.stg');setTimeout(()=>g.classList.add('on'),40);   // las entradas animadas (setTimeout y no rAF: corre aunque la ventana no esté al frente)
   }
