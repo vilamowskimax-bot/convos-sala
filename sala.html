@@ -127,7 +127,7 @@ body.nonames .cpop,body.nonames .ccard,body.nonames .wtag{visibility:hidden}
 .stg .a{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
 .stg.on .a{opacity:1;transform:none}
 .stg.on .d1{transition-delay:.15s}.stg.on .d2{transition-delay:.35s}.stg.on .d3{transition-delay:.55s}.stg.on .d5{transition-delay:.95s}
-.stg .w{opacity:0;transform:translateY(30px) scale(.98);transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1)}
+.stg .w{opacity:0;transform:translateY(30px) scale(.98);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
 #slide.s1 .w1,#slide.s2 .w2,#slide.s3 .w3,#slide.s4 .w4{opacity:1;transform:none}
 .stg .ey{display:flex;align-items:center;gap:12px;margin:0;font:600 18px var(--fb);letter-spacing:.16em;text-transform:uppercase;color:var(--peri)}
 .stg .ey .lg{width:44px;height:30px}
@@ -183,7 +183,7 @@ body.nonames .cpop,body.nonames .ccard,body.nonames .wtag{visibility:hidden}
 .dhead{display:flex;justify-content:space-between;align-items:flex-end}
 #slide .dhead h1{font-size:80px;line-height:1;margin-top:8px}
 .dhead .live{margin:0}
-.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:38px;transition:opacity .6s,transform .6s}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:38px;transition:opacity .8s,transform .8s}
 #slide.s3 .dgrid{opacity:0;transform:scale(.97)}
 .dpan{background:var(--ink-2);border-radius:34px;padding:30px 34px 28px;display:flex;flex-direction:column;gap:20px}
 .dq{font:600 30px/1.1 var(--fd)}
@@ -202,7 +202,7 @@ body.nonames .cpop,body.nonames .ccard,body.nonames .wtag{visibility:hidden}
 .punch{position:absolute;left:100px;right:100px;top:330px;margin:0;text-align:center;font:600 92px/1.05 var(--fd)}
 /* la solución */
 #slide .stg.t-reveal{align-items:center;text-align:center}
-.qw{transition:opacity .6s}
+.qw{transition:opacity .8s}
 #slide.s1 .qw{opacity:0}
 .q1{margin:0;font:600 100px/1 var(--fd);max-width:18ch}
 .q1 small{display:block;font:500 34px/1.3 var(--fb);color:var(--mute);margin-top:26px}
@@ -243,6 +243,27 @@ body.nonames .cpop,body.nonames .ccard,body.nonames .wtag{visibility:hidden}
 /* al pasar de una diapositiva a la app o al mapa, entran con un fundido */
 body.v-app #app,body.v-map #map,body.v-map #hint{animation:vin .7s ease both}
 @keyframes vin{from{opacity:0}to{opacity:1}}
+/* cierre */
+#slide .stg.t-logo{align-items:center;text-align:center}
+.cl{position:relative;display:flex;flex-direction:column;align-items:center}
+.cl>.lg{width:270px;height:186px;position:relative;z-index:1}
+.cl-road{position:absolute;left:50%;top:172px;width:1600px;margin-left:-800px;height:3px;border-radius:2px;background:linear-gradient(90deg,transparent,rgba(251,146,60,.55) 25%,#FB923C 50%,rgba(251,146,60,.55) 75%,transparent);transform-origin:0 50%;transform:scaleX(0);animation:cldraw 1.5s cubic-bezier(.2,.9,.25,1) .1s forwards}
+@keyframes cldraw{to{transform:scaleX(1)}}
+#slide .cl-w{font-size:132px;line-height:1;margin-top:34px}
+.cl-t{margin:10px 0 0;font:500 40px var(--fb);color:var(--mute)}
+.cl-n{margin-top:46px}
+.cl-k{margin:0 0 16px;font:600 16px var(--fb);letter-spacing:.2em;text-transform:uppercase;color:var(--peri)}
+.cl-row{display:flex;justify-content:center}
+.cl-row>div{display:flex;flex-direction:column;align-items:center;padding:0 46px;min-width:220px}
+.cl-row>div+div{border-left:1px solid var(--line)}
+.cl-row b{font:600 64px/1 var(--fd);color:var(--cream);font-variant-numeric:tabular-nums}
+.cl-row>div:last-child b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cl-row span{margin-top:8px;font:500 18px var(--fb);color:var(--mute)}
+.cl-x{margin:14px 0 0;font:500 13px var(--fb);color:var(--mute);opacity:.7}
+.cl-g{margin:40px 0 0;font:600 34px var(--fd);color:var(--cream)}
+.cl-g span{color:var(--orange)}
+.cl-f{position:absolute;left:0;right:0;bottom:44px;margin:0;font:600 15px var(--fb);letter-spacing:.2em;text-transform:uppercase;color:var(--mute);opacity:.6}
+
 /* entrada: el auto cruza la pantalla y corre la previa como un telón */
 #intro{position:fixed;inset:0;z-index:900;pointer-events:none;display:none}
 #intro.on{display:block}
@@ -323,7 +344,8 @@ body.nonames .dp .nm{display:none}
 @keyframes ping{0%{transform:scale(.7);opacity:.9}100%{transform:scale(2.6);opacity:0}}
 .zb{display:grid;place-items:center;width:var(--s);height:var(--s);border-radius:50%;background:rgba(244,63,94,.8);border:3px solid #fff;color:#fff;font:600 20px var(--fd);box-shadow:0 8px 20px rgba(21,11,51,.4)}
 .zl{position:absolute;top:calc(var(--s) + 6px);left:50%;transform:translateX(-50%);white-space:nowrap;font:600 12px var(--fb);color:var(--ink);background:rgba(245,235,221,.94);padding:2px 9px;border-radius:99px;font-style:normal}
-.sede{width:38px;height:38px;border-radius:12px;background:var(--ink);color:var(--cream);display:grid;place-items:center;border:3px solid #fff;box-shadow:0 6px 14px rgba(21,11,51,.5)}
+.sede{position:relative;width:38px;height:38px;border-radius:12px;background:var(--ink);color:var(--cream);display:grid;place-items:center;border:3px solid #fff;box-shadow:0 6px 14px rgba(21,11,51,.5)}
+.sede em{position:absolute;left:50%;top:44px;transform:translateX(-50%);white-space:nowrap;font:700 12px var(--fb);font-style:normal;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:#fff;padding:3px 8px;border-radius:7px;box-shadow:0 4px 10px rgba(21,11,51,.3)}
 body.roots-on .sede{animation:pulse 2.2s ease-out infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(244,63,94,.65),0 6px 14px rgba(21,11,51,.5)}100%{box-shadow:0 0 0 26px rgba(244,63,94,0),0 6px 14px rgba(21,11,51,.5)}}
 path.root{opacity:0;transition:opacity .9s ease}
@@ -355,13 +377,13 @@ body.v-map .toast{display:flex}
     <div class="anat" id="anat"><span data-t="Inicio">Inicio</span><span data-t="Cerca mío">Cerca mío</span><span data-t="Mis viajes">Mis viajes</span><span data-t="Perfil">Perfil</span></div>
     <p class="sb" id="capSub"></p><h2 id="capT"></h2><p id="capP"></p><div class="try" id="capTry"></div>
   </section>
-  <iframe id="mirror" src="index.html?espejo=1&amp;v=125dd229a2" title="App ConVos"></iframe>
+  <iframe id="mirror" src="index.html?espejo=1&amp;v=4531613d85" title="App ConVos"></iframe>
   <aside class="qrside glass"><div class="qrbox" id="qrSideBox"></div><b>Escaneá y seguí</b>
     <div class="meter"><div class="mt"><i id="nCon">0</i>conectados</div><div class="bar2"><u id="mtr"></u></div><div id="mtrT">0 lo probaron</div></div></aside>
 </main>
 
 <div id="intro" aria-hidden="true"><div class="cur"><div class="ttl"><div><p>Tecnología y Sociedad · ITBA</p><h2>ConVos</h2><span>Movilidad urbana · Trabajo de campo 2026</span></div></div></div><div class="road"></div><div class="beam"></div><div class="edge"></div><span id="introCar"></span></div>
-<div class="brand glass"><svg viewBox="0 10 64 44" aria-hidden="true"><g class="spd"><path d="M2 30h7M0 36h8M3 42h5" stroke="#818CF8" stroke-width="2.6" stroke-linecap="round"/></g><g class="body"><path d="M10 39q0-8 8-9.5l5.5-9q1.8-3 5.5-3h11q3.6 0 5.6 3l5.6 9q7.8 1.4 7.8 8.5v3.5q0 3-3 3H13q-3 0-3-3z" fill="#FB923C"/><path d="M25.5 22h17q1.6 0 2.5 1.4l3.6 6.1H21.4l3.6-6.1q.9-1.4 2.5-1.4z" fill="#150B33"/><circle cx="29" cy="26.6" r="3.1" fill="#F5EBDD"/><circle cx="40" cy="26.6" r="3.1" fill="#F5EBDD"/><rect x="55.5" y="34" width="4" height="3" rx="1.5" fill="#F5EBDD"/></g><g class="whl"><circle cx="21" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/><circle cx="49" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/></g></svg>ConVos</div>
+<div class="brand glass"><svg viewBox="0 10 64 44" aria-hidden="true"><g class="spd"><path d="M1.5 31.5h6M0 36.5h6.5M3 41.5h4" stroke="#818CF8" stroke-opacity=".85" stroke-width="1.7" stroke-linecap="round"/></g><g class="body"><path d="M9 44.5V39.2q0-4.6 4.6-5.3l6.6-.9 6.4-7.4q1.9-2.1 4.7-2.1h12.2q2.8 0 4.6 2l6.5 7.3 5 .9q4.4.8 4.4 5.2v4.1q0 1.9-1.9 1.9H10.9q-1.9 0-1.9-1.9z" fill="#FB923C"/><path d="M22.4 32.9l5.3-6.1q1.2-1.3 3-1.3h5.8v7.4z" fill="#150B33"/><path d="M38.6 25.5h5.3q1.8 0 3 1.3l5.4 6.1H38.6z" fill="#150B33"/><circle cx="32.2" cy="29.2" r="2.1" fill="#F5EBDD"/><path d="M29 32.9q0-2.3 3.2-2.3t3.2 2.3z" fill="#F5EBDD"/><circle cx="43.6" cy="29.2" r="2.1" fill="#F5EBDD"/><path d="M40.4 32.9q0-2.3 3.2-2.3t3.2 2.3z" fill="#F5EBDD"/><path d="M21 38.2h37" stroke="#150B33" stroke-opacity=".22" stroke-width=".9" stroke-linecap="round"/><rect x="58.6" y="35.6" width="3.6" height="2" rx="1" fill="#F5EBDD"/><rect x="9" y="36.2" width="1.8" height="2.4" rx=".8" fill="#F43F5E"/></g><g class="whl"><circle cx="20.5" cy="45.6" r="6.3" fill="#150B33"/><circle cx="20.5" cy="45.6" r="4.2" fill="#2F2166" stroke="#F5EBDD" stroke-width="1.5"/><circle cx="20.5" cy="45.6" r="1.3" fill="#F5EBDD"/><circle cx="50" cy="45.6" r="6.3" fill="#150B33"/><circle cx="50" cy="45.6" r="4.2" fill="#2F2166" stroke="#F5EBDD" stroke-width="1.5"/><circle cx="50" cy="45.6" r="1.3" fill="#F5EBDD"/></g></svg>ConVos</div>
 <div id="hint" class="glass"><b id="hintT"></b><span id="hintP"></span></div>
 
 <aside class="panel glass" id="panel" aria-label="Números de la sala">
@@ -383,13 +405,16 @@ body.v-map .toast{display:flex}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha256-XJrs/DDkVkUZ29zdzFOkGCJ9zHVo5hnpdi3c7HYJ7Uc=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha256-xUHvBjJ4hahBW8qN9gceFBibSFUzbe9PNttUvehITzY=" crossorigin="anonymous"></script>
-<script src="locs.js?v=dc410bc9df"></script><script src="manifest.js?v=5eaa727148"></script><script src="show.js?v=c5a4399bdd"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=118cfce577"></script><script src="match.js?v=43d4d534ea"></script>
+<script src="locs.js?v=dc410bc9df"></script><script src="manifest.js?v=5eaa727148"></script><script src="show.js?v=eb95e47597"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=118cfce577"></script><script src="match.js?v=43d4d534ea"></script>
 <script>
 (function(){
 'use strict';
 const R=window.ConvosRoom,SHOW=R.SHOW,BY=R.BYID,$=(s,r=document)=>r.querySelector(s);
 const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const SEDE={pt:[-34.64030,-58.40125],name:'Distrito Tecnológico'};
+/* las tres sedes del ITBA (las mismas de la app). Cada persona va a la que le queda más cerca. */
+const SEDES=[{pt:[-34.64030,-58.40125],name:'Distrito Tecnológico',short:'Tecnológico'},{pt:[-34.64169,-58.40621],name:'Rectorado',short:'Rectorado'},{pt:[-34.6058,-58.3737],name:'Distrito Financiero',short:'Financiero'}];
+const PINS=[{pt:SEDES[0].pt,name:'Distrito Tecnológico y Rectorado',short:'Tecnológico · Rectorado'},{pt:SEDES[2].pt,name:SEDES[2].name,short:SEDES[2].short}];   // las dos de Parque Patricios están a 500 m: un solo marcador
+const SEDE=SEDES[0],nearSedeKm=p=>Math.min(...SEDES.map(s=>R.hav(p,s.pt)));
 const ZONE_OF=new Map(window.CONVOS_LOCS.map(l=>[l.name,l.zone])),ZN=window.CONVOS_ZONES;
 const COLORS=['#F97316','#6366F1','#10B981','#EC4899','#0EA5E9','#EF4444','#8B5CF6','#EAB308'];
 const RADIUS=4.5;   /* un auto toma a quienes viven a menos de 4,5 km */
@@ -412,13 +437,13 @@ function dijkstra(src,target=-1){
   const n=G.n,dist=new Float64Array(n).fill(Infinity),pe=new Int32Array(n).fill(-1),pn=new Int32Array(n).fill(-1),hk=[],hv=[];
   const push=(k,v)=>{let i=hk.length;hk.push(k);hv.push(v);while(i>0){const p=(i-1)>>1;if(hk[p]<=k)break;hk[i]=hk[p];hv[i]=hv[p];i=p;}hk[i]=k;hv[i]=v;};
   const pop=()=>{const k=hk[0],v=hv[0],lk=hk.pop(),lv=hv.pop();if(hk.length){let i=0;const L=hk.length;while(true){let l=2*i+1,r=l+1,s=i,sk=lk;if(l<L&&hk[l]<sk){s=l;sk=hk[l]}if(r<L&&hk[r]<sk){s=r}if(s===i)break;hk[i]=hk[s];hv[i]=hv[s];i=s;}hk[i]=lk;hv[i]=lv;}return [k,v];};
-  dist[src]=0;push(0,src);
+  const srcs=Array.isArray(src)?src:[src];srcs.forEach(x=>{dist[x]=0;push(0,x);});src=srcs[0];   // varias fuentes: el árbol lleva a la sede más cercana
   while(hk.length){const[d,u]=pop();if(d>dist[u])continue;if(u===target)break;for(let k=G.start[u];k<G.start[u+1];k++){const e=G.adjE[k],v=G.adjN[k],nd=d+G.ew[e];if(nd<dist[v]){dist[v]=nd;pe[v]=e;pn[v]=u;push(nd,v);}}}
   return {dist,pe,pn,src};
 }
 
 let TREE=null,graphP=null;
-function ensureGraph(){return graphP||(graphP=fetch('graph.json').then(r=>r.json()).then(j=>{loadGraph(j);const n=snap(SEDE.pt);TREE=dijkstra(n);}).catch(()=>{graphP=null;}));}
+function ensureGraph(){return graphP||(graphP=fetch('graph.json').then(r=>r.json()).then(j=>{loadGraph(j);TREE=dijkstra(SEDES.map(s=>snap(s.pt)));}).catch(()=>{graphP=null;}));}
 function edgePts(e){const g=G.eg[e]||[],a=G.ea[e],b=G.eb[e],pts=[[G.lat[a],G.lon[a]]];for(let k=0;k<g.length;k+=2)pts.push([g[k+1]/1e5,g[k]/1e5]);pts.push([G.lat[b],G.lon[b]]);return pts;}
 
 /* ---------- mapa (el mismo mapa sin conexión del prototipo) ---------- */
@@ -433,7 +458,7 @@ MAP.attributionControl.setPrefix(false).addAttribution('© OpenStreetMap');new T
 const LG={halo:L.layerGroup().addTo(MAP),root:L.layerGroup().addTo(MAP),agg:L.layerGroup().addTo(MAP),ppl:L.layerGroup().addTo(MAP),sede:L.layerGroup().addTo(MAP)};
 const CAR_PATH='<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>';
 const ICON_CAR='<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">'+CAR_PATH+'</svg>';
-L.marker(SEDE.pt,{icon:L.divIcon({className:'',html:'<span class="sede" title="'+esc(SEDE.name)+'"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11v5c3 2 7 2 10 0v-5"/></svg></span>',iconSize:[38,38],iconAnchor:[19,19]}),zIndexOffset:900,interactive:false}).addTo(LG.sede);
+PINS.forEach((S0,i)=>L.marker(S0.pt,{icon:L.divIcon({className:'',html:'<span class="sede" title="'+esc(S0.name)+'"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11v5c3 2 7 2 10 0v-5"/></svg><em>'+esc(S0.short)+'</em></span>',iconSize:[38,38],iconAnchor:[19,19]}),zIndexOffset:900-i,interactive:false}).addTo(LG.sede));
 
 /* ---------- estado ---------- */
 const room=R.connect({role:'screen'});   // el proyector solo mira: no publica nada ni tiene claves
@@ -444,9 +469,9 @@ function people(){
   return all.map(p=>({...p,pt:R.pointOf(p)})).filter(p=>p.pt);
 }
 const plan=ps=>R.plan(ps,RADIUS);   // armado de grupos (compartido con la consola)
-function numbers(ps,pl){
+function numbers(ps,pl){   // n: personas · groups: viajes posibles · co2: kg por mes (máximo)
   let conn=0,noCar=0,co2=0;
-  pl.groups.forEach(g=>{conn+=1+g.members.length;g.members.forEach(j=>{if(ps[j].car)co2+=R.hav(ps[j].pt,SEDE.pt)*1.3*2*0.16*20;else noCar++;});});
+  pl.groups.forEach(g=>{conn+=1+g.members.length;g.members.forEach(j=>{if(ps[j].car)co2+=nearSedeKm(ps[j].pt)*1.3*2*0.16*20;else noCar++;});});
   const zones={};ps.forEach(p=>{const z=ZONE_OF.get(p.loc);zones[z]=(zones[z]||0)+1;});
   return {n:ps.length,sim:ps.filter(p=>p.sim).length,conn:ps.length?Math.round(conn/ps.length*100):0,groups:pl.groups.length,noCar,co2:Math.round(co2),zones};
 }
@@ -510,20 +535,20 @@ function fit(){
   /* encuadra a casi todos (deja afuera a los muy alejados, para que lo del centro se vea grande) */
   let pts=people().map(p=>p.pt);
   if(pts.length>=6){const c=[med(pts.map(p=>p[0])),med(pts.map(p=>p[1]))],ds=pts.map(p=>R.hav(c,p)),lim=Math.max(10,med(ds)*2.5);pts=pts.filter((_,i)=>ds[i]<=lim);}
-  const b=L.latLngBounds([SEDE.pt,SEDE.pt]);pts.forEach(p=>b.extend(p));
+  const b=L.latLngBounds([SEDE.pt,SEDE.pt]);SEDES.forEach(x=>b.extend(x.pt));pts.forEach(p=>b.extend(p));
   MAP.fitBounds(b,{paddingTopLeft:[60,110],paddingBottomRight:[(innerWidth>1100?390:60),90],maxZoom:13.5});
 }
 function toast(t){const d=document.createElement('div');d.textContent=t;$('#toast').appendChild(d);setTimeout(()=>d.remove(),4800);while($('#toast').children.length>3)$('#toast').firstChild.remove();}
 
 /* ---------- diapositivas: cada paso suma algo (un número, un gráfico) o anima ---------- */
 /* logo único (proyector, consola y celular): el auto con dos personas. */
-const LOGO=cls=>'<svg class="lg'+(cls?' '+cls:'')+'" viewBox="0 10 64 44" aria-hidden="true"><g class="spd"><path d="M2 30h7M0 36h8M3 42h5" stroke="#818CF8" stroke-width="2.6" stroke-linecap="round"/></g><g class="body"><path d="M10 39q0-8 8-9.5l5.5-9q1.8-3 5.5-3h11q3.6 0 5.6 3l5.6 9q7.8 1.4 7.8 8.5v3.5q0 3-3 3H13q-3 0-3-3z" fill="#FB923C"/><path d="M25.5 22h17q1.6 0 2.5 1.4l3.6 6.1H21.4l3.6-6.1q.9-1.4 2.5-1.4z" fill="#150B33"/><circle cx="29" cy="26.6" r="3.1" fill="#F5EBDD"/><circle cx="40" cy="26.6" r="3.1" fill="#F5EBDD"/><rect x="55.5" y="34" width="4" height="3" rx="1.5" fill="#F5EBDD"/></g><g class="whl"><circle cx="21" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/><circle cx="49" cy="45" r="6.2" fill="#150B33" stroke="#F5EBDD" stroke-width="2.6"/></g></svg>';
+const LOGO=cls=>'<svg class="lg'+(cls?' '+cls:'')+'" viewBox="0 10 64 44" aria-hidden="true"><g class="spd"><path d="M1.5 31.5h6M0 36.5h6.5M3 41.5h4" stroke="#818CF8" stroke-opacity=".85" stroke-width="1.7" stroke-linecap="round"/></g><g class="body"><path d="M9 44.5V39.2q0-4.6 4.6-5.3l6.6-.9 6.4-7.4q1.9-2.1 4.7-2.1h12.2q2.8 0 4.6 2l6.5 7.3 5 .9q4.4.8 4.4 5.2v4.1q0 1.9-1.9 1.9H10.9q-1.9 0-1.9-1.9z" fill="#FB923C"/><path d="M22.4 32.9l5.3-6.1q1.2-1.3 3-1.3h5.8v7.4z" fill="#150B33"/><path d="M38.6 25.5h5.3q1.8 0 3 1.3l5.4 6.1H38.6z" fill="#150B33"/><circle cx="32.2" cy="29.2" r="2.1" fill="#F5EBDD"/><path d="M29 32.9q0-2.3 3.2-2.3t3.2 2.3z" fill="#F5EBDD"/><circle cx="43.6" cy="29.2" r="2.1" fill="#F5EBDD"/><path d="M40.4 32.9q0-2.3 3.2-2.3t3.2 2.3z" fill="#F5EBDD"/><path d="M21 38.2h37" stroke="#150B33" stroke-opacity=".22" stroke-width=".9" stroke-linecap="round"/><rect x="58.6" y="35.6" width="3.6" height="2" rx="1" fill="#F5EBDD"/><rect x="9" y="36.2" width="1.8" height="2.4" rx=".8" fill="#F43F5E"/></g><g class="whl"><circle cx="20.5" cy="45.6" r="6.3" fill="#150B33"/><circle cx="20.5" cy="45.6" r="4.2" fill="#2F2166" stroke="#F5EBDD" stroke-width="1.5"/><circle cx="20.5" cy="45.6" r="1.3" fill="#F5EBDD"/><circle cx="50" cy="45.6" r="6.3" fill="#150B33"/><circle cx="50" cy="45.6" r="4.2" fill="#2F2166" stroke="#F5EBDD" stroke-width="1.5"/><circle cx="50" cy="45.6" r="1.3" fill="#F5EBDD"/></g></svg>';
 const SL=$('#slide'),MARK=LOGO('draw');
 const E=(tag,cls,k,html,o)=>'<'+tag+' class="b '+cls+'" data-k="'+k+'"'+(o===undefined?'':' data-o="'+o+'"')+'>'+html+'</'+tag+'>';
 const SRC=s=>E('p','src',1,s.src?'Fuente: '+esc(s.src):'');
 const hl=t=>esc(t||'').replace(/\*([^*]+)\*/g,'<span class="g">$1</span>').replace(/\n/g,'<br>');   // *así* = resaltado
 /* ---------- diapositivas de escenario fijo (1600×900): las diseñó el amigo de Max y se escalan enteras ---------- */
-const STAGE={welcome:1,team:1,converge:1,people:1,survey:1,reveal:1,how:1,answers:1,cta:1};
+const STAGE={welcome:1,team:1,converge:1,people:1,survey:1,reveal:1,how:1,answers:1,cta:1,logo:1};
 const ICON={cal:'<rect x="3" y="4.5" width="18" height="16.5" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 10h18M12 13.5v3.2l2.2 1.3"/>',
   ppl:'<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.6"/><path d="M15.6 14.2c3 .3 5.4 2.7 5.4 5.8"/>',car:CAR_PATH};
 const svgI=k=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(ICON[k]||'')+'</svg>';
@@ -570,12 +595,23 @@ function stageHTML(s){
       '<div class="st '+nth(i)+'"><span class="n">PASO '+(i+1)+'</span><span class="ic">'+svgI(it.i)+'</span><h3>'+esc(it.t)+'</h3><p>'+esc(it.d)+'</p></div>').join('')+'</div>';
     case 'answers':return '<p class="ey a">'+esc(s.kicker)+'</p><h1 class="a d1">'+hl(s.title)+'</h1><div class="ans">'+(s.rows||[]).slice(0,3).map((r,i)=>
       '<div class="ar '+nth(i)+'"><span class="p">'+esc(r.p)+'</span><span class="f">'+esc(r.f)+'</span>'+ARROW+'<div><h3>'+esc(r.t)+'</h3><p class="d">'+esc(r.d)+'</p></div></div>').join('')+'</div>'+(s.src?'<p class="ssrc">Fuente: '+esc(s.src)+'</p>':'');
+    case 'logo':{   // cierre: la ruta se dibuja, el auto entra y frena; después, los números de esta sala
+      const ps=people(),nb=numbers(ps,plan(ps)),stat=(v,t)=>'<div><b data-v="'+v+'">0</b><span>'+t+'</span></div>';
+      return '<div class="cl"><div class="cl-road"></div>'+LOGO('draw')+'<h1 class="cl-w a d2">'+esc(s.word)+'</h1><p class="cl-t a d3">'+esc(s.tag||'')+'</p>'+
+        (nb.n?'<div class="cl-n w w1"><p class="cl-k">Esta sala, hoy</p><div class="cl-row">'+stat(nb.n,'personas')+stat(nb.groups,nb.groups===1?'viaje compartido posible':'viajes compartidos posibles')+stat(nb.co2,'kg de CO₂ menos por mes*')+'</div>'+
+          '<p class="cl-x">*Máximo estimado con los factores oficiales (SNIGEIAR 2025)'+(nb.sim?' · incluye '+nb.sim+' compañeros de ejemplo':'')+'</p></div>':'')+
+        '<p class="cl-g w w1">Gracias. <span>¿Preguntas?</span></p></div><p class="cl-f a d5">Tecnología y Sociedad · ITBA · 2026</p>';}
     case 'cta':return '<div class="wel cta"><div><p class="ey a">'+LOGO()+esc(s.kicker)+'</p><h1 class="a d1">'+hl(s.title)+'</h1><p class="sub a d2">'+esc(s.sub||'')+'</p></div>'+
       '<div class="qrc a d3"><div class="qrbox" id="qrCta"></div><b>'+esc(s.t1||'')+'</b><span>'+esc(s.t2||'')+'</span></div></div>';
   }
   return '';
 }
 function stageStep(s,st){
+  if(s.type==='logo'&&st>=1){
+    SL.querySelectorAll('.cl-row b').forEach((b,j)=>{if(b.dataset.done)return;b.dataset.done='1';const v=+b.dataset.v,t0=performance.now()+300+j*180,D=1400;
+      (function tick(t){const x=Math.min(1,Math.max(0,(t-t0)/D)),e=1-Math.pow(1-x,3);b.textContent=Math.round(v*e).toLocaleString('es-AR');if(x<1)requestAnimationFrame(tick);})(t0);
+      setTimeout(()=>{b.textContent=v.toLocaleString('es-AR');},D+j*180+700);});
+  }
   if(s.type==='survey'){
     SL.querySelectorAll('.dpan').forEach(pan=>{const on=st>=+pan.dataset.q;pan.classList.toggle('lit',on);
       pan.querySelectorAll('.hb').forEach((r,j)=>{const p=+r.dataset.p,u=r.querySelector('u'),b=r.querySelector('b');
@@ -658,7 +694,6 @@ function buildSlide(d){
     case 'list':h=E('p','kick',0,esc(s.kicker))+E('h1','t',0,esc(s.title))+'<div class="lst">'+s.rows.map((r,i)=>'<div class="b lr" data-k="1" style="--i:'+i+'"><b>'+esc(r.l)+'</b><span>'+esc(r.v)+'</span></div>').join('')+'</div>'+E('p','end',2,esc(s.end||''))+SRC(s);break;
     case 'match':h=matchHTML();break;
     case 'big':h=(s.lines||[]).map((l,i)=>E('h1','',i,esc(l))).join('');break;
-    case 'logo':h='<div class="stack">'+(s.pre?E('h1','',0,esc(s.pre),1):'')+E('div','word',s.pre?1:0,'<span class="mk">'+MARK+'</span><span>'+esc(s.word)+'</span>')+'</div>'+E('p','tag',s.pre?2:1,esc(s.tag||''));break;
     default:if(STAGE[s.type])h=stageHTML(s);
   }
   const stage=!!STAGE[s.type];
@@ -716,16 +751,16 @@ function runIntro(){
   const box=$('#intro');if(!box||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   if(!box.querySelector('.lg'))$('#introCar').outerHTML=LOGO('');
   const cur=box.querySelector('.cur'),edge=box.querySelector('.edge'),road=box.querySelector('.road'),beam=box.querySelector('.beam'),car=box.querySelector('.lg'),ttl=box.querySelector('.ttl');
-  const W=innerWidth,cw=230,D=2600,t0=performance.now();introUntil=t0+150;   // la diapositiva se arma debajo del telón: el auto la descubre ya armada
+  const W=innerWidth,cw=230,D=3800,t0=performance.now();introUntil=t0+150;   // la diapositiva se arma debajo del telón: el auto la descubre ya armada
   box.classList.add('on');
-  const ease=x=>x<.18?0:(x=(x-.18)/.82,x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2);   // espera, arranca y acelera
+  const ease=x=>x<.26?0:(x=(x-.26)/.74,x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2);   // espera, arranca y acelera
   const frame=t=>{
     const x=Math.min(1,(t-t0)/D),e=ease(x),cx=-cw*0.3+e*(W+cw*1.6),edgeX=Math.max(0,cx+cw*0.15);
     cur.style.clipPath='inset(0 0 0 '+edgeX+'px)';edge.style.left=edgeX+'px';edge.style.opacity=e>0&&e<1?1:0;
-    road.style.width=Math.max(0,cx+cw*0.6)+'px';road.style.opacity=x<.55?1:Math.max(0,1-(x-.55)*4);
+    road.style.width=Math.max(0,cx+cw*0.6)+'px';road.style.opacity=x<.6?1:Math.max(0,1-(x-.6)*4);
     car.style.transform='translateX('+cx+'px)';
     beam.style.transform='translateX('+(cx+cw*0.92)+'px)';beam.style.opacity=Math.min(1,x*4);
-    ttl.style.opacity=x<.1?x/.1:x<.3?1:Math.max(0,1-(x-.3)*5);ttl.style.transform='translateY('+(-x*14)+'px)';
+    ttl.style.opacity=x<.08?x/.08:x<.36?1:Math.max(0,1-(x-.36)*5);ttl.style.transform='translateY('+(-x*14)+'px)';
     if(x<1)requestAnimationFrame(frame);else{box.classList.remove('on');cur.style.clipPath='';}
   };
   requestAnimationFrame(frame);setTimeout(()=>box.classList.remove('on'),D+400);   // por si el navegador frena los cuadros

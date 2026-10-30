@@ -17,6 +17,9 @@ Archivos compartidos: `show.js` (guion), `sync.js` (sala en vivo y firmas), `mat
 Está en `show.js` (una sola lista que leen las tres partes).
 
 - Cada "Siguiente" pasa a la diapositiva siguiente.
+- **Mismo ritmo en todas:** las partes de cada diapositiva se sueltan cada 2,5 s (`CONVOS_AUTO`) y todas las entradas duran 0,8 s. Solo Match y Tu red tienen su propio ritmo, porque son animaciones en vivo.
+- **Entrada:** con el primer "Siguiente" aparece una placa (Tecnología y Sociedad · ITBA · ConVos) y el auto la cruza despacio de izquierda a derecha, corriéndola como un telón: detrás queda la diapositiva del equipo ya armada. Si la tele se recarga a mitad de la charla, no se repite.
+- **Cierre:** la ruta se dibuja, el auto entra y frena en el centro (ConVos · Volver juntos.); después aparecen los números de esta sala (personas, viajes compartidos posibles y kg de CO₂ por mes) y "Gracias. ¿Preguntas?".
 - Si una diapositiva tiene varias partes, se sueltan solas, una cada uno o dos segundos (campo `auto` de cada escena). Si tocás "Siguiente" mientras se arma, aparece entera.
 - La única parte que espera un toque es la frase final de la encuesta, porque reemplaza a los gráficos. La consola avisa "sigue: La frase final".
 - De punta a punta son 17 toques (antes 23). Abajo del botón, la consola siempre dice qué hace el próximo toque.
@@ -30,7 +33,7 @@ Está en `show.js` (una sola lista que leen las tres partes).
 | Equipo | "¿Cómo llegaste hoy a la facu?", los cuatro nombres y la foto del equipo | — (**borrador**: faltan nombres y foto) |
 | Problema | Autos con una persona que llegan todos al ITBA: "Todos vamos al mismo lugar. Cada uno por su cuenta." | — |
 | Entrevistas | "Salimos a escuchar": cuatro tarjetas (nombre, cargo, frase), una por paso | — (**borrador**: vacía hasta tener los entrevistados) |
-| Encuesta | 38 respuestas válidas: qué frena (flexibilidad 66%, desvío 45%, seguridad 34%) y qué da confianza (conocerse en la facu 79%, misma carrera 71%, mismo género 8%). Cierra con "No es miedo: es rigidez. Y la confianza la da la comunidad." | Encuesta propia, octubre 2026 (40 respuestas, 2 descartadas por contradictorias; muestra no aleatoria) |
+| Encuesta | 40 respuestas, en barras horizontales: qué frena (flexibilidad 68%, desvío 48%, seguridad 38%) y qué da confianza (conocerse en la facu 80%, misma carrera 73%, mismo género 13%). Cierra con "No es miedo: es rigidez. Y la confianza la da la comunidad." | Encuesta propia, octubre 2026 (40 respuestas; muestra no aleatoria) |
 | La solución | "Apps para compartir el auto hay muchas. Ninguna se volvió costumbre." → se dibuja el logo: ConVos, Comunidad ITBA | — |
 
 - Salieron del guion para ser breves: **Autos** (1,3 personas por auto), **Tiempo** (ENMODO), **Planeta** (31% de los GEI) y **Qué existe** (Tenés Lugar, Waze, BlaBlaCar). Quedan en el historial de git y en las notas por si preguntan.
@@ -39,11 +42,13 @@ Está en `show.js` (una sola lista que leen las tres partes).
 - Salieron del guion, para no pasar los 8 minutos: la pregunta en vivo del inicio (Hook), **Volver** (83% presencial, Randstad) y **En el camino** (44,6% de las muertes laborales, SRT). Siguen en `resultados-investigacion.md` por si preguntan.
 - Las diapositivas del amigo de Max van en un escenario fijo de 1600 × 900 que se escala entero a la pantalla, con sus mismas animaciones.
 - **Foto del equipo:** guardala como `equipo.jpg` en esta carpeta (horizontal o vertical, se recorta sola). Mientras no esté, el proyector muestra "Foto del equipo". Los nombres y los entrevistados se completan en `show.js` (escenas `equipo` y `escuchar`); al completarlos, sacá el `draft:true`.
-- La encuesta es una foto fija de las 40 respuestas de la planilla (38 válidas). No se lee la hoja de Google en vivo: eso obligaría al proyector a ejecutar código de otro sitio. Si llegan más respuestas, se actualizan los números en `show.js` (escena `encuesta`).
+- La encuesta es una foto fija de las 40 respuestas de la planilla (se usan todas). No se lee la hoja de Google en vivo: eso obligaría al proyector a ejecutar código de otro sitio. Si llegan más respuestas, se actualizan los números en `show.js` (escena `encuesta`).
 - Las notas de la consola tienen el contexto de cada dato y lo que conviene aclarar si preguntan.
 - Si una diapositiva lleva `draft:true`, el proyector la marca como "Borrador".
 
-**Logos.** El proyector y la consola usan el de los dos caminos que se juntan en el destino (se dibuja al aparecer). El celular usa el del auto con dos personas (en la pantalla de espera anda en el lugar).
+**Logo.** Uno solo en todas las pantallas: el auto (sedán de costado) con dos personas en las ventanillas. En el proyector entra manejando en La solución y en el cierre; en la previa y en el celular anda en el lugar.
+
+**Sedes.** El mapa usa las tres sedes del ITBA: Distrito Tecnológico (Lavardén 315), Rectorado (Iguazú 341) y Distrito Financiero (San Martín 202). Cada raíz va a la sede más cercana y el CO₂ se calcula con esa distancia. Tecnológico y Rectorado están a 500 m: comparten un marcador.
 
 **Acto 2 · La solución (≈3:10).** Cómo funciona (3 pasos, sin grupos fijos) → Por qué esta sí (cada miedo de la encuesta con su respuesta) → la app (Inicio, Cerca mío, Swipe, En viaje) → Ahora ustedes (QR) → **La pregunta** → **Match** → **Tu red** (con el CO₂) → Cierre. Salieron **Para la organización** y **Empresa** (lo que ve la universidad).
 
