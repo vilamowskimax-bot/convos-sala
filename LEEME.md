@@ -19,7 +19,8 @@ Está en `show.js` (una sola lista que leen las tres partes).
 - Cada "Siguiente" pasa a la diapositiva siguiente.
 - **Mismo ritmo en todas:** las partes de cada diapositiva se sueltan cada 2,5 s (`CONVOS_AUTO`) y todas las entradas duran 0,8 s. Solo Match y Tu red tienen su propio ritmo, porque son animaciones en vivo.
 - **Entrada:** con el primer "Siguiente" aparece una placa (Tecnología y Sociedad · ITBA · ConVos) y el auto la cruza despacio de izquierda a derecha, corriéndola como un telón: detrás queda la diapositiva del equipo ya armada. Si la tele se recarga a mitad de la charla, no se repite.
-- **Cierre:** la ruta se dibuja, el auto entra y frena en el centro (ConVos · Volver juntos.). Después, el tablero "Lo que ahorraríamos cada mes" con la gente de esta sala: kg de CO₂, litros de nafta, pesos de nafta ($2.045 el litro, YPF oct. 2026) y lugares de estacionamiento libres; al lado, el gráfico del CO₂ acumulado en un año lectivo (10 meses) y su equivalencia en árboles urbanos (60 kg por árbol por año, EPA). Abajo, "Gracias. ¿Preguntas?". Queda en pantalla durante las preguntas.
+- **Lo que ahorramos** (después de Tu red): el tablero "Lo que ahorraríamos cada mes" con la gente de esta sala, por dimensión: ambiental (kg de CO₂), económica (pesos y litros de nafta, a $2.045 el litro, YPF oct. 2026), logística (autos menos y estacionamientos libres) y social (cuántos ya tienen con quién volver). En el segundo paso crece el gráfico del CO₂ acumulado en un año lectivo (10 meses) y su equivalencia en árboles urbanos (60 kg por árbol por año, EPA).
+- **Cierre:** la ruta se dibuja, el auto entra y frena en el centro (ConVos · Volver juntos.); después, "Gracias. ¿Preguntas?".
 - Si una diapositiva tiene varias partes, se sueltan solas, una cada uno o dos segundos (campo `auto` de cada escena). Si tocás "Siguiente" mientras se arma, aparece entera.
 - La única parte que espera un toque es la frase final de la encuesta, porque reemplaza a los gráficos. La consola avisa "sigue: La frase final".
 - De punta a punta son 17 toques (antes 23). Abajo del botón, la consola siempre dice qué hace el próximo toque.
@@ -50,7 +51,7 @@ Está en `show.js` (una sola lista que leen las tres partes).
 
 **Sedes.** El mapa usa las tres sedes del ITBA: Distrito Tecnológico (Lavardén 315), Rectorado (Iguazú 341) y Distrito Financiero (San Martín 202). Cada raíz va a la sede más cercana y el CO₂ se calcula con esa distancia. Tecnológico y Rectorado están a 500 m: comparten un marcador.
 
-**Acto 2 · La solución (≈3:10).** Cómo funciona (3 pasos, sin grupos fijos) → Por qué esta sí (cada miedo de la encuesta con su respuesta) → la app (Inicio, Cerca mío, Swipe, En viaje) → Ahora ustedes (QR) → **La pregunta** → **Match** → **Tu red** (con el CO₂) → Cierre. Salieron **Para la organización** y **Empresa** (lo que ve la universidad).
+**Acto 2 · La solución (≈3:40).** Cómo funciona (3 pasos, sin grupos fijos) → Por qué esta sí (cada miedo de la encuesta con su respuesta) → la app (Inicio, Cerca mío, Swipe, En viaje) → Ahora ustedes (QR) → **La pregunta** → **Match** → **Tu red** (con el CO₂) → **Lo que ahorramos** → Cierre. Salieron **Para la organización** y **Empresa** (lo que ve la universidad).
 
 - **La pregunta:** cada celular elige su localidad (nunca la dirección) y si tiene auto. El mapa del proyector se llena en vivo.
 - **Match:** aparece HAY MATCH y se ve una avenida en perspectiva (desde arriba y de costado) con los autos siempre en movimiento.

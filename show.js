@@ -113,8 +113,12 @@ window.CONVOS_SHOW=[
   {id:'red',act:2,opts:['names','fit','fill'],label:'Tu red',secs:30,view:'map',steps:4,auto:[2.5,4,3.5],hint:['Así llegarían juntos a su sede','Cada raíz es un camino real. Cuanto más gruesa, más gente pasa por ahí'],
    proj:'Puntos → raíces hacia la sede → grupos de colores y números → CO₂.',cel:'Tu red: quién vive cerca de vos y cómo podrían volver juntos.',
    notes:['Cada punto es una persona de esta sala.','Cada raíz es el camino real hasta la sede; donde se juntan, engorda.','Los círculos son grupos posibles: alguien maneja y los lleva.','Y esto es lo que se evita. Es un máximo: no descuenta el desvío del conductor.']},
+  {id:'ahorro',act:2,label:'Lo que ahorramos',secs:30,view:'slide',steps:2,
+   slide:{type:'savings',kicker:'Si esta sala viajara junta',title:'Lo que *ahorraríamos* cada mes',word:'ConVos'},
+   phone:{text:'Mirá la pantalla',sub:'Esto es lo que ahorraría esta sala si viajara junta.'},proj:'El tablero de esta sala por dimensión: ambiental (CO₂), económica (nafta), logística (autos y estacionamiento) y social (con quién volver). Después crece el gráfico del CO₂ en un año lectivo.',cel:'Mensaje de compañía.',
+   notes:['Si esta sala viajara junta, esto ahorraríamos cada mes. Ambiental: los kg de CO₂. Económico: la nafta que se deja de pagar. Logístico: autos menos en la calle y lugares de estacionamiento libres. Social: cuántos ya tienen con quién volver.','En un año lectivo, el CO₂ se acumula así, y equivale a esos árboles. Es un máximo: no descuenta el desvío del conductor.']},
   {id:'cierre',act:2,label:'Cierre',secs:15,view:'slide',steps:2,
    slide:{type:'logo',pre:'',word:'ConVos',tag:'Volver juntos.'},
-   phone:{text:'Gracias'},proj:'El auto entra y frena: ConVos. Volver juntos. Después, el tablero de lo que ahorraría esta sala (CO₂, nafta, plata y estacionamiento) con el gráfico del año, y Gracias.',cel:'Gracias, con tu camino de vuelta.',
-   notes:['ConVos: volver juntos.','Si esta sala viajara junta: esto es lo que ahorraría por mes, y el CO₂ acumulado en un año lectivo. Es un máximo: no descuenta el desvío del conductor. Gracias. ¿Preguntas?']}
+   phone:{text:'Gracias'},proj:'La ruta se dibuja y el auto entra y frena: ConVos. Volver juntos. Después, Gracias. ¿Preguntas?',cel:'Gracias, con tu camino de vuelta.',
+   notes:['ConVos: volver juntos.','Gracias. ¿Preguntas?']}
 ];
