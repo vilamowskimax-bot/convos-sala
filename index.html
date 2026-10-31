@@ -1,7 +1,7 @@
 <!doctype html><html lang="es"><head><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0}img{max-width:100%}</style>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="dark"><meta name="theme-color" content="#150B33">
-<title>ConVos ITBA</title>
+<title>Poolify ITBA</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,6 +33,7 @@ h1,h2,h3,p{margin:0}
 .top{max-width:1040px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:4px 0 8px}
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
 .logo{width:36px;height:36px;border-radius:12px;background:var(--violet);display:grid;place-items:center;flex:none}
+.logo img{height:26px;width:auto}
 .brand b{display:block;font:600 21px/1 var(--fd);letter-spacing:.03em}
 .brand small{display:block;margin-top:3px;font-size:11px;color:var(--mute)}
 .pills,.sub{display:flex;flex-wrap:wrap;gap:6px}
@@ -428,7 +429,7 @@ body.aud .stage{padding-top:10px}
 .comp .ck{font:600 11px var(--fb);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
 .comp .cs{font-size:15px;color:var(--mute);max-width:26ch}
 .comp small{color:var(--mute)}
-.comp .clogo{width:112px;height:112px;animation:look 3.2s ease-in-out infinite}   /* el auto anda en el lugar mientras mirás al frente */
+.comp .clogo{width:auto;height:118px;animation:look 3.2s ease-in-out infinite}   /* el auto anda en el lugar mientras mirás al frente */
 .comp .clogo .body{animation:ride .7s ease-in-out infinite alternate}
 .comp .clogo .spd{animation:spd .5s ease-in-out infinite alternate}
 @keyframes look{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
@@ -448,8 +449,8 @@ body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent}
 
 <header class="top">
   <div class="brand">
-    <span class="logo"><svg width="30" height="20" viewBox="6 20 58 32" aria-hidden="true"><g class="body"><path d="M9 44.5V39.2q0-4.6 4.6-5.3l6.6-.9 6.4-7.4q1.9-2.1 4.7-2.1h12.2q2.8 0 4.6 2l6.5 7.3 5 .9q4.4.8 4.4 5.2v4.1q0 1.9-1.9 1.9H10.9q-1.9 0-1.9-1.9z" fill="#FB923C"/><path d="M22.4 32.9l5.3-6.1q1.2-1.3 3-1.3h5.8v7.4z" fill="#150B33"/><path d="M38.6 25.5h5.3q1.8 0 3 1.3l5.4 6.1H38.6z" fill="#150B33"/><circle cx="32.2" cy="29.2" r="2.1" fill="#F5EBDD"/><path d="M29 32.9q0-2.3 3.2-2.3t3.2 2.3z" fill="#F5EBDD"/><circle cx="43.6" cy="29.2" r="2.1" fill="#F5EBDD"/><path d="M40.4 32.9q0-2.3 3.2-2.3t3.2 2.3z" fill="#F5EBDD"/><path d="M21 38.2h37" stroke="#150B33" stroke-opacity=".22" stroke-width=".9" stroke-linecap="round"/><rect x="58.6" y="35.6" width="3.6" height="2" rx="1" fill="#F5EBDD"/><rect x="9" y="36.2" width="1.8" height="2.4" rx=".8" fill="#F43F5E"/></g><g class="whl"><circle cx="20.5" cy="45.6" r="6.3" fill="#150B33"/><circle cx="20.5" cy="45.6" r="4.2" fill="#2F2166" stroke="#F5EBDD" stroke-width="1.5"/><circle cx="20.5" cy="45.6" r="1.3" fill="#F5EBDD"/><circle cx="50" cy="45.6" r="6.3" fill="#150B33"/><circle cx="50" cy="45.6" r="4.2" fill="#2F2166" stroke="#F5EBDD" stroke-width="1.5"/><circle cx="50" cy="45.6" r="1.3" fill="#F5EBDD"/></g></svg></span>
-    <div><b>ConVos</b><small>Comunidad ITBA · demo con mapa real</small></div>
+    <span class="logo"><img src="poolify-icono.png" alt=""></span>
+    <div><b>Poolify</b><small>Comunidad ITBA · demo con mapa real</small></div>
   </div>
   <nav class="pills" id="pills" aria-label="Momento de la historia">
     <button type="button" data-story="d1">Día 1</button>
@@ -474,7 +475,7 @@ body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent}
           <span>9:41</span>
           <span><svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5" width="3" height="7" rx="1" fill="currentColor"/><rect x="10" y="2" width="3" height="10" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="1" fill="currentColor"/></svg><svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="4" fill="none" stroke="currentColor" opacity=".5"/><rect x="2" y="2" width="18" height="9" rx="2.5" fill="currentColor"/><rect x="25" y="4.5" width="2" height="4" rx="1" fill="currentColor" opacity=".5"/></svg></span>
         </div>
-        <button type="button" class="banner" id="banner" data-act="bannergo"><span class="app"><svg width="30" height="20" viewBox="6 20 58 32" aria-hidden="true"><g class="body"><path d="M9 44.5V39.2q0-4.6 4.6-5.3l6.6-.9 6.4-7.4q1.9-2.1 4.7-2.1h12.2q2.8 0 4.6 2l6.5 7.3 5 .9q4.4.8 4.4 5.2v4.1q0 1.9-1.9 1.9H10.9q-1.9 0-1.9-1.9z" fill="#FB923C"/><path d="M22.4 32.9l5.3-6.1q1.2-1.3 3-1.3h5.8v7.4z" fill="#150B33"/><path d="M38.6 25.5h5.3q1.8 0 3 1.3l5.4 6.1H38.6z" fill="#150B33"/><circle cx="32.2" cy="29.2" r="2.1" fill="#F5EBDD"/><path d="M29 32.9q0-2.3 3.2-2.3t3.2 2.3z" fill="#F5EBDD"/><circle cx="43.6" cy="29.2" r="2.1" fill="#F5EBDD"/><path d="M40.4 32.9q0-2.3 3.2-2.3t3.2 2.3z" fill="#F5EBDD"/><path d="M21 38.2h37" stroke="#150B33" stroke-opacity=".22" stroke-width=".9" stroke-linecap="round"/><rect x="58.6" y="35.6" width="3.6" height="2" rx="1" fill="#F5EBDD"/><rect x="9" y="36.2" width="1.8" height="2.4" rx=".8" fill="#F43F5E"/></g><g class="whl"><circle cx="20.5" cy="45.6" r="6.3" fill="#150B33"/><circle cx="20.5" cy="45.6" r="4.2" fill="#2F2166" stroke="#F5EBDD" stroke-width="1.5"/><circle cx="20.5" cy="45.6" r="1.3" fill="#F5EBDD"/><circle cx="50" cy="45.6" r="6.3" fill="#150B33"/><circle cx="50" cy="45.6" r="4.2" fill="#2F2166" stroke="#F5EBDD" stroke-width="1.5"/><circle cx="50" cy="45.6" r="1.3" fill="#F5EBDD"/></g></svg></span><span class="bt"><b>ConVos</b><span id="bnText"></span></span><small>ahora</small></button>
+        <button type="button" class="banner" id="banner" data-act="bannergo"><span class="app"><svg width="30" height="20" viewBox="6 20 58 32" aria-hidden="true"><g class="body"><path d="M9 44.5V39.2q0-4.6 4.6-5.3l6.6-.9 6.4-7.4q1.9-2.1 4.7-2.1h12.2q2.8 0 4.6 2l6.5 7.3 5 .9q4.4.8 4.4 5.2v4.1q0 1.9-1.9 1.9H10.9q-1.9 0-1.9-1.9z" fill="#FB923C"/><path d="M22.4 32.9l5.3-6.1q1.2-1.3 3-1.3h5.8v7.4z" fill="#150B33"/><path d="M38.6 25.5h5.3q1.8 0 3 1.3l5.4 6.1H38.6z" fill="#150B33"/><circle cx="32.2" cy="29.2" r="2.1" fill="#F5EBDD"/><path d="M29 32.9q0-2.3 3.2-2.3t3.2 2.3z" fill="#F5EBDD"/><circle cx="43.6" cy="29.2" r="2.1" fill="#F5EBDD"/><path d="M40.4 32.9q0-2.3 3.2-2.3t3.2 2.3z" fill="#F5EBDD"/><path d="M21 38.2h37" stroke="#150B33" stroke-opacity=".22" stroke-width=".9" stroke-linecap="round"/><rect x="58.6" y="35.6" width="3.6" height="2" rx="1" fill="#F5EBDD"/><rect x="9" y="36.2" width="1.8" height="2.4" rx=".8" fill="#F43F5E"/></g><g class="whl"><circle cx="20.5" cy="45.6" r="6.3" fill="#150B33"/><circle cx="20.5" cy="45.6" r="4.2" fill="#2F2166" stroke="#F5EBDD" stroke-width="1.5"/><circle cx="20.5" cy="45.6" r="1.3" fill="#F5EBDD"/><circle cx="50" cy="45.6" r="6.3" fill="#150B33"/><circle cx="50" cy="45.6" r="4.2" fill="#2F2166" stroke="#F5EBDD" stroke-width="1.5"/><circle cx="50" cy="45.6" r="1.3" fill="#F5EBDD"/></g></svg></span><span class="bt"><b>Poolify</b><span id="bnText"></span></span><small>ahora</small></button>
         <div class="view" id="view"></div>
         <nav class="tabbar" id="tabbar" aria-label="Secciones"></nav>
         <div id="modal"></div>
@@ -486,7 +487,7 @@ body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent}
 
 <section class="org" id="orgpanel" hidden></section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha256-XJrs/DDkVkUZ29zdzFOkGCJ9zHVo5hnpdi3c7HYJ7Uc=" crossorigin="anonymous"></script>
-<script src="locs.js?v=dc410bc9df"></script><script src="show.js?v=11a09bbdce"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=118cfce577"></script>
+<script src="locs.js?v=dc410bc9df"></script><script src="show.js?v=449f3a283e"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=118cfce577"></script>
 <script>
 (function(){
 'use strict';
@@ -704,7 +705,7 @@ function startRoom(){
   ROOM.room.onReset(()=>{try{sessionStorage.removeItem('convosForm');}catch(_){}
     Promise.race([Promise.resolve(ROOM.room.leave()).catch(()=>{}),new Promise(r=>setTimeout(r,800))]).then(()=>location.reload());});
   try{const f=JSON.parse(sessionStorage.getItem('convosForm')||'null'),nick=f&&R.clean(f.nick,14);   // recargó la página: vuelve con lo que ya había contestado
-    if(nick&&LOC(f.loc)){const car=f.car===true,seats=Math.min(4,Math.max(1,parseInt(f.seats,10)||3));Object.assign(S.me,{name:nick,origin:f.loc,car,seats});ROOM.joined=true;ROOM.room.track({id:ROOM.myId,n:nick,loc:f.loc,car,seats});}}catch(_){}
+    if(nick&&LOC(f.loc)){const car=f.car===true,seats=Math.min(4,Math.max(1,parseInt(f.seats,10)||3));Object.assign(S.me,{name:nick,origin:f.loc,car,seats,sede:'rec'});ROOM.joined=true;ROOM.room.track({id:ROOM.myId,n:nick,loc:f.loc,car,seats});}}catch(_){}
   addEventListener('pointerdown',e=>{if(ROOM.last&&e.target.closest&&e.target.closest('.screen,#orgpanel'))ROOM.room.ping(ROOM.last.s);},{passive:true});
   ROOM.room.onPeople(list=>{ROOM.people=list;
     if(ROOM.joined&&S.world==='room'&&(S.screen==='near'||S.screen==='red')&&!S.modal){clearTimeout(t);t=setTimeout(()=>{computeWorld();render(true);},1200);}});
@@ -718,7 +719,7 @@ function joinRoom(){
   if(!nick){$('#jNick').focus();toast('Poné un apodo para entrar.');return;}
   if(!LOC(loc)){$('#jLoc').focus();toast('Elegí tu localidad.');return;}
   try{sessionStorage.setItem('convosForm',JSON.stringify({nick,loc,car,seats}));}catch(_){}
-  Object.assign(S.me,{name:nick,origin:loc,car,seats});
+  Object.assign(S.me,{name:nick,origin:loc,car,seats,sede:'rec'});   // quien se suma desde el QR va a Rectorado (ahí presentamos)
   ROOM.joined=true;S.modal=null;regen();render();
   if(ROOM.room)ROOM.room.track({id:ROOM.myId,n:nick,loc,car,seats});
   toast('Listo, ya estás en la sala. Mirá la pantalla grande.');
@@ -1028,7 +1029,7 @@ function red(){
 }
 function comp(){
   const c=S.comp||{},d=c.def||{},ph=d.phone||{};
-  const mark='<svg class="clogo" viewBox="0 6 64 52" aria-hidden="true"><g class="spd"><path d="M1.5 31.5h6M0 36.5h6.5M3 41.5h4" stroke="#818CF8" stroke-opacity=".85" stroke-width="1.7" stroke-linecap="round"/></g><g class="body"><path d="M9 44.5V39.2q0-4.6 4.6-5.3l6.6-.9 6.4-7.4q1.9-2.1 4.7-2.1h12.2q2.8 0 4.6 2l6.5 7.3 5 .9q4.4.8 4.4 5.2v4.1q0 1.9-1.9 1.9H10.9q-1.9 0-1.9-1.9z" fill="#FB923C"/><path d="M22.4 32.9l5.3-6.1q1.2-1.3 3-1.3h5.8v7.4z" fill="#150B33"/><path d="M38.6 25.5h5.3q1.8 0 3 1.3l5.4 6.1H38.6z" fill="#150B33"/><circle cx="32.2" cy="29.2" r="2.1" fill="#F5EBDD"/><path d="M29 32.9q0-2.3 3.2-2.3t3.2 2.3z" fill="#F5EBDD"/><circle cx="43.6" cy="29.2" r="2.1" fill="#F5EBDD"/><path d="M40.4 32.9q0-2.3 3.2-2.3t3.2 2.3z" fill="#F5EBDD"/><path d="M21 38.2h37" stroke="#150B33" stroke-opacity=".22" stroke-width=".9" stroke-linecap="round"/><rect x="58.6" y="35.6" width="3.6" height="2" rx="1" fill="#F5EBDD"/><rect x="9" y="36.2" width="1.8" height="2.4" rx=".8" fill="#F43F5E"/></g><g class="whl"><circle cx="20.5" cy="45.6" r="6.3" fill="#150B33"/><circle cx="20.5" cy="45.6" r="4.2" fill="#2F2166" stroke="#F5EBDD" stroke-width="1.5"/><circle cx="20.5" cy="45.6" r="1.3" fill="#F5EBDD"/><circle cx="50" cy="45.6" r="6.3" fill="#150B33"/><circle cx="50" cy="45.6" r="4.2" fill="#2F2166" stroke="#F5EBDD" stroke-width="1.5"/><circle cx="50" cy="45.6" r="1.3" fill="#F5EBDD"/></g></svg>';   // el logo del celular: el auto con dos personas, andando
+  const mark='<img class="clogo" src="poolify-icono.png" alt="">';   // el logo del celular: el auto con dos personas, andando
   if(ph.poll&&d.slide){const v=ROOM.voted[d.id]||0;
     return '<div class="comp"><p class="ck">'+esc(d.slide.kicker||'')+'</p><h2>'+esc(d.slide.q)+'</h2><div class="opts">'+d.slide.opts.map((o,i)=>'<button type="button" class="opt'+(v===i+1?' on':'')+'" data-act="vote" data-v="'+(i+1)+'">'+esc(o)+'</button>').join('')+'</div><small>'+(v?'Gracias. Mirá la pantalla.':'Tocá una opción')+'</small></div>';}
   return '<div class="comp">'+mark+(c.big?'<h2>'+esc(c.big)+'</h2>':'')+(c.sub?'<p class="cs">'+esc(c.sub)+'</p>':'')+'<small>Conectado</small></div>';
@@ -1191,7 +1192,7 @@ function commit(dir,id){
   else{render(true);if(dir==='right')toast('Le avisamos a '+first(id)+'. Si también le interesa, se arma el viaje.');}
 }
 function showMatch(p){
-  $('#modal').innerHTML='<div class="mscrim"><div class="matchbox" role="dialog" aria-modal="true" aria-label="Es un ConVos"><div class="m-avs">'+av(ME(),96,';border:4px solid #fff')+av(p,96,';border:4px solid #fff;margin-left:-20px')+'</div><h2>¡Es un ConVos!</h2><p>A vos y a '+first(p.id).replace(/^./,c=>c.toUpperCase())+' les interesa ir juntos el '+DN[S.day]+'.</p>'+
+  $('#modal').innerHTML='<div class="mscrim"><div class="matchbox" role="dialog" aria-modal="true" aria-label="Es un match"><div class="m-avs">'+av(ME(),96,';border:4px solid #fff')+av(p,96,';border:4px solid #fff;margin-left:-20px')+'</div><h2>¡Es un match!</h2><p>A vos y a '+first(p.id).replace(/^./,c=>c.toUpperCase())+' les interesa ir juntos el '+DN[S.day]+'.</p>'+
   '<button type="button" class="btn btn-cream block" data-act="matchprop" data-id="'+p.id+'">Armar el viaje</button><button type="button" class="btn btn-ghost block" data-act="close">Seguir deslizando</button></div></div>';
 }
 

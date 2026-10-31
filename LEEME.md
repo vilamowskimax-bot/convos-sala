@@ -1,4 +1,4 @@
-# ConVos · presentación interactiva (8 minutos)
+# Poolify · presentación interactiva (8 minutos)
 
 Se presenta con tres pantallas que se complementan. No muestran lo mismo: el proyector cuenta y suma lo colectivo, el celular es personal e interactivo, y la consola maneja todo.
 
@@ -18,9 +18,9 @@ Está en `show.js` (una sola lista que leen las tres partes).
 
 - Cada "Siguiente" pasa a la diapositiva siguiente.
 - **Mismo ritmo en todas:** las partes de cada diapositiva se sueltan cada 2,5 s (`CONVOS_AUTO`) y todas las entradas duran 0,8 s. Solo Match y Tu red tienen su propio ritmo, porque son animaciones en vivo.
-- **Entrada:** con el primer "Siguiente" aparece una placa (Tecnología y Sociedad · ITBA · ConVos) y el auto la cruza despacio de izquierda a derecha, corriéndola como un telón: detrás queda la diapositiva del equipo ya armada. Si la tele se recarga a mitad de la charla, no se repite.
+- **Entrada:** con el primer "Siguiente" aparece una placa (Tecnología y Sociedad · ITBA · Poolify) y el auto la cruza despacio de izquierda a derecha, corriéndola como un telón: detrás queda la diapositiva del equipo ya armada. Si la tele se recarga a mitad de la charla, no se repite.
 - **Lo que ahorramos** (después de Tu red): el tablero "Lo que ahorraríamos cada mes" con la gente de esta sala, por dimensión: ambiental (kg de CO₂), económica (pesos y litros de nafta, a $2.045 el litro, YPF oct. 2026), logística (autos menos y estacionamientos libres) y social (cuántos ya tienen con quién volver). En el segundo paso crece el gráfico del CO₂ acumulado en un año lectivo (10 meses) y su equivalencia en árboles urbanos (60 kg por árbol por año, EPA).
-- **Cierre:** la ruta se dibuja, el auto entra y frena en el centro (ConVos · Volver juntos.); después, "Gracias. ¿Preguntas?".
+- **Cierre:** la ruta se dibuja y el auto la recorre de izquierda a derecha; a su paso se descubre el logo de Poolify (espeja la entrada). Después, "Volver juntos." y "Gracias. ¿Preguntas?".
 - Si una diapositiva tiene varias partes, se sueltan solas, una cada uno o dos segundos (campo `auto` de cada escena). Si tocás "Siguiente" mientras se arma, aparece entera.
 - La única parte que espera un toque es la frase final de la encuesta, porque reemplaza a los gráficos. La consola avisa "sigue: La frase final".
 - De punta a punta son 17 toques (antes 23). Abajo del botón, la consola siempre dice qué hace el próximo toque.
@@ -34,8 +34,8 @@ Está en `show.js` (una sola lista que leen las tres partes).
 | Equipo | "¿Cómo llegaste hoy a la universidad?", los cuatro integrantes (Max Vilamowski, Thiago García, Martina Ciceran Pellegrini y Santiago Bermudez) y la foto del equipo | — (**borrador**: falta la foto) |
 | Problema | Autos con una persona que llegan todos al ITBA: "Todos vamos al mismo lugar. Cada uno por su cuenta." | — |
 | Entrevistas | "Salimos a escuchar": cuatro tarjetas (nombre, cargo, frase), una por paso | — (**borrador**: vacía hasta tener los entrevistados) |
-| Encuesta | 40 respuestas, en barras horizontales: qué frena (flexibilidad 68%, desvío 48%, seguridad 38%) y qué da confianza (conocerse en la facu 80%, misma carrera 73%, mismo género 13%). Cierra con "No es miedo: es rigidez. Y la confianza la da la comunidad." | Encuesta propia, octubre 2026 (40 respuestas; muestra no aleatoria) |
-| La solución | "Apps para compartir el auto hay muchas. Ninguna se volvió costumbre." → se dibuja el logo: ConVos, Comunidad ITBA | — |
+| Encuesta | 40 respuestas, en barras horizontales: qué frena (flexibilidad 68%, desvío 48%, seguridad 38%) y qué da confianza (conocerse en la facu 80%, misma carrera 73%, mismo género 13%). Cierra con "El problema no es con quién viajar. Es cuándo." | Encuesta propia, octubre 2026 (40 respuestas; muestra no aleatoria) |
+| La solución | "Apps para compartir el auto hay muchas. Ninguna se volvió costumbre." → el logo de Poolify sube desde la ruta: Comunidad ITBA | — |
 
 - Salieron del guion para ser breves: **Autos** (1,3 personas por auto), **Tiempo** (ENMODO), **Planeta** (31% de los GEI) y **Qué existe** (Tenés Lugar, Waze, BlaBlaCar). Quedan en el historial de git y en las notas por si preguntan.
 
@@ -47,11 +47,11 @@ Está en `show.js` (una sola lista que leen las tres partes).
 - Las notas de la consola tienen el contexto de cada dato y lo que conviene aclarar si preguntan.
 - Si una diapositiva lleva `draft:true`, el proyector la marca como "Borrador".
 
-**Logo.** Uno solo en todas las pantallas: el auto (sedán de costado) con dos personas en las ventanillas. En el proyector entra manejando en La solución y en el cierre; en la previa y en el celular anda en el lugar.
+**Logo.** Poolify, el mismo en todas las pantallas, en versión para fondo oscuro (el azul pasa a crema): `poolify-logo.png` (completo) y `poolify-icono.png` (solo el ícono). Va en la previa, la placa de la entrada, La solución (sube desde la ruta), el cierre, los rótulos, la esquina y el celular. El auto de costado queda solo para las animaciones: cruza la placa en la entrada y, en el cierre, recorre la ruta y descubre el logo a su paso.
 
-**Sedes.** El mapa usa las tres sedes del ITBA: Distrito Tecnológico (Lavardén 315), Rectorado (Iguazú 341) y Distrito Financiero (San Martín 202). Cada raíz va a la sede más cercana y el CO₂ se calcula con esa distancia. Tecnológico y Rectorado están a 500 m: comparten un marcador.
+**Sedes.** El mapa usa las tres sedes del ITBA: Distrito Tecnológico (Lavardén 315), Rectorado (Iguazú 341) y Distrito Financiero (San Martín 202). La gente real de la sala (la que escanea el QR) va a **Rectorado**, porque ahí presentamos; los compañeros de ejemplo, a la sede que les queda más cerca. Las raíces y el CO₂ se calculan con ese destino. Tecnológico y Rectorado están a 500 m: comparten un marcador.
 
-**Acto 2 · La solución (≈3:40).** Cómo funciona (3 pasos, sin grupos fijos) → Por qué esta sí (cada miedo de la encuesta con su respuesta) → la app (Inicio, Cerca mío, Swipe, En viaje) → Ahora ustedes (QR) → **La pregunta** → **Match** → **Tu red** (con el CO₂) → **Lo que ahorramos** → Cierre. Salieron **Para la organización** y **Empresa** (lo que ve la universidad).
+**Acto 2 · La solución (≈3:40).** Cómo funciona (3 pasos, sin grupos fijos) → la app (Inicio, Cerca mío, Swipe, En viaje) → Ahora ustedes (QR) → **La pregunta** → **Match** → **Tu red** (con el CO₂) → **Lo que ahorramos** → Cierre. Salieron **Para la organización**, **Empresa** (lo que ve la universidad) y **Por qué esta sí** (sus datos quedan como contraargumentos para las preguntas).
 
 - **La pregunta:** cada celular elige su localidad (nunca la dirección) y si tiene auto. El mapa del proyector se llena en vivo.
 - **Match:** aparece HAY MATCH y se ve una avenida en perspectiva (desde arriba y de costado) con los autos siempre en movimiento.
