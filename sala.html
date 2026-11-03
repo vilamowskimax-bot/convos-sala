@@ -654,11 +654,22 @@ function stageHTML(s){
   }
   return '';
 }
+function svTween(b,a,v,delay,D){   // un número del ahorro va de a a v; si llega otro cambio, el último manda
+  const pre=b.dataset.pre||'',suf=b.dataset.suf||'',f=x=>pre+Math.round(x).toLocaleString('es-AR')+suf,id=(b._tw=(b._tw||0)+1),t0=performance.now()+delay;
+  b._now=a;(function tick(t){if(b._tw!==id)return;const x=Math.min(1,Math.max(0,(t-t0)/D)),e=1-Math.pow(1-x,3);b._now=a+(v-a)*e;b.textContent=f(b._now);if(x<1)requestAnimationFrame(tick);})(t0);
+  setTimeout(()=>{if(b._tw===id){b._now=v;b.textContent=f(v);}},delay+D+600);
+}
+function refreshSavings(d){   // con gente nueva no se rehace la lámina (titilaba): se actualizan solo los números que cambiaron
+  if(!SL.querySelector('.t-savings')){buildSlide(d);stepSlide(d,cur.st);return;}
+  const tmp=document.createElement('div');tmp.innerHTML=stageHTML(d.slide);
+  const nv=[...tmp.querySelectorAll('[data-v]')],ov=[...SL.querySelectorAll('.t-savings [data-v]')];
+  ov.forEach((b,j)=>{const n=nv[j];if(!n||n.dataset.v===b.dataset.v)return;const v=+n.dataset.v;b.dataset.v=n.dataset.v;
+    if(b.dataset.done)svTween(b,b._now==null?v:b._now,v,0,900);});
+  [['.cb-s'],['.cb-tr'],['.cl-x'],['.sv:nth-child(3) span']].forEach(([q])=>{const a=SL.querySelector('.t-savings '+q),n=tmp.querySelector(q);if(a&&n&&a.innerHTML!==n.innerHTML)a.innerHTML=n.innerHTML;});
+}
 function stageStep(s,st){
   if(s.type==='savings'){   // cada número cuenta cuando llega su paso (data-k)
-    SL.querySelectorAll('.t-savings [data-v]').forEach((b,j)=>{if(b.dataset.done||st<+b.dataset.k)return;b.dataset.done='1';const v=+b.dataset.v,pre=b.dataset.pre||'',suf=b.dataset.suf||'',t0=performance.now()+(st?250:700)+j*140,D=1500,f=x=>pre+Math.round(x).toLocaleString('es-AR')+suf;
-      (function tick(t){const x=Math.min(1,Math.max(0,(t-t0)/D)),e=1-Math.pow(1-x,3);b.textContent=f(v*e);if(x<1)requestAnimationFrame(tick);})(t0);
-      setTimeout(()=>{b.textContent=f(v);},D+j*140+1000);});
+    SL.querySelectorAll('.t-savings [data-v]').forEach((b,j)=>{if(b.dataset.done||st<+b.dataset.k)return;b.dataset.done='1';svTween(b,0,+b.dataset.v,(st?250:700)+j*140,1500);});
   }
   if(s.type==='survey'){
     SL.querySelectorAll('.dpan').forEach(pan=>{const on=st>=+pan.dataset.q;pan.classList.toggle('lit',on);
@@ -830,7 +841,7 @@ function setScene(sc,live){
   if(d.view==='map'&&(isNew||(cur.f&4)))setTimeout(fit,90);
   if(d.id==='red')ensureGraph().then(()=>draw());
   if(!isNew&&d.id==='match'&&prev.fill!==cur.fill)matchLive();   // la consola sumó o sacó a alguien de ejemplo
-  if(!isNew&&d.slide&&d.slide.type==='savings'&&prev.fill!==cur.fill){buildSlide(d);stepSlide(d,cur.st);}   // y el ahorro se recalcula
+  if(!isNew&&d.slide&&d.slide.type==='savings'&&prev.fill!==cur.fill)refreshSavings(d);   // y el ahorro se recalcula
   paintStats(lastStats);
 }
 function paintStats(st){
@@ -846,7 +857,7 @@ room.onPeople(list=>{
   const prev=new Set(real.map(p=>p.id));real=list;
   list.filter(p=>!prev.has(p.id)&&prev.size+known.size>0).forEach(p=>toast(p.n+' se sumó desde '+p.loc));
   matchLive();   // si alguien suma su respuesta mientras está el match, se anima
-  {const d=BY[cur.s];if(d&&d.slide&&d.slide.type==='savings'){buildSlide(d);stepSlide(d,cur.st);}}   // el ahorro se recalcula con la gente nueva
+  {const d=BY[cur.s];if(d&&d.slide&&d.slide.type==='savings'&&d.view==='slide')refreshSavings(d);}   // el ahorro se recalcula con la gente nueva
   draw();
 });
 room.onScene(sc=>setScene(sc,true));
