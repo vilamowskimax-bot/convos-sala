@@ -46,7 +46,7 @@ window.CONVOS_SHOW=[
   {id:'problema',act:1,label:'Problema',secs:20,view:'slide',steps:2,
    slide:{type:'converge',kicker:'El problema',t1:'Todos vamos al mismo lugar.',t2:'Cada uno por su cuenta.',dest:'ITBA'},
    phone:{text:'Mirá la pantalla'},proj:'Autos con una persona que llegan todos al ITBA. Después, la segunda frase.',cel:'Mensaje de compañía.',
-   notes:['Todos los días hacemos el mismo viaje al ITBA, cada uno en su auto o en dos colectivos.','Cada uno por su cuenta: más de la mitad de los que vienen manejando viaja solo (encuesta propia). Tiempo, estacionamiento, nafta y contaminación, y encima no nos conocemos.']},
+   notes:['Todos los días hacemos el mismo viaje al ITBA, cada uno por su cuenta: en auto o combinando colectivo, tren y subte.','Y nos cuesta a todos. Tiempo: es lo que más molesta (64%) y 1 de cada 3 tarda más de una hora por tramo. Plata: la mayoría gasta entre $10.000 y $30.000 por semana, y los que manejan, más (65% gasta más de $30.000). Tránsito y estacionamiento, y 6 de cada 10 que manejan vienen solos (encuesta propia, 61 respuestas).']},
   {id:'escuchar',act:1,label:'Entrevistas',secs:35,view:'slide',steps:3,
    slide:{type:'people',kicker:'Antes de diseñar nada',title:'Salimos a escuchar',people:[
      {n:'Josefina Furlong',r:'Prensa, RSE y Relaciones Públicas · Mercedes-Benz Argentina',q:'Compartir el auto es un cambio cultural: funciona en comunidades cerradas, con mail institucional e incentivos.'},
@@ -54,19 +54,19 @@ window.CONVOS_SHOW=[
    phone:{text:'Mirá la pantalla'},proj:'El título y, de a una, las dos entrevistadas: nombre, cargo y su frase.',cel:'Mensaje de compañía.',
    notes:['Hablamos con quienes ya trabajan en esto. Aparecen de a una.','Josefina Furlong, de Mercedes-Benz: compartir el auto es un cambio cultural; funciona en comunidades cerradas, con mail institucional e incentivos. Eso es la universidad.','Romina Suárez, de una PyME de traslados de confianza para jóvenes: la confianza nace de saber con quién viajás. Por eso, solo gente del ITBA.']},
   {id:'encuesta',act:1,label:'Encuesta',secs:40,view:'slide',steps:4,auto:[null,null,'La frase final'],
-   slide:{type:'survey',kicker:'Encuesta a estudiantes del ITBA',title:'Lo que nos dijeron',n:40,
-     q1:{q:'¿Qué te frena a compartir el viaje?',opts:[{l:'Perder flexibilidad de horarios',k:27,c:'hot'},{l:'Desviarme o esperar a otros',k:19,c:'hot'},{l:'No sentirme seguro/a',k:15,c:'cool'}],leg:'= 1 estudiante'},
-     q2:{q:'¿Qué te daría confianza para viajar con alguien?',opts:[{l:'Conocerlo antes en la facu',k:32,c:'hot'},{l:'Que sea de mi carrera o año',k:29,c:'hot2'},{l:'Que sea de mi mismo género',k:5,c:'cool'}]},
-     punch:'El problema no es *con quién* viajar.\nEs *cuándo.*',src:'Encuesta propia a estudiantes del ITBA, octubre 2026 (40 respuestas, muestra no aleatoria)'},
+   slide:{type:'survey',kicker:'Encuesta a estudiantes del ITBA',title:'Lo que nos dijeron',n:61,
+     q1:{q:'¿Qué te frena a compartir el viaje?',opts:[{l:'Perder flexibilidad de horarios',k:41,c:'hot'},{l:'Desviarme o esperar a otros',k:27,c:'hot'},{l:'No sentirme seguro/a',k:17,c:'cool'}],leg:'= 1 estudiante'},
+     q2:{q:'¿Qué te daría confianza para viajar con alguien?',opts:[{l:'Conocerlo antes en la facu',k:47,c:'hot'},{l:'Que sea de mi carrera o año',k:41,c:'hot2'},{l:'Que sea de mi mismo género',k:4,c:'cool'}]},
+     punch:'El problema no es *con quién* viajar.\nEs *cuándo.*',src:'Encuesta propia a estudiantes del ITBA, octubre-noviembre 2026 (61 respuestas, muestra no aleatoria)'},
    phone:{text:'Mirá la pantalla'},proj:'Las dos preguntas; después se llenan solos los muñequitos y los anillos. La frase final sale con otro Siguiente.',cel:'Mensaje de compañía.',
-   notes:['Apenas aparece, preguntá: «¿Qué creen que frena más: el miedo o los horarios?»','Se llenan los muñequitos: la flexibilidad le gana a la seguridad.','Las barras de confianza: conocerse en la facu (80%) y misma carrera (73%), contra mismo género (13%).','Tocá Siguiente para la frase final: el problema no es con quién viajar, es cuándo. La confianza ya está: la da la comunidad. (Si preguntan: 40 respuestas. 25 de 40 estarían dispuestos o muy dispuestos a compartir. La muestra no es aleatoria.)']},
+   notes:['Apenas aparece, preguntá: «¿Qué creen que frena más: el miedo o los horarios?»','Se llenan las barras: perder flexibilidad de horarios (67%) le gana a no sentirse seguro (28%).','Las barras de confianza: conocerse en la facu (77%) y misma carrera (67%), contra mismo género (7%).','Tocá Siguiente para la frase final: el problema no es con quién viajar, es cuándo. La confianza ya está: la da la comunidad. (Si preguntan: 61 respuestas válidas. 7 de cada 10 estarían dispuestos o muy dispuestos a compartir. La muestra no es aleatoria.)']},
   {id:'solucion',act:1,label:'La solución',secs:20,view:'slide',steps:2,
    slide:{type:'reveal',q:'Apps para compartir el auto hay muchas.',sub:'Ninguna se volvió costumbre.',word:'Poolify',tag:'Comunidad ITBA',line:'No inventamos el carpooling. Lo diseñamos para que se adopte.',next:'Cómo funciona →'},
    phone:{text:'Poolify'},proj:'La frase, y después el logo que se dibuja: Poolify, Comunidad ITBA.',cel:'Poolify.',
    notes:['Apps para compartir el auto existen (hasta Waze tuvo una, y cerró). Ninguna se volvió costumbre.','Se revela Poolify. Pasar a la demo.']},
 
   /* ============ ACTO 2 · LA SOLUCIÓN ============ */
-  /* Sin grupos fijos: cada uno publica su viaje el día anterior (decisión del informe, por el 68% de la encuesta) */
+  /* Sin grupos fijos: cada uno publica su viaje el día anterior (decisión del informe, por el 67% de la encuesta) */
   {id:'como',act:2,label:'Cómo funciona',secs:20,view:'slide',steps:3,
    slide:{type:'how',kicker:'Cómo funciona',title:'Tres pasos. *Todos los días.*',
      items:[{i:'cal',t:'Publicás tu viaje',d:'El día anterior: a qué sede vas y a qué hora.'},
