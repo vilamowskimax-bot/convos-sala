@@ -170,6 +170,11 @@ body.nonames .cpop,body.nonames .ccard,body.nonames .wtag{visibility:hidden}
 .ptxt .ey{margin-bottom:22px}
 #slide .ptxt h1{font-size:132px;line-height:.96;max-width:920px}
 .ptxt h1 span{display:block}
+#slide .ptxt.st h1{font-size:100px;max-width:860px}
+.cvst{display:flex;align-items:center;gap:24px;margin-top:40px;max-width:820px}
+.cvst b{font:600 96px/1 var(--fd);color:#FB923C;letter-spacing:-.02em}
+.cvst span{font-size:26px;line-height:1.25;color:var(--cream);max-width:420px}
+.cvsrc{margin-top:18px;font-size:16px;color:var(--mute)}
 /* entrevistados */
 #slide .pp h1{font-size:84px;line-height:1;margin-top:10px}
 .ints{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:26px;margin-top:56px}
@@ -406,7 +411,7 @@ body.v-map .toast{display:flex}
     <div class="anat" id="anat"><span data-t="Inicio">Inicio</span><span data-t="Cerca mío">Cerca mío</span><span data-t="Mis viajes">Mis viajes</span><span data-t="Perfil">Perfil</span></div>
     <p class="sb" id="capSub"></p><h2 id="capT"></h2><p id="capP"></p><div class="try" id="capTry"></div>
   </section>
-  <iframe id="mirror" src="index.html?espejo=1&amp;v=53e7eb72f5" title="App Poolify"></iframe>
+  <iframe id="mirror" src="index.html?espejo=1&amp;v=9843625145" title="App Poolify"></iframe>
   <aside class="qrside glass"><div class="qrbox" id="qrSideBox"></div><b>Escaneá y seguí</b>
     <div class="meter"><div class="mt"><i id="nCon">0</i>conectados</div><div class="bar2"><u id="mtr"></u></div><div id="mtrT">0 lo probaron</div></div></aside>
 </main>
@@ -434,7 +439,7 @@ body.v-map .toast{display:flex}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha256-XJrs/DDkVkUZ29zdzFOkGCJ9zHVo5hnpdi3c7HYJ7Uc=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha256-xUHvBjJ4hahBW8qN9gceFBibSFUzbe9PNttUvehITzY=" crossorigin="anonymous"></script>
-<script src="locs.js?v=dc410bc9df"></script><script src="manifest.js?v=5eaa727148"></script><script src="show.js?v=855d6f05f2"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=18c86a80ac"></script><script src="match.js?v=43d4d534ea"></script>
+<script src="locs.js?v=dc410bc9df"></script><script src="manifest.js?v=5eaa727148"></script><script src="show.js?v=df9104dcc5"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=18c86a80ac"></script><script src="match.js?v=43d4d534ea"></script>
 <script>
 (function(){
 'use strict';
@@ -442,9 +447,9 @@ const R=window.ConvosRoom,SHOW=R.SHOW,BY=R.BYID,$=(s,r=document)=>r.querySelecto
 const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 /* las tres sedes del ITBA (las mismas de la app). Cada persona va a la que le queda más cerca. */
 const SEDES=[{pt:[-34.64030,-58.40125],name:'Distrito Tecnológico',short:'Tecnológico'},{pt:[-34.64169,-58.40621],name:'Rectorado',short:'Rectorado'},{pt:[-34.6058,-58.3737],name:'Distrito Financiero',short:'Financiero'}];
-const PINS=[{pt:SEDES[0].pt,name:'Distrito Tecnológico y Rectorado',short:'Tecnológico · Rectorado'},{pt:SEDES[2].pt,name:SEDES[2].name,short:SEDES[2].short}];   // las dos de Parque Patricios están a 500 m: un solo marcador
+const PINS=[{pt:SEDES[1].pt,name:'Rectorado',short:'Rectorado'}];   // en vivo toda la sala va a Rectorado (ahí presentamos): un solo marcador
 const SEDE=SEDES[0],REC=SEDES[1],nearSedeKm=p=>Math.min(...SEDES.map(s=>R.hav(p,s.pt)));
-const destKm=p=>p.sim?nearSedeKm(p.pt):R.hav(p.pt,REC.pt);   // la gente real de la sala va a Rectorado (ahí presentamos); los de ejemplo, a su sede más cercana
+const destKm=p=>R.hav(p.pt,REC.pt);   // toda la sala (los del QR y los de ejemplo) va a Rectorado: ahí presentamos
 const ZONE_OF=new Map(window.CONVOS_LOCS.map(l=>[l.name,l.zone])),ZN=window.CONVOS_ZONES;
 const COLORS=['#F97316','#6366F1','#10B981','#EC4899','#0EA5E9','#EF4444','#8B5CF6','#EAB308'];
 const RADIUS=4.5;   /* un auto toma a quienes viven a menos de 4,5 km */
@@ -516,7 +521,7 @@ function drawRoots(ps,on){
   const key=ps.map(p=>p.id).join(',');if(key===rootsKey)return;
   const instant=rootsKey!=='';rootsKey=key;LG.root.clearLayers();
   const cnt=new Map();
-  ps.forEach(p=>{const T=p.sim?TREE:(TREE_R||TREE),nd=snap(p.pt);if(nd<0)return;let x=nd,g=0;while(x!==T.src&&T.pe[x]>=0&&g++<40000){const e=T.pe[x];cnt.set(e,(cnt.get(e)||0)+1);x=T.pn[x];}});
+  ps.forEach(p=>{const T=TREE_R||TREE,nd=snap(p.pt);if(nd<0)return;let x=nd,g=0;while(x!==T.src&&T.pe[x]>=0&&g++<40000){const e=T.pe[x];cnt.set(e,(cnt.get(e)||0)+1);x=T.pn[x];}});
   if(!cnt.size)return;
   const max=Math.max(...cnt.values()),byC=new Map();
   cnt.forEach((c,e)=>{let a=byC.get(c);if(!a)byC.set(c,a=[]);a.push(edgePts(e));});
@@ -566,7 +571,7 @@ function fit(){
   /* encuadra a casi todos (deja afuera a los muy alejados, para que lo del centro se vea grande) */
   let pts=people().map(p=>p.pt);
   if(pts.length>=6){const c=[med(pts.map(p=>p[0])),med(pts.map(p=>p[1]))],ds=pts.map(p=>R.hav(c,p)),lim=Math.max(10,med(ds)*2.5);pts=pts.filter((_,i)=>ds[i]<=lim);}
-  const b=L.latLngBounds([SEDE.pt,SEDE.pt]);SEDES.forEach(x=>b.extend(x.pt));pts.forEach(p=>b.extend(p));
+  const b=L.latLngBounds([REC.pt,REC.pt]);pts.forEach(p=>b.extend(p));
   MAP.fitBounds(b,{paddingTopLeft:[60,110],paddingBottomRight:[(innerWidth>1100?390:60),90],maxZoom:13.5});
 }
 function toast(t){const d=document.createElement('div');d.textContent=t;$('#toast').appendChild(d);setTimeout(()=>d.remove(),4800);while($('#toast').children.length>3)$('#toast').firstChild.remove();}
@@ -611,7 +616,7 @@ function stageHTML(s){
       '<div class="qrc a d3"><div class="qrbox" id="qrWel"></div><b>'+esc(s.t1)+'</b><span>'+esc(s.t2)+'</span></div></div>';
     case 'team':return '<div class="tm"><div><p class="ey a">'+LGI()+esc(s.kicker)+'</p><h1 class="a d1">'+hl(s.title)+'</h1><div class="names a d3">'+(s.names||[]).map(n=>'<span>'+esc(n)+'</span>').join('')+'</div></div>'+
       '<div class="pframe"><div class="noimg">Foto del equipo</div>'+(s.photo?'<img src="'+esc(s.photo)+'" alt="Foto del equipo">':'')+'</div></div>';
-    case 'converge':return convergeSVG(s.dest)+'<div class="shade"></div><div class="ptxt"><p class="ey a">'+esc(s.kicker)+'</p><h1><span class="a d1">'+esc(s.t1)+'</span><span class="w w1 g">'+esc(s.t2)+'</span></h1></div>';
+    case 'converge':return convergeSVG(s.dest)+'<div class="shade"></div><div class="ptxt'+(s.stat?' st':'')+'"><p class="ey a">'+esc(s.kicker)+'</p><h1><span class="a d1">'+esc(s.t1)+'</span><span class="w w1 g">'+esc(s.t2)+'</span></h1>'+(s.stat?'<div class="cvst w w2"><b>'+esc(s.stat)+'</b><span>'+esc(s.cap||'')+'</span></div>'+(s.src?'<p class="cvsrc w w2">Fuente: '+esc(s.src)+'</p>':''):'')+'</div>';
     case 'people':{const C=['#FB923C','#818CF8','#34D399','#F5EBDD'];
       return '<div class="pp"><p class="ey a">'+esc(s.kicker)+'</p><h1 class="a d1">'+hl(s.title)+'</h1><div class="ints" style="--n:'+Math.min(4,(s.people||[]).length||1)+'">'+(s.people||[]).slice(0,4).map((p,i)=>
         '<div class="int w w'+(i+1)+'" style="--c:'+C[i]+'"><span class="av">'+esc(INI(p.n))+'</span><div class="nm">'+esc(p.n)+'</div><div class="rl">'+esc(p.r||'')+'</div>'+(p.q?'<div class="ins">'+esc(p.q)+'</div>':'')+'</div>').join('')+'</div></div>';}
