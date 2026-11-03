@@ -18,8 +18,8 @@ const FLAGS={NAMES_OFF:1,QR:2,REFIT:4};   // lo que la consola puede pedirle al 
    Mica tiene auto pero va con Nico (vive a 2,4 km): así el CO₂ en vivo cuenta un auto menos aunque solo haya ejemplos. */
 const FILLERS=[
   ['Nico','Martínez',3],['Sofi','San Isidro',0],['Mica','Olivos',2],['Fede','Castelar',3],['Vero','Morón',0],['Lucho','Pilar',3],
-  ['Cande','Tigre',0],['Juli','Haedo',2],['Tobi','Ramos Mejía',0],['Agus','Adrogué',3],['Lu','Lomas de Zamora',0],['Flor','Bernal',2],
-  ['Santi','Quilmes',0],['Pau','Belgrano',0],['Gabi','Palermo',0],['Dani','Caballito',1],['Mati','Villa Urquiza',0],['Rama','La Plata',4]
+  ['Cande','Tigre',0],['Juli','Haedo',2],['Tobi','Ramos Mejía',1],['Agus','Adrogué',3],['Lu','Temperley',1],['Flor','Bernal',2],
+  ['Santi','Quilmes',1],['Pau','Belgrano',0],['Gabi','Palermo',0],['Dani','Caballito',1],['Mati','Villa Urquiza',0],['Rama','La Plata',4]
 ].map(([n,loc,seats],i)=>({id:'sim'+String(i+1).padStart(2,'0'),n,loc,car:seats>0,seats:seats||3,sim:true}));
 
 const clean=(s,max)=>String(s==null?'':s).replace(/[\u0000-\u001f\u007f<>&"'`\\]/g,'').replace(/\s+/g,' ').trim().slice(0,max);
@@ -245,7 +245,7 @@ function plan(ps,radius){
   ps.map((_,i)=>i).filter(i=>ps[i].car).sort((x,y)=>ps[y].seats-ps[x].seats||(ps[x].id<ps[y].id?-1:1)).forEach(i=>{
     if(taken[i])return;
     const cand=ps.map((_,j)=>j).filter(j=>j!==i&&!taken[j]).map(j=>({j,d:hav(ps[i].pt,ps[j].pt)})).filter(c=>c.d<=radius)
-      .sort((p,q)=>(ps[p.j].car-ps[q.j].car)||p.d-q.d).slice(0,ps[i].seats);
+      .sort((p,q)=>p.d-q.d).slice(0,ps[i].seats);   // los más cercanos, tengan auto o no: si un conductor se sube al auto de otro, es un auto menos en la calle
     if(!cand.length)return;
     const g={id:groups.length,driver:i,members:cand.map(c=>c.j)};groups.push(g);
     taken[i]=true;gid[i]=g.id;g.members.forEach(j=>{taken[j]=true;gid[j]=g.id;});

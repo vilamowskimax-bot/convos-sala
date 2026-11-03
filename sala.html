@@ -172,7 +172,7 @@ body.nonames .cpop,body.nonames .ccard,body.nonames .wtag{visibility:hidden}
 .ptxt h1 span{display:block}
 /* entrevistados */
 #slide .pp h1{font-size:84px;line-height:1;margin-top:10px}
-.ints{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:56px}
+.ints{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:26px;margin-top:56px}
 .int{background:var(--ink-2);border-radius:34px;padding:30px 28px 32px;position:relative;overflow:hidden;min-height:380px;display:flex;flex-direction:column}
 .int::before{content:"";position:absolute;inset:0 0 auto 0;height:8px;background:var(--c)}
 .int .av{width:96px;height:96px;border-radius:30px;background:var(--c);color:var(--ink);display:grid;place-items:center;font:600 42px var(--fd)}
@@ -406,7 +406,7 @@ body.v-map .toast{display:flex}
     <div class="anat" id="anat"><span data-t="Inicio">Inicio</span><span data-t="Cerca mío">Cerca mío</span><span data-t="Mis viajes">Mis viajes</span><span data-t="Perfil">Perfil</span></div>
     <p class="sb" id="capSub"></p><h2 id="capT"></h2><p id="capP"></p><div class="try" id="capTry"></div>
   </section>
-  <iframe id="mirror" src="index.html?espejo=1&amp;v=7513973d93" title="App Poolify"></iframe>
+  <iframe id="mirror" src="index.html?espejo=1&amp;v=7ccad0cee2" title="App Poolify"></iframe>
   <aside class="qrside glass"><div class="qrbox" id="qrSideBox"></div><b>Escaneá y seguí</b>
     <div class="meter"><div class="mt"><i id="nCon">0</i>conectados</div><div class="bar2"><u id="mtr"></u></div><div id="mtrT">0 lo probaron</div></div></aside>
 </main>
@@ -434,7 +434,7 @@ body.v-map .toast{display:flex}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha256-XJrs/DDkVkUZ29zdzFOkGCJ9zHVo5hnpdi3c7HYJ7Uc=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha256-xUHvBjJ4hahBW8qN9gceFBibSFUzbe9PNttUvehITzY=" crossorigin="anonymous"></script>
-<script src="locs.js?v=dc410bc9df"></script><script src="manifest.js?v=5eaa727148"></script><script src="show.js?v=449f3a283e"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=118cfce577"></script><script src="match.js?v=43d4d534ea"></script>
+<script src="locs.js?v=dc410bc9df"></script><script src="manifest.js?v=5eaa727148"></script><script src="show.js?v=e0672b7f8a"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=18c86a80ac"></script><script src="match.js?v=43d4d534ea"></script>
 <script>
 (function(){
 'use strict';
@@ -500,10 +500,11 @@ function people(){
 }
 const plan=ps=>R.plan(ps,RADIUS);   // armado de grupos (compartido con la consola)
 function numbers(ps,pl){   // n: personas · groups: viajes posibles · co2: kg por mes (máximo)
-  let conn=0,noCar=0,co2=0,carsOff=0;
-  pl.groups.forEach(g=>{conn+=1+g.members.length;g.members.forEach(j=>{if(ps[j].car){co2+=destKm(ps[j])*1.3*2*0.16*20;carsOff++;}else noCar++;});});
+  let conn=0,noCar=0,co2=0,carsOff=0,drvSave=0;
+  pl.groups.forEach(g=>{conn+=1+g.members.length;const m=g.members.length;drvSave+=destKm(ps[g.driver])*1.3*2*20*0.08*2045*m/(m+1);   // lo que deja de pagar el conductor al dividir la nafta entre m+1
+    g.members.forEach(j=>{if(ps[j].car){co2+=destKm(ps[j])*1.3*2*0.16*20;carsOff++;}else noCar++;});});
   const zones={};ps.forEach(p=>{const z=ZONE_OF.get(p.loc);zones[z]=(zones[z]||0)+1;});
-  return {n:ps.length,sim:ps.filter(p=>p.sim).length,conn:ps.length?Math.round(conn/ps.length*100):0,groups:pl.groups.length,noCar,carsOff,co2:Math.round(co2),zones};
+  return {n:ps.length,sim:ps.filter(p=>p.sim).length,conn:ps.length?Math.round(conn/ps.length*100):0,groups:pl.groups.length,noCar,carsOff,co2:Math.round(co2),drvSave:Math.round(drvSave/100)*100,zones};
 }
 
 /* ---------- raíces: el camino más corto de cada persona a la sede; donde se juntan, el trazo engorda ---------- */
@@ -612,7 +613,7 @@ function stageHTML(s){
       '<div class="pframe"><div class="noimg">Foto del equipo</div>'+(s.photo?'<img src="'+esc(s.photo)+'" alt="Foto del equipo">':'')+'</div></div>';
     case 'converge':return convergeSVG(s.dest)+'<div class="shade"></div><div class="ptxt"><p class="ey a">'+esc(s.kicker)+'</p><h1><span class="a d1">'+esc(s.t1)+'</span><span class="w w1 g">'+esc(s.t2)+'</span></h1></div>';
     case 'people':{const C=['#FB923C','#818CF8','#34D399','#F5EBDD'];
-      return '<div class="pp"><p class="ey a">'+esc(s.kicker)+'</p><h1 class="a d1">'+hl(s.title)+'</h1><div class="ints">'+(s.people||[]).slice(0,4).map((p,i)=>
+      return '<div class="pp"><p class="ey a">'+esc(s.kicker)+'</p><h1 class="a d1">'+hl(s.title)+'</h1><div class="ints" style="--n:'+Math.min(4,(s.people||[]).length||1)+'">'+(s.people||[]).slice(0,4).map((p,i)=>
         '<div class="int w w'+(i+1)+'" style="--c:'+C[i]+'"><span class="av">'+esc(INI(p.n))+'</span><div class="nm">'+esc(p.n)+'</div><div class="rl">'+esc(p.r||'')+'</div>'+(p.q?'<div class="ins">'+esc(p.q)+'</div>':'')+'</div>').join('')+'</div></div>';}
     case 'survey':{const n=s.n||1,pc=k=>Math.round(k/n*100);
       const bar=(o,i)=>'<div class="hb '+o.c+(i===0?' top':'')+'" data-p="'+pc(o.k)+'"><div class="hl"><span>'+esc(o.l)+'</span><b>0%</b></div><div class="tr"><u></u></div></div>';
@@ -639,13 +640,13 @@ function stageHTML(s){
           '<div class="cb-brand a d2">'+LGI()+'<b>Pool<span>ify</span></b></div></div>'+
         '<div class="cb-g"><div class="svs a d2">'+
           kp('Ambiental',nb.co2,'kg de CO₂ menos por mes','hot')+
-          kp('Económico',pesos,'de nafta por mes ('+fmt(lts)+' litros)','','$ ')+
+          kp('Económico',nb.drvSave,'se ahorran los conductores al dividir la nafta','','$ ')+
           kp('Logístico',nb.carsOff,nb.carsOff===1?'auto menos y un estacionamiento libre por día':'autos menos y estacionamientos libres por día')+
           kp('Social',nb.conn,'ya tiene con quién volver','','','%')+'</div>'+
           '<div class="cb-c a d3"><div class="cb-ct"><span>CO₂ evitado en un año lectivo</span><b><i data-v="'+year+'" data-k="1">0</i> kg</b></div>'+
           '<svg viewBox="-4 0 '+(10*bw+9*gap+8)+' '+(H+34)+'" aria-hidden="true"><defs><linearGradient id="cbGr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FB923C"/><stop offset="1" stop-color="#F43F5E"/></linearGradient></defs>'+bars+'</svg>'+
           '<p class="cb-tr">≈ <b>'+fmt(trees)+'</b> '+(trees===1?'árbol urbano':'árboles urbanos')+' absorbiendo CO₂ un año entero</p></div></div>'+
-        '<p class="cl-x a d5">Máximo estimado con esta sala'+(nb.sim?' (incluye '+nb.sim+' de ejemplo)':'')+': 20 días por mes, ida y vuelta · CO₂: SNIGEIAR 2025 · nafta súper $2.045/l: YPF, oct. 2026 · árboles: EPA · no descuenta el desvío del conductor.</p>';}
+        '<p class="cl-x a d5">Por mes, entre todos los de esta sala'+(nb.sim?' (incluye '+nb.sim+' de ejemplo)':'')+'. Máximo estimado: 20 días por mes, ida y vuelta, auto de 8 l cada 100 km · CO₂: SNIGEIAR 2025 · nafta súper $2.045/l: YPF, oct. 2026 · árboles: EPA · no descuenta el desvío del conductor.</p>';}
     case 'logo':   // cierre: la ruta se dibuja y el auto la recorre; a su paso se descubre el logo (espeja la entrada) · s1 Gracias
       return '<div class="cl"><div class="cl-lw">'+LGF('cl-logo')+'<div class="cl-road"></div><div class="cl-car">'+LOGO('')+'</div></div><p class="cl-t">'+esc(s.tag||'')+'</p><p class="cl-g w w1">Gracias. <span>¿Preguntas?</span></p></div><p class="cl-f a d5">Tecnología y Sociedad · ITBA · 2026</p>';
     case 'cta':return '<div class="wel cta"><div><p class="ey a">'+LGI()+esc(s.kicker)+'</p><h1 class="a d1">'+hl(s.title)+'</h1><p class="sub a d2">'+esc(s.sub||'')+'</p></div>'+
@@ -829,6 +830,7 @@ function setScene(sc,live){
   if(d.view==='map'&&(isNew||(cur.f&4)))setTimeout(fit,90);
   if(d.id==='red')ensureGraph().then(()=>draw());
   if(!isNew&&d.id==='match'&&prev.fill!==cur.fill)matchLive();   // la consola sumó o sacó a alguien de ejemplo
+  if(!isNew&&d.slide&&d.slide.type==='savings'&&prev.fill!==cur.fill){buildSlide(d);stepSlide(d,cur.st);}   // y el ahorro se recalcula
   paintStats(lastStats);
 }
 function paintStats(st){
@@ -844,6 +846,7 @@ room.onPeople(list=>{
   const prev=new Set(real.map(p=>p.id));real=list;
   list.filter(p=>!prev.has(p.id)&&prev.size+known.size>0).forEach(p=>toast(p.n+' se sumó desde '+p.loc));
   matchLive();   // si alguien suma su respuesta mientras está el match, se anima
+  {const d=BY[cur.s];if(d&&d.slide&&d.slide.type==='savings'){buildSlide(d);stepSlide(d,cur.st);}}   // el ahorro se recalcula con la gente nueva
   draw();
 });
 room.onScene(sc=>setScene(sc,true));
