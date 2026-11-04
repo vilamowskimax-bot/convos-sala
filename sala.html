@@ -411,7 +411,7 @@ body.v-map .toast{display:flex}
     <div class="anat" id="anat"><span data-t="Inicio">Inicio</span><span data-t="Cerca mío">Cerca mío</span><span data-t="Mis viajes">Mis viajes</span><span data-t="Perfil">Perfil</span></div>
     <p class="sb" id="capSub"></p><h2 id="capT"></h2><p id="capP"></p><div class="try" id="capTry"></div>
   </section>
-  <iframe id="mirror" src="index.html?espejo=1&amp;v=9843625145" title="App Poolify"></iframe>
+  <iframe id="mirror" src="index.html?espejo=1&amp;v=d94771922d" title="App Poolify"></iframe>
   <aside class="qrside glass"><div class="qrbox" id="qrSideBox"></div><b>Escaneá y seguí</b>
     <div class="meter"><div class="mt"><i id="nCon">0</i>conectados</div><div class="bar2"><u id="mtr"></u></div><div id="mtrT">0 lo probaron</div></div></aside>
 </main>
@@ -439,7 +439,7 @@ body.v-map .toast{display:flex}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha256-XJrs/DDkVkUZ29zdzFOkGCJ9zHVo5hnpdi3c7HYJ7Uc=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha256-xUHvBjJ4hahBW8qN9gceFBibSFUzbe9PNttUvehITzY=" crossorigin="anonymous"></script>
-<script src="locs.js?v=dc410bc9df"></script><script src="manifest.js?v=5eaa727148"></script><script src="show.js?v=df9104dcc5"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=18c86a80ac"></script><script src="match.js?v=43d4d534ea"></script>
+<script src="locs.js?v=dc410bc9df"></script><script src="manifest.js?v=5eaa727148"></script><script src="show.js?v=d723803ad8"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=18c86a80ac"></script><script src="match.js?v=43d4d534ea"></script>
 <script>
 (function(){
 'use strict';
@@ -609,7 +609,7 @@ function convergeSVG(dest){   // autos con una sola persona que llegan todos al 
   return '<svg class="cvs" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+h+
     '<g transform="translate('+tx+' '+ty+')"><rect x="-38" y="-38" width="76" height="76" rx="20" fill="#F5EBDD"/><path d="M-20 -6l20-11 20 11-20 11z M-12 -1v11c7 5 17 5 24 0v-11" fill="none" stroke="#150B33" stroke-width="4" stroke-linejoin="round"/><text y="66" text-anchor="middle" style="font:600 26px Oswald,sans-serif;letter-spacing:.1em" fill="#F5EBDD">'+esc(dest||'')+'</text></g></svg>';
 }
-const INI=n=>{n=String(n||'').trim();const m=/^Entrevistado (\d)$/.exec(n);return m?m[1]:n.split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase();};
+const INI=n=>{n=String(n||'').trim();const m=/^Entrevistado (\d)$/.exec(n);if(m)return m[1];const w=n.split(/\s+/);return ((w[0]||'')[0]+(w.length>1?w[w.length-1][0]:'')).toUpperCase();};   // nombre + apellido
 function stageHTML(s){
   switch(s.type){
     case 'welcome':return '<div class="wel"><div>'+LGF('a')+'<p class="ey a d2">'+esc(s.kicker)+'</p><p class="live a d5"><i></i><b id="wCon">'+lastStats.connected+'</b> <span id="wConT">'+(lastStats.connected===1?'conectado':'conectados')+'</span></p></div>'+
