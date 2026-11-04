@@ -1085,7 +1085,8 @@ const MODALS={
     const m=S.me;
     return '<div class="scrim" data-act="close"></div><div class="msheet tall" role="dialog" aria-label="Editar trayecto"><span class="grab"></span><h2>Tu trayecto</h2>'+
     '<label class="fl">Salís de<select id="tOrigin">'+Object.entries(ZONES).map(([z,zn])=>'<optgroup label="'+zn+'">'+LOCS.filter(l=>l.zone===z).map(l=>'<option'+(l.name===m.origin?' selected':'')+'>'+l.name+'</option>').join('')+'</optgroup>').join('')+'</select></label>'+
-    '<label class="fl">Vas a<select id="tSede">'+Object.values(SEDES).map(s=>'<option value="'+s.key+'"'+(s.key===m.sede?' selected':'')+'>ITBA '+s.name+' · '+s.addr+'</option>').join('')+'</select></label>'+
+    (ROOM.joined?'<label class="fl">Vas a<select id="tSede" disabled><option value="rec" selected>ITBA '+SEDES.rec.name+' · '+SEDES.rec.addr+'</option></select></label><p class="fine">Hoy, en la sala, todos van a Rectorado.</p>'
+      :'<label class="fl">Vas a<select id="tSede">'+Object.values(SEDES).map(s=>'<option value="'+s.key+'"'+(s.key===m.sede?' selected':'')+'>ITBA '+s.name+' · '+s.addr+'</option>').join('')+'</select></label>')+
     '<div class="two2"><label class="fl">Llegás<select id="tArr">'+SLOTS.map(t=>'<option'+(t===m.arr?' selected':'')+'>'+t+'</option>').join('')+'</select></label><label class="fl">Te vas<select id="tBack">'+SLOTS.map(t=>'<option'+(t===m.back?' selected':'')+'>'+t+'</option>').join('')+'</select></label></div>'+
     '<div class="lbl">Días que vas a la facu</div><div class="days">'+DAYS.map((d,i)=>'<button type="button" class="day'+(m.days[i]?' on':'')+'" data-act="tday" data-i="'+i+'">'+d+'</button>').join('')+'</div><p class="fine">Los días que no marcás, no aparecés. Lo cambiás cuando quieras.</p>'+
     '<div class="set" style="border:0;padding:0"><p>Tengo auto y puedo llevar gente</p><label class="sw"><input type="checkbox" id="tCar"'+(m.car?' checked':'')+'><span></span></label></div>'+
@@ -1296,7 +1297,8 @@ function act(a,el){
     case 'write':toast('El chat se abre cuando arman el viaje juntos.');break;
     case 'edittrip':modal('edittrip');break;
     case 'tday':{const i=+el.dataset.i;el.classList.toggle('on');break;}
-    case 'savetrip':{const m=S.me;m.origin=$('#tOrigin').value;m.sede=$('#tSede').value;m.arr=$('#tArr').value;m.back=$('#tBack').value;m.days=$$('[data-act="tday"]').map(b=>b.classList.contains('on')?1:0);if(!m.days.some(Boolean))m.days[0]=1;
+    case 'savetrip':{const m=S.me;m.origin=$('#tOrigin').value;m.sede=ROOM.joined?'rec':$('#tSede').value;   // en la sala, siempre Rectorado
+      m.arr=$('#tArr').value;m.back=$('#tBack').value;m.days=$$('[data-act="tday"]').map(b=>b.classList.contains('on')?1:0);if(!m.days.some(Boolean))m.days[0]=1;
       m.car=$('#tCar').checked;const c=CARS.find(x=>x.m===$('#tCarM').value);m.carM=c.m;m.cons=c.cons;m.fuel=c.fuel;S.groups=[];S.pending=null;S.modal=null;regen();render();toast('Listo. Buscamos compañeros para tu nuevo trayecto.');break;}
     case 'editme':modal('editme');break;
     case 'frole':S.me.role=el.dataset.v;S.me.carrera=el.dataset.v==='est'?INGS[6]:el.dataset.v==='doc'?DOCAREAS[0]:'';stashMe();$('#modal').innerHTML=MODALS.editme();break;

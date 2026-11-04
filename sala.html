@@ -380,7 +380,10 @@ body.nonames .dp .nm{display:none}
 .zl{position:absolute;top:calc(var(--s) + 6px);left:50%;transform:translateX(-50%);white-space:nowrap;font:600 12px var(--fb);color:var(--ink);background:rgba(245,235,221,.94);padding:2px 9px;border-radius:99px;font-style:normal}
 .sede{position:relative;width:38px;height:38px;border-radius:12px;background:var(--ink);color:var(--cream);display:grid;place-items:center;border:3px solid #fff;box-shadow:0 6px 14px rgba(21,11,51,.5)}
 .sede em{position:absolute;left:50%;top:44px;transform:translateX(-50%);white-space:nowrap;font:700 12px var(--fb);font-style:normal;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:#fff;padding:3px 8px;border-radius:7px;box-shadow:0 4px 10px rgba(21,11,51,.3)}
-body.roots-on .sede{animation:pulse 2.2s ease-out infinite}
+.sede.alt{width:30px;height:30px;border-radius:10px;background:#fff;color:var(--ink);border:2.5px solid var(--ink);box-shadow:0 4px 10px rgba(21,11,51,.35)}
+.sede.alt em{top:36px;font-size:10.5px;padding:2px 7px;background:rgba(255,255,255,.92);color:var(--ink);box-shadow:0 3px 8px rgba(21,11,51,.25)}
+.sede.lbr em{left:calc(100% + 6px);top:50%;transform:translateY(-50%)}
+body.roots-on .sede.main{animation:pulse 2.2s ease-out infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(244,63,94,.65),0 6px 14px rgba(21,11,51,.5)}100%{box-shadow:0 0 0 26px rgba(244,63,94,0),0 6px 14px rgba(21,11,51,.5)}}
 path.root{opacity:0;transition:opacity .9s ease}
 path.root.on{opacity:.96}
@@ -411,7 +414,7 @@ body.v-map .toast{display:flex}
     <div class="anat" id="anat"><span data-t="Inicio">Inicio</span><span data-t="Cerca mío">Cerca mío</span><span data-t="Mis viajes">Mis viajes</span><span data-t="Perfil">Perfil</span></div>
     <p class="sb" id="capSub"></p><h2 id="capT"></h2><p id="capP"></p><div class="try" id="capTry"></div>
   </section>
-  <iframe id="mirror" src="index.html?espejo=1&amp;v=d94771922d" title="App Poolify"></iframe>
+  <iframe id="mirror" src="index.html?espejo=1&amp;v=5a4bbaaead" title="App Poolify"></iframe>
   <aside class="qrside glass"><div class="qrbox" id="qrSideBox"></div><b>Escaneá y seguí</b>
     <div class="meter"><div class="mt"><i id="nCon">0</i>conectados</div><div class="bar2"><u id="mtr"></u></div><div id="mtrT">0 lo probaron</div></div></aside>
 </main>
@@ -445,9 +448,9 @@ body.v-map .toast{display:flex}
 'use strict';
 const R=window.ConvosRoom,SHOW=R.SHOW,BY=R.BYID,$=(s,r=document)=>r.querySelector(s);
 const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-/* las tres sedes del ITBA (las mismas de la app). Cada persona va a la que le queda más cerca. */
+/* las tres sedes del ITBA (las mismas de la app). Las tres se ven en el mapa, pero en vivo toda la sala va a Rectorado (ahí presentamos). */
 const SEDES=[{pt:[-34.64030,-58.40125],name:'Distrito Tecnológico',short:'Tecnológico'},{pt:[-34.64169,-58.40621],name:'Rectorado',short:'Rectorado'},{pt:[-34.6058,-58.3737],name:'Distrito Financiero',short:'Financiero'}];
-const PINS=[{pt:SEDES[1].pt,name:'Rectorado',short:'Rectorado'}];   // en vivo toda la sala va a Rectorado (ahí presentamos): un solo marcador
+const PINS=[{...SEDES[1],main:true},{...SEDES[0],side:'r'},SEDES[2]];   // Rectorado resaltado (el destino de la sala); Tecnológico y Financiero, más chicos
 const SEDE=SEDES[0],REC=SEDES[1],nearSedeKm=p=>Math.min(...SEDES.map(s=>R.hav(p,s.pt)));
 const destKm=p=>R.hav(p.pt,REC.pt);   // toda la sala (los del QR y los de ejemplo) va a Rectorado: ahí presentamos
 const ZONE_OF=new Map(window.CONVOS_LOCS.map(l=>[l.name,l.zone])),ZN=window.CONVOS_ZONES;
@@ -493,7 +496,14 @@ MAP.attributionControl.setPrefix(false).addAttribution('© OpenStreetMap');new T
 const LG={halo:L.layerGroup().addTo(MAP),root:L.layerGroup().addTo(MAP),agg:L.layerGroup().addTo(MAP),ppl:L.layerGroup().addTo(MAP),sede:L.layerGroup().addTo(MAP)};
 const CAR_PATH='<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>';
 const ICON_CAR='<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">'+CAR_PATH+'</svg>';
-PINS.forEach((S0,i)=>L.marker(S0.pt,{icon:L.divIcon({className:'',html:'<span class="sede" title="'+esc(S0.name)+'"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11v5c3 2 7 2 10 0v-5"/></svg><em>'+esc(S0.short)+'</em></span>',iconSize:[38,38],iconAnchor:[19,19]}),zIndexOffset:900-i,interactive:false}).addTo(LG.sede));
+const SEDE_SVG=sz=>'<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11v5c3 2 7 2 10 0v-5"/></svg>';
+const PIN_M=PINS.map((S0,i)=>{const z=S0.main?38:30;return L.marker(S0.pt,{icon:L.divIcon({className:'',html:'<span class="sede'+(S0.main?' main':' alt')+(S0.side?' lbr':'')+'" title="'+esc(S0.name)+'">'+SEDE_SVG(S0.main?20:16)+'<em>'+esc(S0.short)+'</em></span>',iconSize:[z,z],iconAnchor:[z/2,z/2]}),zIndexOffset:900-i,interactive:false}).addTo(LG.sede);});
+/* Tecnológico y Rectorado están a 500 m: con poco zoom se tapan. Se corren un poco en pantalla (no en el mapa) para que se vean las tres. */
+function spreadSedes(){const P=PIN_M.map(m=>MAP.latLngToLayerPoint(m.getLatLng())),O=P.map(()=>[0,0]),MIN=46;
+  for(let it=0;it<6;it++)for(let a=0;a<P.length;a++)for(let b=a+1;b<P.length;b++){let dx=P[b].x+O[b][0]-P[a].x-O[a][0],dy=P[b].y+O[b][1]-P[a].y-O[a][1],d=Math.hypot(dx,dy);
+    if(d>=MIN)continue;if(d<.5){dx=1;dy=0;d=1;}const k=(MIN-d)/2/d;O[a][0]-=dx*k;O[a][1]-=dy*k;O[b][0]+=dx*k;O[b][1]+=dy*k;}
+  PIN_M.forEach((m,i)=>{const el=m.getElement(),sp=el&&el.firstElementChild;if(sp)sp.style.transform=(O[i][0]||O[i][1])?'translate('+O[i][0].toFixed(1)+'px,'+O[i][1].toFixed(1)+'px)':'';});}
+MAP.on('zoomend viewreset',spreadSedes);spreadSedes();
 
 /* ---------- estado ---------- */
 const room=R.connect({role:'screen'});   // el proyector solo mira: no publica nada ni tiene claves
