@@ -63,7 +63,7 @@ window.CONVOS_SHOW=[
   {id:'solucion',act:1,label:'La solución',secs:20,view:'slide',
    slide:{type:'reveal',word:'Poolify',line:'No inventamos el carpooling. Lo diseñamos para que se adopte.',next:'Cómo funciona →'},
    phone:{text:'Poolify'},proj:'El logo de Poolify, que sube desde la ruta.',cel:'Poolify.',
-   notes:['Apps para compartir el auto existen (hasta Waze tuvo una, y cerró). No inventamos el carpooling: lo diseñamos para que se adopte. Esto es Poolify. Pasar a la demo.']},
+   notes:['Se revela Poolify: no inventamos el carpooling, lo diseñamos para que se adopte. Pasar a la demo.']},
 
   /* ============ ACTO 2 · LA SOLUCIÓN ============ */
   /* Sin grupos fijos: cada uno publica su viaje el día anterior (decisión del informe, por el 65% de la encuesta) */
