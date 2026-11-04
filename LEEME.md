@@ -34,7 +34,7 @@ Está en `show.js` (una sola lista que leen las tres partes).
 | Problema | Autos con una persona que llegan todos al ITBA: "Todos vamos al mismo lugar. Cada uno por su cuenta." | — |
 | Entrevistas | "Salimos a escuchar": cuatro tarjetas (nombre, cargo, frase), una por paso | — (**borrador**: vacía hasta tener los entrevistados) |
 | Encuesta | 71 respuestas válidas, en barras horizontales: qué frena (flexibilidad 65%, desvío 42%, seguridad 27%) y qué da confianza (conocerse en la facu 77%, misma carrera 66%, mismo género 6%). | Encuesta propia, octubre-noviembre 2026 (74 respuestas, 3 de broma excluidas; muestra no aleatoria) |
-| La solución | "Apps para compartir el auto hay muchas. Ninguna se volvió costumbre." → el logo de Poolify sube desde la ruta: Comunidad ITBA | — |
+| La solución | El logo de Poolify, grande, sube desde la ruta apenas entra la diapositiva; abajo, "No inventamos el carpooling. Lo diseñamos para que se adopte." | — |
 
 - Salieron del guion para ser breves: **Autos** (1,3 personas por auto), **Tiempo** (ENMODO), **Planeta** (31% de los GEI) y **Qué existe** (Tenés Lugar, Waze, BlaBlaCar). Quedan en el historial de git y en las notas por si preguntan.
 

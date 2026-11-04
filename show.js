@@ -60,10 +60,10 @@ window.CONVOS_SHOW=[
      {n:'Josefina Furlong',r:'Responsable de Prensa, RSE y Relaciones Públicas · Mercedes-Benz Argentina',q:'Compartir el auto es un cambio cultural: funciona en comunidades cerradas, con mail institucional e incentivos.'}]},
    phone:{text:'Mirá la pantalla'},proj:'El título y, de a una, las tres entrevistadas: nombre, cargo y su frase.',cel:'Mensaje de compañía.',
    notes:['Hablamos con alguien que vive el problema, y con quienes ya trabajan en esto. Aparecen de a una.','Sofía Marina Pérez, estudiante del ITBA que maneja sola: compartiría si ayuda con el estacionamiento y el tránsito, y acepta esperar hasta media hora. Valora llevar y que la lleven, para no manejar todos los días.','Romina Paola Suárez, de una PyME de traslados de confianza para jóvenes: la confianza nace de conocerse antes y de compartir la ubicación en vivo. Las dos cosas están en Poolify.','Josefina Furlong, de Mercedes-Benz: compartir el auto es un cambio cultural; funciona en comunidades cerradas, con mail institucional e incentivos. Su red, Tenés Lugar, se apagó cuando la coordinación pasó a WhatsApp. Por eso, todo dentro de la app.']},
-  {id:'solucion',act:1,label:'La solución',secs:20,view:'slide',steps:2,
-   slide:{type:'reveal',q:'Apps para compartir el auto hay muchas.',sub:'Ninguna se volvió costumbre.',word:'Poolify',tag:'Comunidad ITBA',line:'No inventamos el carpooling. Lo diseñamos para que se adopte.',next:'Cómo funciona →'},
-   phone:{text:'Poolify'},proj:'La frase, y después el logo que se dibuja: Poolify, Comunidad ITBA.',cel:'Poolify.',
-   notes:['Apps para compartir el auto existen (hasta Waze tuvo una, y cerró). Ninguna se volvió costumbre.','Se revela Poolify. Pasar a la demo.']},
+  {id:'solucion',act:1,label:'La solución',secs:20,view:'slide',
+   slide:{type:'reveal',word:'Poolify',line:'No inventamos el carpooling. Lo diseñamos para que se adopte.',next:'Cómo funciona →'},
+   phone:{text:'Poolify'},proj:'El logo de Poolify, que sube desde la ruta.',cel:'Poolify.',
+   notes:['Apps para compartir el auto existen (hasta Waze tuvo una, y cerró). No inventamos el carpooling: lo diseñamos para que se adopte. Esto es Poolify. Pasar a la demo.']},
 
   /* ============ ACTO 2 · LA SOLUCIÓN ============ */
   /* Sin grupos fijos: cada uno publica su viaje el día anterior (decisión del informe, por el 65% de la encuesta) */
