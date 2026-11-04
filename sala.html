@@ -439,7 +439,7 @@ body.v-map .toast{display:flex}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha256-XJrs/DDkVkUZ29zdzFOkGCJ9zHVo5hnpdi3c7HYJ7Uc=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha256-xUHvBjJ4hahBW8qN9gceFBibSFUzbe9PNttUvehITzY=" crossorigin="anonymous"></script>
-<script src="locs.js?v=dc410bc9df"></script><script src="manifest.js?v=5eaa727148"></script><script src="show.js?v=6eff828d45"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=18c86a80ac"></script><script src="match.js?v=43d4d534ea"></script>
+<script src="locs.js?v=dc410bc9df"></script><script src="manifest.js?v=5eaa727148"></script><script src="show.js?v=0082eb5bf5"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=18c86a80ac"></script><script src="match.js?v=43d4d534ea"></script>
 <script>
 (function(){
 'use strict';
@@ -626,7 +626,7 @@ function stageHTML(s){
       return '<div class="dhead"><div><p class="ey a">'+esc(s.kicker)+'</p><h1 class="a d1">'+esc(s.title)+'</h1></div><span class="live a d2"><b>'+n+'</b> respuestas</span></div>'+
         '<div class="dgrid"><div class="dpan a d2" data-q="1"><div class="dq">'+esc(s.q1.q)+'</div><div class="bars">'+s.q1.opts.map(bar).join('')+'</div>'+axis+'</div>'+
         '<div class="dpan a d3" data-q="2"><div class="dq">'+esc(s.q2.q)+'</div><div class="bars">'+s.q2.opts.map(bar).join('')+'</div>'+axis+'</div></div>'+
-        '<p class="punch w w3">'+hl(s.punch)+'</p>'+(s.src?'<p class="ssrc">Fuente: '+esc(s.src)+'</p>':'');}
+        (s.punch?'<p class="punch w w3">'+hl(s.punch)+'</p>':'')+(s.src?'<p class="ssrc">Fuente: '+esc(s.src)+'</p>':'');}
     case 'reveal':return '<div class="qw"><p class="q1 a d1">'+esc(s.q)+'<small class="a d3">'+esc(s.sub||'')+'</small></p></div>'+
       '<div class="sol">'+LGF()+'<div class="tagi a2">'+esc(s.tag||'')+'</div><p class="a2">'+esc(s.line||'')+'</p><div class="nx a2">'+esc(s.next||'')+'</div></div>';
     case 'how':return '<p class="ey a">'+LGI()+esc(s.kicker)+'</p><h1 class="a d1">'+hl(s.title)+'</h1><div class="hw">'+(s.items||[]).slice(0,3).map((it,i)=>
