@@ -32,7 +32,7 @@ Está en `show.js` (una sola lista que leen las tres partes).
 |---|---|---|
 | Equipo | "¿Cómo llegaste hoy a la universidad?", los cuatro integrantes (Max Vilamowski, Thiago García, Martina Ciceran Pellegrini y Santiago Bermudez) y la foto del equipo | — (**borrador**: falta la foto) |
 | Problema | Autos con una persona que llegan todos al ITBA: "Todos vamos al mismo lugar. Cada uno por su cuenta." | — |
-| Entrevistas | "Salimos a escuchar": cuatro tarjetas (nombre, cargo, frase), una por paso | — (**borrador**: vacía hasta tener los entrevistados) |
+| Entrevistas | "Salimos a escuchar": cuatro tarjetas (nombre, cargo, frase), una por paso: Sofía Marina Pérez, Romina Paola Suárez, Javier Taussik (Uber) y Josefina Furlong | Entrevistas propias |
 | Encuesta | 71 respuestas válidas, en barras horizontales: qué frena (flexibilidad 65%, desvío 42%, seguridad 27%) y qué da confianza (conocerse en la facu 77%, misma carrera 66%, mismo género 6%). | Encuesta propia, octubre-noviembre 2026 (74 respuestas, 3 de broma excluidas; muestra no aleatoria) |
 | La solución | El logo de Poolify, grande, sube desde la ruta apenas entra la diapositiva; abajo, "No inventamos el carpooling. Lo diseñamos para que se adopte." | — |
 
