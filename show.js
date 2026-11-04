@@ -48,12 +48,12 @@ window.CONVOS_SHOW=[
    phone:{text:'Mirá la pantalla'},proj:'Autos con una persona que llegan todos al ITBA. Después, la segunda frase.',cel:'Mensaje de compañía.',
    notes:['Todos los días hacemos el mismo viaje al ITBA: al mismo lugar, a la misma hora. Pero cada uno por su cuenta: en auto o combinando colectivo, tren y subte.','Y eso nos cuesta a todos: tiempo de viaje y combinaciones; plata en nafta, peajes, estacionamiento o SUBE; tránsito y más CO₂.']},
   {id:'encuesta',act:1,label:'Encuesta',secs:40,view:'slide',steps:4,auto:[null,null,'La frase final'],
-   slide:{type:'survey',kicker:'Encuesta a estudiantes del ITBA',title:'Lo que nos dijeron',n:61,
-     q1:{q:'¿Qué te frena a compartir el viaje?',opts:[{l:'Perder flexibilidad de horarios',k:41,c:'hot'},{l:'Desviarme o esperar a otros',k:27,c:'hot'},{l:'No sentirme seguro/a',k:17,c:'cool'}],leg:'= 1 estudiante'},
-     q2:{q:'¿Qué te daría confianza para viajar con alguien?',opts:[{l:'Conocerlo antes en la facu',k:47,c:'hot'},{l:'Que sea de mi carrera o año',k:41,c:'hot2'},{l:'Que sea de mi mismo género',k:4,c:'cool'}]},
-     punch:'El problema no es *con quién* viajar.\nEs *cuándo.*',src:'Encuesta propia a estudiantes del ITBA, octubre-noviembre 2026 (61 respuestas, muestra no aleatoria)'},
+   slide:{type:'survey',kicker:'Encuesta a estudiantes del ITBA',title:'Lo que nos dijeron',n:71,
+     q1:{q:'¿Qué te frena a compartir el viaje?',opts:[{l:'Perder flexibilidad de horarios',k:46,c:'hot'},{l:'Desviarme o esperar a otros',k:30,c:'hot'},{l:'No sentirme seguro/a',k:19,c:'cool'}],leg:'= 1 estudiante'},
+     q2:{q:'¿Qué te daría confianza para viajar con alguien?',opts:[{l:'Conocerlo antes en la facu',k:55,c:'hot'},{l:'Que sea de mi carrera o año',k:47,c:'hot2'},{l:'Que sea de mi mismo género',k:4,c:'cool'}]},
+     punch:'El problema no es *con quién* viajar.\nEs *cuándo.*',src:'Encuesta propia a estudiantes del ITBA, octubre-noviembre 2026 (71 respuestas, muestra no aleatoria)'},
    phone:{text:'Mirá la pantalla'},proj:'Las dos preguntas; después se llenan solos los muñequitos y los anillos. La frase final sale con otro Siguiente.',cel:'Mensaje de compañía.',
-   notes:['Apenas aparece, preguntá: «¿Qué creen que frena más: el miedo o los horarios?»','Se llenan las barras: perder flexibilidad de horarios (67%) le gana a no sentirse seguro (28%).','Las barras de confianza: conocerse en la facu (77%) y misma carrera (67%), contra mismo género (7%).','Tocá Siguiente para la frase final: el problema no es con quién viajar, es cuándo. La confianza ya está: la da la comunidad. (Si preguntan: 61 respuestas válidas. 7 de cada 10 estarían dispuestos o muy dispuestos a compartir. La muestra no es aleatoria.)']},
+   notes:['Apenas aparece, preguntá: «¿Qué creen que frena más: el miedo o los horarios?»','Se llenan las barras: perder flexibilidad de horarios (65%) le gana a no sentirse seguro (27%).','Las barras de confianza: conocerse en la facu (77%) y misma carrera (66%), contra mismo género (6%).','Tocá Siguiente para la frase final: el problema no es con quién viajar, es cuándo. La confianza ya está: la da la comunidad. (Si preguntan: 71 respuestas válidas. 7 de cada 10 estarían dispuestos o muy dispuestos a compartir. La muestra no es aleatoria.)']},
   {id:'escuchar',act:1,label:'Entrevistas',secs:35,view:'slide',steps:4,
    slide:{type:'people',kicker:'Antes de diseñar nada',title:'Salimos a escuchar',people:[
      {n:'Sofía Marina Pérez',r:'Estudiante del ITBA · maneja sola',q:'Hay mucha disposición a compartir el auto si ayuda con el estacionamiento y el tránsito.'},
@@ -67,7 +67,7 @@ window.CONVOS_SHOW=[
    notes:['Apps para compartir el auto existen (hasta Waze tuvo una, y cerró). Ninguna se volvió costumbre.','Se revela Poolify. Pasar a la demo.']},
 
   /* ============ ACTO 2 · LA SOLUCIÓN ============ */
-  /* Sin grupos fijos: cada uno publica su viaje el día anterior (decisión del informe, por el 67% de la encuesta) */
+  /* Sin grupos fijos: cada uno publica su viaje el día anterior (decisión del informe, por el 65% de la encuesta) */
   {id:'como',act:2,label:'Cómo funciona',secs:20,view:'slide',steps:3,
    slide:{type:'how',kicker:'Cómo funciona',title:'Tres pasos. *Todos los días.*',
      items:[{i:'cal',t:'Publicás tu viaje',d:'El día anterior: a qué sede vas y a qué hora.'},
