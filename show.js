@@ -38,7 +38,7 @@ window.CONVOS_SHOW=[
    notes:['Mientras se acomodan: que escaneen y dejen el celular abierto.','Cuando haya suficientes conectados, arrancá. El cronómetro empieza solo con el primer “Siguiente”.']},
 
   /* ============ ACTO 1 · EL PROBLEMA ============ */
-  {id:'equipo',act:1,label:'Equipo',secs:30,view:'slide',draft:true,
+  {id:'equipo',act:1,label:'Equipo',secs:30,view:'slide',
    slide:{type:'team',kicker:'Poolify · Tecnología y Sociedad · ITBA',title:'¿Cómo llegaste *hoy* a la universidad?',names:['Max Vilamowski','Thiago García','Martina Ciceran Pellegrini','Santiago Bermudez'],photo:'equipo.jpg'},
    phone:{text:'Mirá la pantalla'},proj:'La pregunta, los cuatro nombres y la foto del equipo.',cel:'Mensaje de compañía.',
    notes:['Presentarnos: nombre y carrera.','¿Cómo llegaron hoy a la universidad? (Que lo piensen: la respuesta aparece en lo que sigue.)']},
