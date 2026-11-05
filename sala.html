@@ -184,6 +184,7 @@ body.nonames .cpop,body.nonames .ccard,body.nonames .wtag{visibility:hidden}
 .int .nm{font:600 34px/1.05 var(--fd);margin-top:24px}
 .int .rl{font-size:17px;color:var(--mute);margin-top:6px}
 .int .ins{margin-top:auto;padding-top:22px;font:500 22px/1.35 var(--fb)}
+.stg .int.w{transition-duration:1.3s,1.3s}   /* los entrevistados entran más despacio */
 .int .ins::before{content:"“";display:block;font:600 64px/.6 var(--fd);color:var(--c);margin-bottom:6px}
 /* encuesta: muñequitos (1 = un estudiante), anillos y la frase */
 #slide .stg.t-survey{justify-content:flex-start;padding-top:96px}
@@ -259,15 +260,15 @@ body.v-app #app,body.v-map #map,body.v-map #hint{animation:vin .7s ease both}
 /* cierre */
 #slide .stg.t-logo{align-items:center;text-align:center}
 .cl{position:relative;display:flex;flex-direction:column;align-items:center}
-.cl-lw{position:relative;width:380px;height:390px}
-.cl-logo{width:380px;display:block;clip-path:inset(0 100% 0 0);animation:clreveal .5s linear 1.16s forwards}
+.cl-lw{position:relative;width:540px;height:554px}
+.cl-logo{width:540px;display:block;clip-path:inset(0 100% 0 0);animation:clreveal .64s linear 1.07s forwards}   /* se descubre mientras pasa el auto */
 @keyframes clreveal{to{clip-path:inset(0 0 0 0)}}
-.cl-road{position:absolute;left:50%;top:394px;width:1600px;margin-left:-800px;height:3px;border-radius:2px;background:linear-gradient(90deg,transparent,rgba(251,146,60,.55) 25%,#FB923C 50%,rgba(251,146,60,.55) 75%,transparent);transform-origin:0 50%;transform:scaleX(0);animation:cldraw 1.2s cubic-bezier(.2,.9,.25,1) .05s forwards}
+.cl-road{position:absolute;left:50%;top:558px;width:1600px;margin-left:-800px;height:3px;border-radius:2px;background:linear-gradient(90deg,transparent,rgba(251,146,60,.55) 25%,#FB923C 50%,rgba(251,146,60,.55) 75%,transparent);transform-origin:0 50%;transform:scaleX(0);animation:cldraw 1.2s cubic-bezier(.2,.9,.25,1) .05s forwards}
 @keyframes cldraw{to{transform:scaleX(1)}}
-.cl-car{position:absolute;left:50%;top:262px;width:190px;height:131px;margin-left:-95px;transform:translateX(-1100px);animation:clcar 2.6s linear .2s forwards;z-index:2}
+.cl-car{position:absolute;left:50%;top:426px;width:190px;height:131px;margin-left:-95px;transform:translateX(-1100px);animation:clcar 2.6s linear .2s forwards;z-index:2}
 .cl-car .lg{width:190px;height:131px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.45))}
 @keyframes clcar{to{transform:translateX(1100px)}}
-.cl-t{margin:34px 0 0;font:500 40px var(--fb);color:var(--mute);opacity:0;transform:translateY(16px);animation:clup .8s cubic-bezier(.2,.8,.2,1) 1.8s forwards}
+.cl-t{margin:28px 0 0;font:500 40px var(--fb);color:var(--mute);opacity:0;transform:translateY(16px);animation:clup .8s cubic-bezier(.2,.8,.2,1) 1.8s forwards}
 @keyframes clup{to{opacity:1;transform:none}}
 #slide .stg.t-savings{justify-content:flex-start;padding-top:70px;padding-bottom:50px}
 .cb-h{display:flex;justify-content:space-between;align-items:flex-start}
@@ -295,7 +296,7 @@ body.v-app #app,body.v-map #map,body.v-map #hint{animation:vin .7s ease both}
 .t-savings .cb-ct b,.t-savings .cb-tr{opacity:0;transition:opacity .8s cubic-bezier(.2,.8,.2,1) .3s}
 #slide.s1 .t-savings .cb-ct b,#slide.s1 .t-savings .cb-tr{opacity:1}
 .cb-tr{margin:10px 0 0;font:500 17px var(--fb);color:var(--mute)}.cb-tr b{color:var(--cream)}
-.cl-g{margin:40px 0 0;font:600 44px var(--fd);color:var(--cream);white-space:nowrap}
+.cl-g{margin:30px 0 0;font:600 44px var(--fd);color:var(--cream);white-space:nowrap}
 .cl-g span{color:var(--orange)}
 .cl-x{margin:18px 0 0;font:500 13px/1.4 var(--fb);color:var(--mute);opacity:.75}
 
@@ -418,7 +419,7 @@ body.v-map .toast{display:flex}
     <div class="anat" id="anat"><span data-t="Inicio">Inicio</span><span data-t="Cerca mío">Cerca mío</span><span data-t="Mis viajes">Mis viajes</span><span data-t="Perfil">Perfil</span></div>
     <p class="sb" id="capSub"></p><h2 id="capT"></h2><p id="capP"></p><div class="try" id="capTry"></div>
   </section>
-  <iframe id="mirror" src="index.html?espejo=1&amp;v=1e166e5540" title="App Poolify"></iframe>
+  <iframe id="mirror" src="index.html?espejo=1&amp;v=f7b90c57e1" title="App Poolify"></iframe>
   <aside class="qrside glass"><div class="qrbox" id="qrSideBox"></div><b>Escaneá y seguí</b>
     <div class="meter"><div class="mt"><i id="nCon">0</i>conectados</div><div class="bar2"><u id="mtr"></u></div><div id="mtrT">0 lo probaron</div></div></aside>
 </main>
@@ -446,7 +447,7 @@ body.v-map .toast{display:flex}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha256-XJrs/DDkVkUZ29zdzFOkGCJ9zHVo5hnpdi3c7HYJ7Uc=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha256-xUHvBjJ4hahBW8qN9gceFBibSFUzbe9PNttUvehITzY=" crossorigin="anonymous"></script>
-<script src="locs.js?v=dc410bc9df"></script><script src="manifest.js?v=5eaa727148"></script><script src="show.js?v=fd8864d3fc"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=18c86a80ac"></script><script src="match.js?v=43d4d534ea"></script>
+<script src="locs.js?v=dc410bc9df"></script><script src="manifest.js?v=5eaa727148"></script><script src="show.js?v=ec807583cd"></script><script src="config.js?v=81eed32057"></script><script src="sync.js?v=18c86a80ac"></script><script src="match.js?v=43d4d534ea"></script>
 <script>
 (function(){
 'use strict';

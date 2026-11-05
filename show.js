@@ -53,7 +53,7 @@ window.CONVOS_SHOW=[
      src:'Encuesta propia a estudiantes del ITBA, octubre-noviembre 2026 (71 respuestas, muestra no aleatoria)'},
    phone:{text:'Mirá la pantalla'},proj:'Las dos preguntas; después se llenan solas las barras.',cel:'Mensaje de compañía.',
    notes:['Apenas aparece, preguntá: «¿Qué creen que frena más: el miedo o los horarios?»','Se llenan las barras: perder flexibilidad de horarios (65%) le gana a no sentirse seguro (27%).','Las barras de confianza: conocerse en la facu (77%) y misma carrera (66%), contra mismo género (6%). La confianza ya está: la da la comunidad. (Si preguntan: 71 respuestas válidas. 7 de cada 10 estarían dispuestos o muy dispuestos a compartir. La muestra no es aleatoria.)']},
-  {id:'escuchar',act:1,label:'Entrevistas',secs:45,view:'slide',steps:5,
+  {id:'escuchar',act:1,label:'Entrevistas',secs:45,view:'slide',steps:5,auto:4,
    slide:{type:'people',kicker:'Antes de diseñar nada',title:'Salimos a escuchar',people:[
      {n:'Sofía Marina Pérez',r:'Estudiante del ITBA · maneja sola',q:'Hay mucha disposición a compartir el auto si ayuda con el estacionamiento y el tránsito.'},
      {n:'Romina Paola Suárez',r:'Titular · PyME de traslados de confianza para jóvenes',q:'La confianza nace de conocerse antes del primer viaje y de compartir la ubicación en vivo.'},
